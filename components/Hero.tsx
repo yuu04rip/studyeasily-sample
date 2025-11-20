@@ -112,55 +112,65 @@ export default function Hero() {
                     <div className="hidden lg:block lg:w-1/2 relative" aria-hidden>
                         {/* Main big sphere */}
                         <div
-                            className="absolute right-12 top-6 rounded-full hero-sphere sphere-1 shadow-2xl animate-float"
+                            className="absolute right-12 top-6"
                             style={{
                                 width: '520px',
                                 height: '520px',
-                                transform: 'translate(0,0) scale(calc(var(--sphere-global-scale) * 1.12))',
+                                transform: 'scale(calc(var(--sphere-global-scale) * 1.12))',
                             }}
-                        />
+                        >
+                            <div className="w-full h-full rounded-full hero-sphere sphere-1 shadow-2xl animate-float" />
+                        </div>
 
                         {/* medium sphere */}
                         <div
-                            className="absolute right-36 top-32 rounded-full hero-sphere sphere-2 shadow-xl animate-float-alt"
+                            className="absolute right-36 top-32"
                             style={{
                                 width: '340px',
                                 height: '340px',
-                                transform: 'translate(0,0) scale(calc(var(--sphere-global-scale) * 0.98))',
-                                animationDuration: '7s',
+                                transform: 'scale(calc(var(--sphere-global-scale) * 0.98))',
                             }}
-                        />
+                        >
+                            <div className="w-full h-full rounded-full hero-sphere sphere-2 shadow-xl animate-float-alt"
+                                 style={{ animationDuration: '7s' }} />
+                        </div>
 
                         {/* dark large bottom */}
                         <div
-                            className="absolute right-24 bottom-6 rounded-full hero-sphere sphere-3 shadow-2xl animate-float"
+                            className="absolute right-24 bottom-6"
                             style={{
                                 width: '420px',
                                 height: '420px',
-                                transform: 'translate(0,0) scale(calc(var(--sphere-global-scale) * 1.02))',
-                                animationDuration: '6.2s',
+                                transform: 'scale(calc(var(--sphere-global-scale) * 1.02))',
                             }}
-                        />
+                        >
+                            <div className="w-full h-full rounded-full hero-sphere sphere-3 shadow-2xl animate-float"
+                                 style={{ animationDuration: '6.2s' }} />
+                        </div>
 
                         {/* small accents */}
                         <div
-                            className="absolute right-48 top-8 rounded-full hero-sphere sphere-4 shadow-lg animate-float-delayed"
+                            className="absolute right-48 top-8"
                             style={{
                                 width: '96px',
                                 height: '96px',
-                                transform: 'translate(0,0) scale(calc(var(--sphere-global-scale) * 0.72))',
-                                animationDuration: '5s',
+                                transform: 'scale(calc(var(--sphere-global-scale) * 0.72))',
                             }}
-                        />
+                        >
+                            <div className="w-full h-full rounded-full hero-sphere sphere-4 shadow-lg animate-float-delayed"
+                                 style={{ animationDuration: '5s' }} />
+                        </div>
                         <div
-                            className="absolute right-6 top-44 rounded-full hero-sphere sphere-5 shadow-lg animate-float-alt"
+                            className="absolute right-6 top-44"
                             style={{
                                 width: '150px',
                                 height: '150px',
-                                transform: 'translate(0,0) scale(calc(var(--sphere-global-scale) * 0.82))',
-                                animationDuration: '6.8s',
+                                transform: 'scale(calc(var(--sphere-global-scale) * 0.82))',
                             }}
-                        />
+                        >
+                            <div className="w-full h-full rounded-full hero-sphere sphere-5 shadow-lg animate-float-alt"
+                                 style={{ animationDuration: '6.8s' }} />
+                        </div>
                     </div>
                 </div>
             </div>
