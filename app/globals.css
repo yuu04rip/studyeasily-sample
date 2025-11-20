@@ -2,9 +2,41 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Font Face Declarations */
+/* Note: Actual Futura and Higuan Elegant Serif font files should be placed in /public/fonts/ */
+/* Currently using system font fallbacks until proper font files are provided */
+
+@font-face {
+  font-family: 'Futura';
+  src: local('Futura'), local('Futura-Medium'),
+       local('Arial'), local('Helvetica');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Futura';
+  src: local('Futura-Bold'),
+       local('Arial Bold'), local('Helvetica Bold');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Higuan Elegant Serif';
+  src: local('Georgia'), local('Times New Roman'), local('serif');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --font-futura: 'Futura', 'Arial', 'Helvetica', sans-serif;
+  --font-higuan: 'Higuan Elegant Serif', 'Georgia', 'Times New Roman', serif;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -17,11 +49,52 @@
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-futura);
+}
+
+/* Floating Animation for Spheres */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px) translateX(0px);
+  }
+  25% {
+    transform: translateY(-20px) translateX(10px);
+  }
+  50% {
+    transform: translateY(-10px) translateX(-10px);
+  }
+  75% {
+    transform: translateY(-15px) translateX(5px);
+  }
+}
+
+@keyframes floatAlt {
+  0%, 100% {
+    transform: translateY(0px) translateX(0px);
+  }
+  33% {
+    transform: translateY(-15px) translateX(-8px);
+  }
+  66% {
+    transform: translateY(-25px) translateX(8px);
+  }
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+  
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+  
+  .animate-float-alt {
+    animation: floatAlt 7s ease-in-out infinite;
+  }
+  
+  .animate-float-delayed {
+    animation: float 8s ease-in-out infinite;
+    animation-delay: 1s;
   }
 }
