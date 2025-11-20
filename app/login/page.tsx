@@ -45,78 +45,78 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center py-12 px-4">
+    <div className="min-h-screen bg-gradient-to-br from-primary via-purple-700 to-accent flex items-center justify-center py-12 px-4">
       <div className="max-w-md w-full">
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold mb-2">Welcome Back</h1>
-          <p className="text-gray-600">Sign in to your account to continue learning</p>
+          <h1 className="text-4xl font-bold mb-2 text-white">Benvenuto</h1>
+          <p className="text-white/80">Accedi al tuo account per continuare ad imparare</p>
         </div>
 
-        <div className="bg-white rounded-lg shadow-md p-8">
+        <div className="bg-white/10 backdrop-blur-md rounded-3xl shadow-2xl p-8 border border-accent/30">
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Email Address
+              <label className="block text-sm font-medium text-white mb-2">
+                Email
               </label>
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                className="w-full px-4 py-3 bg-white/90 border border-white/20 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent outline-none"
                 placeholder="demo@studyeasily.com"
                 required
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-white mb-2">
                 Password
               </label>
               <input
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                className="w-full px-4 py-3 bg-white/90 border border-white/20 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent outline-none"
                 placeholder="••••••••"
                 required
               />
             </div>
 
             {error && (
-              <div className="bg-red-50 text-red-600 p-3 rounded-lg text-sm">
+              <div className="bg-red-500/20 text-white p-3 rounded-lg text-sm border border-red-500/30">
                 {error}
               </div>
             )}
 
             <div className="flex items-center justify-between text-sm">
-              <label className="flex items-center">
+              <label className="flex items-center text-white/90">
                 <input type="checkbox" className="mr-2" />
-                <span className="text-gray-600">Remember me</span>
+                <span>Ricordami</span>
               </label>
-              <a href="#" className="text-primary hover:underline">
-                Forgot password?
+              <a href="#" className="text-accent hover:text-accent/80 transition">
+                Password dimenticata?
               </a>
             </div>
 
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-gradient-to-r from-gradientStart to-gradientEnd text-white py-3 rounded-lg font-semibold hover:opacity-90 transition disabled:opacity-50"
+              className="w-full bg-accent hover:bg-accent/90 text-white py-3 rounded-lg font-semibold transition disabled:opacity-50 shadow-xl"
             >
-              {loading ? 'Signing in...' : 'Sign In'}
+              {loading ? 'Accesso...' : 'Accedi'}
             </button>
           </form>
 
-          <div className="mt-6 text-center text-sm text-gray-600">
-            Don't have an account?{' '}
-            <Link href="/signup" className="text-primary hover:underline font-medium">
-              Sign up
+          <div className="mt-6 text-center text-sm text-white/80">
+            Non hai un account?{' '}
+            <Link href="/signup" className="text-accent hover:text-accent/80 font-semibold transition">
+              Registrati
             </Link>
           </div>
 
-          <div className="mt-6 pt-6 border-t">
-            <p className="text-xs text-gray-500 text-center">
-              <strong>Demo:</strong> Use email "demo@studyeasily.com" with any password
+          <div className="mt-6 pt-6 border-t border-white/20">
+            <p className="text-xs text-white/60 text-center">
+              <strong>Demo:</strong> Usa email "demo@studyeasily.com" con qualsiasi password
             </p>
           </div>
         </div>

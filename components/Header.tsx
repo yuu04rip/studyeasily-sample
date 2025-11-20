@@ -8,10 +8,10 @@ export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <header className="bg-white shadow-md sticky top-0 z-50">
+    <header className="bg-white shadow-lg sticky top-0 z-50 border-b-2 border-accent/20">
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
-          <Link href="/" className="text-2xl font-bold bg-gradient-to-r from-gradientStart to-gradientEnd bg-clip-text text-transparent">
+          <Link href="/" className="text-2xl md:text-3xl font-bold bg-gradient-purple-pink bg-clip-text text-transparent hover:opacity-80 transition">
             StudyEasily
           </Link>
 
@@ -44,13 +44,13 @@ export default function Header() {
             <SearchBar />
             <Link
               href="/login"
-              className="text-primary hover:text-accent transition"
+              className="text-primary hover:text-accent transition font-medium"
             >
               Login
             </Link>
             <Link
               href="/signup"
-              className="bg-gradient-to-r from-gradientStart to-gradientEnd text-white px-4 py-2 rounded-lg hover:opacity-90 transition"
+              className="bg-gradient-purple-pink text-white px-6 py-2 rounded-full hover:opacity-90 transition font-semibold shadow-lg"
             >
               Sign Up
             </Link>
@@ -116,7 +116,7 @@ export default function Header() {
               </Link>
               <Link
                 href="/signup"
-                className="bg-gradient-to-r from-gradientStart to-gradientEnd text-white px-4 py-2 rounded-lg hover:opacity-90 transition text-center"
+                className="bg-gradient-purple-pink text-white px-4 py-2 rounded-lg hover:opacity-90 transition text-center"
               >
                 Sign Up
               </Link>

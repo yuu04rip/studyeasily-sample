@@ -26,37 +26,38 @@ export default function FAQPage() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+      <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-darkPurple to-primary">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-accent"></div>
       </div>
     );
   }
 
   return (
-    <div className="container mx-auto px-4 py-16">
-      <div className="max-w-4xl mx-auto">
-        <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">
-            Frequently Asked Questions
-          </h1>
-          <p className="text-xl text-gray-600">
-            Find answers to common questions about StudyEasily
-          </p>
-        </div>
+    <div className="min-h-screen bg-gradient-to-b from-darkPurple to-primary py-16">
+      <div className="container mx-auto px-4">
+        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12">
+          {/* FAQ Content */}
+          <div>
+            <h1 className="text-5xl md:text-7xl font-bold text-accent mb-8 uppercase">FAQ</h1>
+            <FAQAccordion faqs={faqs} />
+          </div>
 
-        <FAQAccordion faqs={faqs} />
-
-        <div className="mt-12 bg-gradient-to-br from-gradientStart to-gradientEnd text-white rounded-lg p-8 text-center">
-          <h2 className="text-2xl font-bold mb-4">Still have questions?</h2>
-          <p className="mb-6 text-white/90">
-            Our support team is here to help you with any inquiries
-          </p>
-          <a
-            href="/contatti"
-            className="inline-block bg-white text-primary px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition"
-          >
-            Contact Support
-          </a>
+          {/* Document Visual */}
+          <div className="flex items-center justify-center">
+            <div className="bg-white rounded-3xl p-8 shadow-2xl max-w-sm w-full">
+              <div className="aspect-[3/4] bg-gradient-to-br from-purple-100 to-pink-100 rounded-2xl flex flex-col items-center justify-center p-6 relative overflow-hidden">
+                {/* Document icon/visual */}
+                <div className="text-9xl opacity-30">📄</div>
+                <div className="absolute inset-0 p-8">
+                  {Array.from({ length: 8 }).map((_, i) => (
+                    <div key={i} className="mb-3 flex space-x-2">
+                      <div className="w-full h-2 bg-gray-300/40 rounded"></div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
