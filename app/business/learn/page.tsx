@@ -1,4 +1,3 @@
-import SemicircleGauge from '@/components/SemicircleGauge';
 import Link from 'next/link';
 
 export default function LearnMorePage() {
@@ -14,81 +13,76 @@ export default function LearnMorePage() {
             Back to Business
           </Link>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-16">
             {/* Content */}
             <div className="text-white">
               <h1 className="text-5xl md:text-7xl font-bold mb-8 leading-tight">
-                Transform Your Workforce
+                Data Analytics
               </h1>
               <p className="text-xl text-white/90 mb-6 leading-relaxed">
-                Potenzia il tuo team con soluzioni di formazione all'avanguardia. Il nostro sistema di gestione 
-                dell'apprendimento aiuta le aziende a crescere attraverso l'educazione continua.
+                Il sistema di data analytics raccoglie e analizza in modo automatico e organizzato i dati 
+                provenienti dagli studenti (materiali usati, progressi, difficoltà, risorse online consultate).
               </p>
-              <ul className="space-y-4 mb-8">
-                <li className="flex items-start">
-                  <svg className="w-6 h-6 text-accent mr-3 mt-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                  </svg>
-                  <span className="text-lg">Corsi personalizzati per il tuo settore</span>
-                </li>
-                <li className="flex items-start">
-                  <svg className="w-6 h-6 text-accent mr-3 mt-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                  </svg>
-                  <span className="text-lg">Analytics avanzate per monitorare i progressi</span>
-                </li>
-                <li className="flex items-start">
-                  <svg className="w-6 h-6 text-accent mr-3 mt-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                  </svg>
-                  <span className="text-lg">Supporto dedicato 24/7</span>
-                </li>
-              </ul>
-              <button className="bg-white text-primary hover:bg-white/90 px-8 py-4 rounded-lg font-semibold transition shadow-xl text-lg">
-                Richiedi una Demo
-              </button>
+              <p className="text-xl text-white/90 mb-6 leading-relaxed">
+                L'algoritmo elabora queste informazioni per generare report, individuare pattern, prevedere 
+                i bisogni formativi e suggerire contenuti personalizzati.
+              </p>
+              <p className="text-xl text-white/90 mb-8 leading-relaxed">
+                Tutto avviene in modo anonimo e aggregato, così il sistema migliora continuamente l'apprendimento 
+                e supporta scuole e tutor con analisi chiare e utili.
+              </p>
             </div>
 
-            {/* Gauge Visual */}
+            {/* Analytics Icon */}
             <div className="flex justify-center">
               <div className="bg-gradient-to-br from-purple-900/50 to-pink-900/50 backdrop-blur-sm rounded-3xl p-12 border border-accent/30">
-                <div className="mb-8 text-center">
-                  <h2 className="text-3xl font-bold text-white mb-2">Success Rate</h2>
-                  <p className="text-white/70">Team Performance Indicator</p>
-                </div>
-                <SemicircleGauge 
-                  period={4000}
-                  radius={120}
-                  strokeWidth={24}
-                  label="Team success rate gauge"
-                />
-                <div className="mt-8 grid grid-cols-2 gap-4 text-center">
-                  <div className="bg-white/10 rounded-lg p-4">
-                    <p className="text-2xl font-bold text-white">95%</p>
-                    <p className="text-white/70 text-sm">Completion</p>
-                  </div>
-                  <div className="bg-white/10 rounded-lg p-4">
-                    <p className="text-2xl font-bold text-white">4.8</p>
-                    <p className="text-white/70 text-sm">Avg Rating</p>
-                  </div>
-                </div>
+                <svg className="w-64 h-64 text-accent" viewBox="0 0 200 200" fill="none">
+                  <rect x="20" y="120" width="30" height="60" fill="currentColor" opacity="0.8" rx="4" />
+                  <rect x="60" y="90" width="30" height="90" fill="currentColor" opacity="0.9" rx="4" />
+                  <rect x="100" y="60" width="30" height="120" fill="currentColor" rx="4" />
+                  <rect x="140" y="40" width="30" height="140" fill="currentColor" opacity="0.9" rx="4" />
+                  <path d="M 35 120 L 75 90 L 115 60 L 155 40" stroke="currentColor" strokeWidth="3" fill="none" opacity="0.6" />
+                  <circle cx="35" cy="120" r="5" fill="white" />
+                  <circle cx="75" cy="90" r="5" fill="white" />
+                  <circle cx="115" cy="60" r="5" fill="white" />
+                  <circle cx="155" cy="40" r="5" fill="white" />
+                </svg>
               </div>
+            </div>
+          </div>
+
+          {/* Key Features */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+            <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-accent/20">
+              <div className="text-accent text-4xl mb-4">📊</div>
+              <h3 className="text-2xl font-bold text-white mb-3">Report Automatici</h3>
+              <p className="text-white/80">Generazione automatica di report dettagliati sui progressi degli studenti</p>
+            </div>
+            <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-accent/20">
+              <div className="text-accent text-4xl mb-4">🎯</div>
+              <h3 className="text-2xl font-bold text-white mb-3">Pattern Recognition</h3>
+              <p className="text-white/80">Individuazione di pattern di apprendimento per ottimizzare i contenuti</p>
+            </div>
+            <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-accent/20">
+              <div className="text-accent text-4xl mb-4">🔮</div>
+              <h3 className="text-2xl font-bold text-white mb-3">Previsioni AI</h3>
+              <p className="text-white/80">Previsione dei bisogni formativi con intelligenza artificiale</p>
             </div>
           </div>
 
           {/* Stats Section */}
           <div className="mt-20 grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="text-center text-white">
-              <div className="text-5xl font-bold text-accent mb-2">500+</div>
-              <p className="text-xl">Aziende Partner</p>
+              <div className="text-5xl font-bold text-accent mb-2">95%</div>
+              <p className="text-xl">Accuratezza Predittiva</p>
             </div>
             <div className="text-center text-white">
-              <div className="text-5xl font-bold text-accent mb-2">50K+</div>
-              <p className="text-xl">Dipendenti Formati</p>
+              <div className="text-5xl font-bold text-accent mb-2">100K+</div>
+              <p className="text-xl">Dati Analizzati</p>
             </div>
             <div className="text-center text-white">
-              <div className="text-5xl font-bold text-accent mb-2">98%</div>
-              <p className="text-xl">Tasso di Soddisfazione</p>
+              <div className="text-5xl font-bold text-accent mb-2">24/7</div>
+              <p className="text-xl">Monitoraggio Continuo</p>
             </div>
           </div>
         </div>
