@@ -3,14 +3,24 @@
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
-export default function SearchBar() {
+interface SearchBarProps {
+  redirectToDashboard?: boolean;
+}
+
+export default function SearchBar({ redirectToDashboard = false }: SearchBarProps) {
   const [query, setQuery] = useState('');
   const router = useRouter();
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (query.trim()) {
-      router.push(`/corsi?search=${encodeURIComponent(query)}`);
+      // If redirectToDashboard is true, navigate to contacts page with dashboard
+      // Otherwise, navigate to courses page
+      if (redirectToDashboard) {
+        router.push(`/contatti?q=${encodeURIComponent(query)}`);
+      } else {
+        router.push(`/corsi?search=${encodeURIComponent(query)}`);
+      }
     }
   };
 

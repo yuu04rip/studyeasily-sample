@@ -1,80 +1,98 @@
+import DashboardPreview from '@/components/DashboardPreview';
+import { Suspense } from 'react';
+
+function DashboardSection() {
+  return <DashboardPreview className="mt-16" />;
+}
+
 export default function ContattiPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-primary to-darkPurple py-16">
       <div className="container mx-auto px-4">
-        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-          {/* Contact Info */}
-          <div className="text-white">
-            <h1 className="text-4xl md:text-6xl font-bold mb-8 uppercase tracking-wide">
-              Contatti
-            </h1>
-            <div className="space-y-6">
-              <div>
-                <p className="text-white/70 mb-2 text-lg">Email:</p>
-                <p className="text-2xl font-semibold">study.easilyhm@gmail.com</p>
-              </div>
-              <div>
-                <p className="text-white/70 mb-2 text-lg">Telefono:</p>
-                <p className="text-2xl font-semibold">xxxxxx-xxxx</p>
-              </div>
-              <div className="mt-8 pt-8 border-t border-white/20">
-                <div className="flex items-center gap-4">
-                  <span className="text-white/70 text-lg">social</span>
-                  <div className="flex gap-4">
-                    <a href="#" className="text-white hover:text-accent transition text-2xl font-bold">f</a>
-                    <a href="#" className="text-white hover:text-accent transition text-2xl font-bold">@</a>
+        <div className="max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            {/* Contact Info */}
+            <div className="text-white">
+              <h1 className="text-4xl md:text-6xl font-bold mb-8 uppercase tracking-wide">
+                Contatti
+              </h1>
+              <div className="space-y-6">
+                <div>
+                  <p className="text-white/70 mb-2 text-lg">Email:</p>
+                  <p className="text-2xl font-semibold">study.easilyhm@gmail.com</p>
+                </div>
+                <div>
+                  <p className="text-white/70 mb-2 text-lg">Telefono:</p>
+                  <p className="text-2xl font-semibold">xxxxxx-xxxx</p>
+                </div>
+                <div className="mt-8 pt-8 border-t border-white/20">
+                  <div className="flex items-center gap-4">
+                    <span className="text-white/70 text-lg">social</span>
+                    <div className="flex gap-4">
+                      <a href="#" className="text-white hover:text-accent transition text-2xl font-bold">f</a>
+                      <a href="#" className="text-white hover:text-accent transition text-2xl font-bold">@</a>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
 
-          {/* Graduation Cap Icon */}
-          <div className="flex justify-center">
-            <div className="text-accent/30">
-              <svg className="w-64 h-64 md:w-80 md:h-80" viewBox="0 0 200 200" fill="none">
-                <path d="M100 50 L180 80 L100 110 L20 80 Z" fill="currentColor" />
-                <path d="M180 80 L180 120 L100 150 L20 120 L20 80" stroke="currentColor" strokeWidth="3" fill="none" />
-                <circle cx="100" cy="130" r="40" stroke="currentColor" strokeWidth="3" fill="none" />
-                <path d="M70 130 L90 150 L130 110" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-              </svg>
+            {/* Graduation Cap Icon */}
+            <div className="flex justify-center">
+              <div className="text-accent/30">
+                <svg className="w-64 h-64 md:w-80 md:h-80" viewBox="0 0 200 200" fill="none">
+                  <path d="M100 50 L180 80 L100 110 L20 80 Z" fill="currentColor" />
+                  <path d="M180 80 L180 120 L100 150 L20 120 L20 80" stroke="currentColor" strokeWidth="3" fill="none" />
+                  <circle cx="100" cy="130" r="40" stroke="currentColor" strokeWidth="3" fill="none" />
+                  <path d="M70 130 L90 150 L130 110" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+                </svg>
+              </div>
             </div>
           </div>
-        </div>
 
-        {/* Contact Form */}
-        <div className="mt-16 max-w-3xl mx-auto bg-white/10 backdrop-blur-md rounded-3xl p-8 border border-accent/30">
-          <h2 className="text-3xl font-bold mb-6 text-white">Inviaci un messaggio</h2>
-          <form className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {/* Contact Form */}
+          <div className="mt-16 max-w-3xl mx-auto bg-white/10 backdrop-blur-md rounded-3xl p-8 border border-accent/30">
+            <h2 className="text-3xl font-bold mb-6 text-white">Inviaci un messaggio</h2>
+            <form className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <input
+                  type="text"
+                  placeholder="Nome"
+                  className="w-full px-4 py-3 bg-white/90 border border-white/20 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent outline-none"
+                />
+                <input
+                  type="text"
+                  placeholder="Cognome"
+                  className="w-full px-4 py-3 bg-white/90 border border-white/20 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent outline-none"
+                />
+              </div>
               <input
-                type="text"
-                placeholder="Nome"
+                type="email"
+                placeholder="Email"
                 className="w-full px-4 py-3 bg-white/90 border border-white/20 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent outline-none"
               />
-              <input
-                type="text"
-                placeholder="Cognome"
+              <textarea
+                rows={6}
+                placeholder="Il tuo messaggio..."
                 className="w-full px-4 py-3 bg-white/90 border border-white/20 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent outline-none"
-              />
+              ></textarea>
+              <button
+                type="submit"
+                className="w-full bg-accent hover:bg-accent/90 text-white py-3 rounded-lg font-semibold transition shadow-xl"
+              >
+                Invia Messaggio
+              </button>
+            </form>
+          </div>
+
+          {/* Dashboard Preview */}
+          <Suspense fallback={
+            <div className="mt-16 flex justify-center">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-accent"></div>
             </div>
-            <input
-              type="email"
-              placeholder="Email"
-              className="w-full px-4 py-3 bg-white/90 border border-white/20 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent outline-none"
-            />
-            <textarea
-              rows={6}
-              placeholder="Il tuo messaggio..."
-              className="w-full px-4 py-3 bg-white/90 border border-white/20 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent outline-none"
-            ></textarea>
-            <button
-              type="submit"
-              className="w-full bg-accent hover:bg-accent/90 text-white py-3 rounded-lg font-semibold transition shadow-xl"
-            >
-              Invia Messaggio
-            </button>
-          </form>
+          }>
+            <DashboardSection />
+          </Suspense>
         </div>
       </div>
     </div>

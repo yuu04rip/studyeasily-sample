@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import FAQAccordion from '@/components/FAQAccordion';
+import Link from 'next/link';
 
 interface FAQ {
   id: string;
@@ -40,6 +41,24 @@ export default function FAQPage() {
           <div>
             <h1 className="text-5xl md:text-7xl font-bold text-accent mb-8 uppercase">FAQ</h1>
             <FAQAccordion faqs={faqs} />
+            
+            {/* Read more link */}
+            <div className="mt-8">
+              <Link 
+                href="/blog/faq-detailed" 
+                className="inline-flex items-center text-accent hover:text-accent/80 font-semibold text-lg transition group"
+              >
+                Read more in our blog
+                <svg 
+                  className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" 
+                  fill="none" 
+                  stroke="currentColor" 
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </Link>
+            </div>
           </div>
 
           {/* Document Visual */}
