@@ -81,7 +81,7 @@
       "description": "Introduction to HTML elements and structure",
       "videoUrl": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
       "duration": "45 min",
-      "content": "In this lesson, you'll learn the basics of HTML..."
+      "content": "In this lesson, you'll learn the basics of HTML, including tags, elements, attributes, and document structure. We'll cover semantic HTML and best practices for creating accessible web pages."
     },
     {
       "id": "2",
@@ -90,7 +90,16 @@
       "description": "Learn how to style your web pages with CSS",
       "videoUrl": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
       "duration": "60 min",
-      "content": "Discover the power of CSS styling..."
+      "content": "Discover the power of CSS styling. Learn about selectors, properties, the box model, flexbox, and responsive design fundamentals."
+    },
+    {
+      "id": "3",
+      "courseId": "1",
+      "title": "JavaScript Introduction",
+      "description": "Introduction to JavaScript programming fundamentals",
+      "videoUrl": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+      "duration": "90 min",
+      "content": "Learn JavaScript fundamentals including variables, data types, functions, loops, and DOM manipulation. Start building interactive web applications."
     },
     {
       "id": "4",
@@ -99,7 +108,79 @@
       "description": "Master useState, useEffect, and custom hooks",
       "videoUrl": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
       "duration": "120 min",
-      "content": "Deep dive into React Hooks..."
+      "content": "Deep dive into React Hooks. Learn how to use useState for state management, useEffect for side effects, and create your own custom hooks."
+    },
+    {
+      "id": "5",
+      "courseId": "2",
+      "title": "State Management with Context",
+      "description": "Learn to manage global state with React Context API",
+      "videoUrl": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+      "duration": "90 min",
+      "content": "Master the React Context API for managing global application state. Learn when to use Context vs prop drilling and best practices for context providers."
+    },
+    {
+      "id": "6",
+      "courseId": "2",
+      "title": "Performance Optimization",
+      "description": "Optimize your React applications for better performance",
+      "videoUrl": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+      "duration": "75 min",
+      "content": "Learn React performance optimization techniques including memoization, lazy loading, code splitting, and profiling with React DevTools."
+    },
+    {
+      "id": "7",
+      "courseId": "3",
+      "title": "Python Basics",
+      "description": "Introduction to Python programming language",
+      "videoUrl": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+      "duration": "60 min",
+      "content": "Learn Python fundamentals including syntax, data types, control structures, functions, and object-oriented programming basics."
+    },
+    {
+      "id": "8",
+      "courseId": "3",
+      "title": "NumPy and Pandas",
+      "description": "Data manipulation with NumPy and Pandas libraries",
+      "videoUrl": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+      "duration": "120 min",
+      "content": "Master NumPy for numerical computing and Pandas for data manipulation. Learn to work with arrays, DataFrames, and perform data analysis."
+    },
+    {
+      "id": "9",
+      "courseId": "3",
+      "title": "Machine Learning Fundamentals",
+      "description": "Introduction to machine learning concepts and algorithms",
+      "videoUrl": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+      "duration": "150 min",
+      "content": "Learn machine learning fundamentals including supervised and unsupervised learning, classification, regression, and model evaluation."
+    },
+    {
+      "id": "10",
+      "courseId": "4",
+      "title": "SEO Fundamentals",
+      "description": "Learn the basics of Search Engine Optimization",
+      "videoUrl": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+      "duration": "45 min",
+      "content": "Master SEO fundamentals including keyword research, on-page optimization, technical SEO, and link building strategies."
+    },
+    {
+      "id": "11",
+      "courseId": "4",
+      "title": "Social Media Marketing",
+      "description": "Effective social media marketing strategies",
+      "videoUrl": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+      "duration": "60 min",
+      "content": "Learn to create effective social media marketing campaigns across platforms like Facebook, Instagram, Twitter, and LinkedIn."
+    },
+    {
+      "id": "12",
+      "courseId": "4",
+      "title": "Content Marketing Strategy",
+      "description": "Build a successful content marketing strategy",
+      "videoUrl": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+      "duration": "90 min",
+      "content": "Learn to create, distribute, and promote valuable content that attracts and retains your target audience."
     }
   ],
   "users": [
