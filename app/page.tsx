@@ -1,43 +1,12 @@
 import Link from "next/link";
 import SearchBar from "@/components/SearchBar";
+import Hero from "@/components/Hero";
 
 export default function Home() {
   return (
     <div className="bg-gradient-main min-h-screen">
-      {/* Hero Section */}
-      <section className="relative bg-gradient-purple-blue text-white py-16 md:py-24 overflow-hidden">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl">
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
-              StudyEasily
-            </h1>
-            <p className="text-xl md:text-2xl mb-4 text-white/90 max-w-xl uppercase font-semibold">
-              L&apos;UOMO COLTO È COLUI
-            </p>
-            <p className="text-xl md:text-2xl mb-2 text-white/90 max-w-xl uppercase font-semibold">
-              CHE SA DOVE TROVARE
-            </p>
-            <p className="text-xl md:text-2xl mb-6 text-white/90 max-w-xl uppercase font-semibold">
-              CIÒ CHE NON SA.
-            </p>
-            <p className="text-lg md:text-xl mb-12 text-white/80 italic">
-              - Georg Simmel
-            </p>
-          </div>
-
-          {/* Decorative circles */}
-          <div className="absolute top-10 right-10 md:right-20 flex gap-4 opacity-80">
-            <div className="w-16 h-16 md:w-24 md:h-24 rounded-full bg-accent"></div>
-            <div className="w-12 h-12 md:w-16 md:h-16 rounded-full bg-purple-400 mt-8"></div>
-          </div>
-          <div className="absolute top-32 right-32 md:right-48">
-            <div className="w-20 h-20 md:w-32 md:h-32 rounded-full bg-primary"></div>
-          </div>
-          <div className="absolute top-40 right-12 md:right-24">
-            <div className="w-10 h-10 md:w-20 md:h-20 rounded-full bg-purple-300"></div>
-          </div>
-        </div>
-      </section>
+      {/* Hero Section with custom fonts and animated spheres */}
+      <Hero />
 
       {/* Search Section */}
       <section className="bg-gradient-to-b from-primary to-darkPurple py-12">

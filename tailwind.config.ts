@@ -8,6 +8,10 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        futura: ['var(--font-futura)', 'Arial', 'Helvetica', 'sans-serif'],
+        higuan: ['var(--font-higuan)', 'Georgia', 'Times New Roman', 'serif'],
+      },
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
