@@ -18,11 +18,14 @@
     font-display: swap;
 }
 
-/* CSS variables used by Hero */
+/* CSS variables used by Hero and animations */
 :root {
     --hero-scale: 1;
     --hero-brightness: 1;
     --sphere-global-scale: 1;
+    --wave-speed: 1;
+    --wave-amplitude: 1;
+    --gauge-duration: 4000ms;
 }
 
 /* Base */
@@ -86,14 +89,45 @@ html, body {
     100% { transform: translateY(0) translateZ(0); }
 }
 
+@keyframes pulse-slow {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.8; }
+}
+
+@keyframes slide-in {
+    0% { transform: translateX(-100%); opacity: 0; }
+    100% { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes fade-in {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
 /* utility animations */
 .animate-float { animation: float 6s ease-in-out infinite; }
 .animate-float-alt { animation: floatAlt 7s ease-in-out infinite; }
 .animate-float-delayed { animation: float 8s ease-in-out infinite; animation-delay: 1s; }
+.animate-pulse-slow { animation: pulse-slow 3s ease-in-out infinite; }
+.animate-slide-in { animation: slide-in 0.5s ease-out; }
+.animate-fade-in { animation: fade-in 0.5s ease-out; }
 
 /* reduced motion */
 @media (prefers-reduced-motion: reduce) {
-    .animate-float, .animate-float-alt, .animate-float-delayed {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+    
+    .animate-float, 
+    .animate-float-alt, 
+    .animate-float-delayed,
+    .animate-pulse-slow,
+    .animate-slide-in,
+    .animate-fade-in {
         animation: none !important;
     }
 }

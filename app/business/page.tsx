@@ -1,3 +1,8 @@
+'use client';
+
+import Link from 'next/link';
+import AnimatedWaves from '@/components/AnimatedWaves';
+
 export default function BusinessPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-accent via-purple-700 to-darkPurple py-16">
@@ -12,16 +17,7 @@ export default function BusinessPage() {
                 ))}
               </div>
               <div className="absolute bottom-0 left-0 right-0 h-2/3">
-                <svg viewBox="0 0 200 100" className="w-full h-full">
-                  <path d="M 0,80 Q 50,20 100,40 T 200,30" fill="none" stroke="#E84CB4" strokeWidth="3" />
-                  <path d="M 0,80 Q 50,20 100,40 T 200,30 L 200,100 L 0,100 Z" fill="url(#gradientBiz)" opacity="0.6" />
-                  <defs>
-                    <linearGradient id="gradientBiz" x1="0%" y1="0%" x2="0%" y2="100%">
-                      <stop offset="0%" stopColor="#E84CB4" stopOpacity="0.8" />
-                      <stop offset="100%" stopColor="#5B4D9D" stopOpacity="0.3" />
-                    </linearGradient>
-                  </defs>
-                </svg>
+                <AnimatedWaves />
               </div>
             </div>
           </div>
@@ -32,9 +28,11 @@ export default function BusinessPage() {
             <p className="text-lg md:text-xl text-white/90 mb-8 leading-relaxed">
               Trasforma la tua forza lavoro con programmi di formazione personalizzati e gestione avanzata dell'apprendimento. Offriamo soluzioni enterprise per team di tutte le dimensioni.
             </p>
-            <button className="bg-accent hover:bg-accent/90 text-white px-8 py-4 rounded-lg font-semibold transition shadow-xl text-lg">
-              Learn More
-            </button>
+            <Link href="/business/learn">
+              <button className="bg-accent hover:bg-accent/90 text-white px-8 py-4 rounded-lg font-semibold transition shadow-xl text-lg">
+                Learn More
+              </button>
+            </Link>
           </div>
         </div>
       </div>
