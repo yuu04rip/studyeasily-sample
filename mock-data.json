@@ -1,0 +1,204 @@
+{
+  "courses": [
+    {
+      "id": "1",
+      "title": "Introduction to Web Development",
+      "description": "Learn the fundamentals of web development including HTML, CSS, and JavaScript",
+      "instructor": "John Doe",
+      "duration": "8 weeks",
+      "level": "Beginner",
+      "price": 49.99,
+      "image": "/assets/course-1.jpg",
+      "category": "Web Development",
+      "enrolled": 1250,
+      "rating": 4.8,
+      "curriculum": [
+        { "id": "1", "title": "Getting Started with HTML", "duration": "45 min" },
+        { "id": "2", "title": "CSS Basics", "duration": "60 min" },
+        { "id": "3", "title": "JavaScript Introduction", "duration": "90 min" }
+      ]
+    },
+    {
+      "id": "2",
+      "title": "Advanced React Development",
+      "description": "Master React hooks, context, and advanced patterns",
+      "instructor": "Jane Smith",
+      "duration": "12 weeks",
+      "level": "Advanced",
+      "price": 99.99,
+      "image": "/assets/course-2.jpg",
+      "category": "Frontend Development",
+      "enrolled": 850,
+      "rating": 4.9,
+      "curriculum": [
+        { "id": "4", "title": "React Hooks Deep Dive", "duration": "120 min" },
+        { "id": "5", "title": "State Management with Context", "duration": "90 min" },
+        { "id": "6", "title": "Performance Optimization", "duration": "75 min" }
+      ]
+    },
+    {
+      "id": "3",
+      "title": "Python for Data Science",
+      "description": "Learn Python programming for data analysis and machine learning",
+      "instructor": "Michael Johnson",
+      "duration": "10 weeks",
+      "level": "Intermediate",
+      "price": 79.99,
+      "image": "/assets/course-3.jpg",
+      "category": "Data Science",
+      "enrolled": 2100,
+      "rating": 4.7,
+      "curriculum": [
+        { "id": "7", "title": "Python Basics", "duration": "60 min" },
+        { "id": "8", "title": "NumPy and Pandas", "duration": "120 min" },
+        { "id": "9", "title": "Machine Learning Fundamentals", "duration": "150 min" }
+      ]
+    },
+    {
+      "id": "4",
+      "title": "Digital Marketing Masterclass",
+      "description": "Complete guide to digital marketing strategies and tools",
+      "instructor": "Sarah Williams",
+      "duration": "6 weeks",
+      "level": "Beginner",
+      "price": 59.99,
+      "image": "/assets/course-4.jpg",
+      "category": "Marketing",
+      "enrolled": 980,
+      "rating": 4.6,
+      "curriculum": [
+        { "id": "10", "title": "SEO Fundamentals", "duration": "45 min" },
+        { "id": "11", "title": "Social Media Marketing", "duration": "60 min" },
+        { "id": "12", "title": "Content Marketing Strategy", "duration": "90 min" }
+      ]
+    }
+  ],
+  "lessons": [
+    {
+      "id": "1",
+      "courseId": "1",
+      "title": "Getting Started with HTML",
+      "description": "Introduction to HTML elements and structure",
+      "videoUrl": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+      "duration": "45 min",
+      "content": "In this lesson, you'll learn the basics of HTML..."
+    },
+    {
+      "id": "2",
+      "courseId": "1",
+      "title": "CSS Basics",
+      "description": "Learn how to style your web pages with CSS",
+      "videoUrl": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+      "duration": "60 min",
+      "content": "Discover the power of CSS styling..."
+    },
+    {
+      "id": "4",
+      "courseId": "2",
+      "title": "React Hooks Deep Dive",
+      "description": "Master useState, useEffect, and custom hooks",
+      "videoUrl": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+      "duration": "120 min",
+      "content": "Deep dive into React Hooks..."
+    }
+  ],
+  "users": [
+    {
+      "id": "1",
+      "email": "demo@studyeasily.com",
+      "name": "Demo User",
+      "avatar": "/assets/avatar-1.jpg",
+      "enrolledCourses": ["1", "2"]
+    },
+    {
+      "id": "2",
+      "email": "test@example.com",
+      "name": "Test User",
+      "avatar": "/assets/avatar-2.jpg",
+      "enrolledCourses": ["3"]
+    }
+  ],
+  "faqs": [
+    {
+      "id": "1",
+      "question": "How do I enroll in a course?",
+      "answer": "Simply browse our course catalog, select the course you're interested in, and click the 'Enroll' button. You'll need to create an account or sign in first."
+    },
+    {
+      "id": "2",
+      "question": "Can I access courses on mobile devices?",
+      "answer": "Yes! Our platform is fully responsive and works seamlessly on all devices including smartphones and tablets."
+    },
+    {
+      "id": "3",
+      "question": "Do you offer refunds?",
+      "answer": "We offer a 30-day money-back guarantee on all courses. If you're not satisfied, contact our support team for a full refund."
+    },
+    {
+      "id": "4",
+      "question": "Are there any prerequisites for courses?",
+      "answer": "Prerequisites vary by course. Check the course details page for specific requirements and recommended prior knowledge."
+    },
+    {
+      "id": "5",
+      "question": "How long do I have access to a course?",
+      "answer": "Once you enroll in a course, you have lifetime access to all course materials and future updates."
+    }
+  ],
+  "blogs": [
+    {
+      "id": "1",
+      "slug": "getting-started-with-online-learning",
+      "title": "Getting Started with Online Learning",
+      "excerpt": "Tips and strategies to make the most of your online education journey",
+      "content": "Online learning has revolutionized education, making it more accessible than ever...",
+      "author": "Admin",
+      "publishedAt": "2024-01-15",
+      "image": "/assets/blog-1.jpg",
+      "category": "Education"
+    },
+    {
+      "id": "2",
+      "slug": "top-programming-languages-2024",
+      "title": "Top Programming Languages to Learn in 2024",
+      "excerpt": "Explore the most in-demand programming languages for career growth",
+      "content": "The tech industry continues to evolve rapidly. Here are the top languages...",
+      "author": "Tech Team",
+      "publishedAt": "2024-02-20",
+      "image": "/assets/blog-2.jpg",
+      "category": "Technology"
+    },
+    {
+      "id": "3",
+      "slug": "effective-study-habits",
+      "title": "5 Effective Study Habits for Success",
+      "excerpt": "Proven techniques to improve your learning and retention",
+      "content": "Developing good study habits is crucial for academic success...",
+      "author": "Education Team",
+      "publishedAt": "2024-03-10",
+      "image": "/assets/blog-3.jpg",
+      "category": "Study Tips"
+    }
+  ],
+  "analytics": {
+    "totalUsers": 15420,
+    "activeUsers": 8750,
+    "totalCourses": 245,
+    "completionRate": 68,
+    "monthlyData": [
+      { "month": "Jan", "users": 5200, "revenue": 45000, "enrollments": 320 },
+      { "month": "Feb", "users": 6100, "revenue": 52000, "enrollments": 380 },
+      { "month": "Mar", "users": 7300, "revenue": 61000, "enrollments": 450 },
+      { "month": "Apr", "users": 8200, "revenue": 68000, "enrollments": 490 },
+      { "month": "May", "users": 9500, "revenue": 79000, "enrollments": 560 },
+      { "month": "Jun", "users": 11200, "revenue": 92000, "enrollments": 640 }
+    ],
+    "topCategories": [
+      { "name": "Web Development", "count": 45 },
+      { "name": "Data Science", "count": 38 },
+      { "name": "Business", "count": 32 },
+      { "name": "Design", "count": 28 },
+      { "name": "Marketing", "count": 25 }
+    ]
+  }
+}
