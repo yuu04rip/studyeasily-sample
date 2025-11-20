@@ -2,99 +2,105 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Font Face Declarations */
-/* Note: Actual Futura and Higuan Elegant Serif font files should be placed in /public/fonts/ */
-/* Currently using system font fallbacks until proper font files are provided */
-
+/* Font-face: mettere reali .woff2 in /public/fonts */
 @font-face {
-  font-family: 'Futura';
-  src: local('Futura'), local('Futura-Medium'),
-       local('Arial'), local('Helvetica');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
+    font-family: 'Futura';
+    src: url('/public/fonts/Futura.ttf') format('ttf');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Higuan Elegant Serif';
+    src: url('/public/fonts/Higuen Serif.otf') format('otf');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
 }
 
-@font-face {
-  font-family: 'Futura';
-  src: local('Futura-Bold'),
-       local('Arial Bold'), local('Helvetica Bold');
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Higuan Elegant Serif';
-  src: local('Georgia'), local('Times New Roman'), local('serif');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
+/* CSS variables used by Hero */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-  --font-futura: 'Futura', 'Arial', 'Helvetica', sans-serif;
-  --font-higuan: 'Higuan Elegant Serif', 'Georgia', 'Times New Roman', serif;
+    --hero-scale: 1;
+    --hero-brightness: 1;
+    --sphere-global-scale: 1;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Base */
+html, body {
+    height: 100%;
+    font-family: 'Futura', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    background: transparent;
+    color: white;
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: var(--font-futura);
+/* Title (Higuan) */
+.hero-title {
+    font-family: 'Higuan Elegant Serif', Georgia, serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-shadow: 2px 6px 0 rgba(0,0,0,0.12), 0 2px 18px rgba(0,0,0,0.25);
+    color: #fff;
 }
 
-/* Floating Animation for Spheres */
+/* Quote glow */
+.quote-line {
+    text-shadow:
+            0 2px 0 rgba(255,255,255,0.08),
+            0 6px 18px rgba(0,0,0,0.45),
+            0 0 18px rgba(255,255,255,0.06);
+    letter-spacing: 0.02em;
+    font-weight: 600;
+}
+
+/* hero spheres base */
+.hero-sphere {
+    border-radius: 9999px;
+    will-change: transform, opacity;
+    position: absolute;
+    background-repeat: no-repeat;
+    background-size: cover;
+    pointer-events: none;
+    opacity: 0.98;
+    transition: transform 240ms cubic-bezier(.22,.9,.35,1), opacity 240ms;
+}
+
+/* sphere gradients */
+.sphere-1 { background: radial-gradient(circle at 30% 30%, #ffd0fb 0%, #d184ff 40%, #7b3bd6 100%); }
+.sphere-2 { background: radial-gradient(circle at 40% 40%, #f6c3ff 0%, #d38bff 50%, #4b2bd6 100%); }
+.sphere-3 { background: radial-gradient(circle at 40% 30%, #9b4dff 0%, #4222a6 65%); }
+.sphere-4 { background: radial-gradient(circle at 50% 50%, #ffd0fb 0%, #c48cff 60%); }
+.sphere-5 { background: radial-gradient(circle at 40% 40%, #f2b5ff 0%, #8b5cf6 70%); }
+
+/* keyframes */
 @keyframes float {
-  0%, 100% {
-    transform: translateY(0px) translateX(0px);
-  }
-  25% {
-    transform: translateY(-20px) translateX(10px);
-  }
-  50% {
-    transform: translateY(-10px) translateX(-10px);
-  }
-  75% {
-    transform: translateY(-15px) translateX(5px);
-  }
+    0% { transform: translateY(0) translateZ(0); }
+    25% { transform: translateY(-20px) translateX(10px); }
+    50% { transform: translateY(-10px) translateX(-10px); }
+    75% { transform: translateY(-15px) translateX(5px); }
+    100% { transform: translateY(0) translateZ(0); }
 }
-
 @keyframes floatAlt {
-  0%, 100% {
-    transform: translateY(0px) translateX(0px);
-  }
-  33% {
-    transform: translateY(-15px) translateX(-8px);
-  }
-  66% {
-    transform: translateY(-25px) translateX(8px);
-  }
+    0% { transform: translateY(0) translateZ(0); }
+    33% { transform: translateY(-15px) translateX(-8px); }
+    66% { transform: translateY(-25px) translateX(8px); }
+    100% { transform: translateY(0) translateZ(0); }
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
-  
-  .animate-float {
-    animation: float 6s ease-in-out infinite;
-  }
-  
-  .animate-float-alt {
-    animation: floatAlt 7s ease-in-out infinite;
-  }
-  
-  .animate-float-delayed {
-    animation: float 8s ease-in-out infinite;
-    animation-delay: 1s;
-  }
+/* utility animations */
+.animate-float { animation: float 6s ease-in-out infinite; }
+.animate-float-alt { animation: floatAlt 7s ease-in-out infinite; }
+.animate-float-delayed { animation: float 8s ease-in-out infinite; animation-delay: 1s; }
+
+/* reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    .animate-float, .animate-float-alt, .animate-float-delayed {
+        animation: none !important;
+    }
+}
+
+/* responsive: hide spheres on smaller screens */
+@media (max-width: 1024px) {
+    .hero-sphere { display: none; }
+    .hero-title { font-size: 3.25rem; }
+    .quote-line { font-size: 1.25rem; }
 }
