@@ -8,11 +8,20 @@ export default function MSWProvider({ children }: { children: React.ReactNode })
   useEffect(() => {
     const initMSW = async () => {
       if (typeof window !== 'undefined') {
-        const { worker } = await import('../mocks/browser');
-        await worker.start({
-          onUnhandledRequest: 'bypass',
-        });
-        setMswReady(true);
+        try {
+          const { worker } = await import('../mocks/browser');
+          await worker.start({
+            onUnhandledRequest: 'bypass',
+            serviceWorker: {
+              url: '/mockServiceWorker.js'
+            }
+          });
+          setMswReady(true);
+        } catch (error) {
+          console.error('MSW failed to start:', error);
+          // Continue anyway if MSW fails
+          setMswReady(true);
+        }
       }
     };
 
