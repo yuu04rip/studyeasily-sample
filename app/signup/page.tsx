@@ -66,17 +66,17 @@ export default function SignupPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center py-12 px-4">
+    <div className="min-h-screen bg-gradient-to-br from-primary via-purple-700 to-accent flex items-center justify-center py-12 px-4">
       <div className="max-w-md w-full">
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold mb-2">Create an Account</h1>
-          <p className="text-gray-600">Start your learning journey today</p>
+          <h1 className="text-4xl font-bold mb-2 text-white">Create an Account</h1>
+          <p className="text-white/80">Start your learning journey today</p>
         </div>
 
-        <div className="bg-white rounded-lg shadow-md p-8">
+        <div className="bg-white/10 backdrop-blur-md rounded-3xl shadow-2xl p-8 border border-accent/30">
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-white mb-2">
                 Full Name
               </label>
               <input
@@ -84,14 +84,14 @@ export default function SignupPage() {
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                className="w-full px-4 py-2 border border-white/20 bg-white/90 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
                 placeholder="John Doe"
                 required
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-white mb-2">
                 Email Address
               </label>
               <input
@@ -99,14 +99,14 @@ export default function SignupPage() {
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                className="w-full px-4 py-2 border border-white/20 bg-white/90 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
                 placeholder="john@example.com"
                 required
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-white mb-2">
                 Password
               </label>
               <input
@@ -114,14 +114,14 @@ export default function SignupPage() {
                 name="password"
                 value={formData.password}
                 onChange={handleChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                className="w-full px-4 py-2 border border-white/20 bg-white/90 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
                 placeholder="••••••••"
                 required
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-white mb-2">
                 Confirm Password
               </label>
               <input
@@ -129,7 +129,7 @@ export default function SignupPage() {
                 name="confirmPassword"
                 value={formData.confirmPassword}
                 onChange={handleChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                className="w-full px-4 py-2 border border-white/20 bg-white/90 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
                 placeholder="••••••••"
                 required
               />
@@ -141,7 +141,7 @@ export default function SignupPage() {
               </div>
             )}
 
-            <div className="text-sm text-gray-600">
+            <div className="text-sm text-white/80">
               <label className="flex items-start">
                 <input type="checkbox" className="mr-2 mt-1" required />
                 <span>
@@ -160,13 +160,13 @@ export default function SignupPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-gradient-to-r from-gradientStart to-gradientEnd text-white py-3 rounded-lg font-semibold hover:opacity-90 transition disabled:opacity-50"
+              className="w-full bg-accent hover:bg-accent/90 shadow-xl text-white py-3 rounded-lg font-semibold hover:opacity-90 transition disabled:opacity-50"
             >
               {loading ? 'Creating account...' : 'Sign Up'}
             </button>
           </form>
 
-          <div className="mt-6 text-center text-sm text-gray-600">
+          <div className="mt-6 text-center text-sm text-white/80">
             Already have an account?{' '}
             <Link href="/login" className="text-primary hover:underline font-medium">
               Sign in

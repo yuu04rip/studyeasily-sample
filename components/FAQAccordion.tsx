@@ -22,15 +22,15 @@ export default function FAQAccordion({ faqs }: FAQAccordionProps) {
   return (
     <div className="space-y-4">
       {faqs.map((faq) => (
-        <div key={faq.id} className="bg-white rounded-lg shadow-md overflow-hidden">
+        <div key={faq.id} className="bg-white/10 backdrop-blur-sm rounded-xl overflow-hidden border border-white/20">
           <button
             onClick={() => toggle(faq.id)}
-            className="w-full px-6 py-4 text-left flex items-center justify-between hover:bg-gray-50 transition"
+            className="w-full px-6 py-4 text-left flex items-center justify-between hover:bg-white/5 transition"
           >
-            <span className="font-semibold text-lg">{faq.question}</span>
+            <span className="font-semibold text-lg text-white">{faq.question}</span>
             <svg
-              className={`w-5 h-5 text-gray-500 transition-transform ${
-                openId === faq.id ? 'rotate-180' : ''
+              className={`w-6 h-6 text-accent transition-transform flex-shrink-0 ml-4 ${
+                openId === faq.id ? 'rotate-45' : ''
               }`}
               fill="none"
               stroke="currentColor"
@@ -40,12 +40,12 @@ export default function FAQAccordion({ faqs }: FAQAccordionProps) {
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 strokeWidth={2}
-                d="M19 9l-7 7-7-7"
+                d="M6 18L18 6M6 6l12 12"
               />
             </svg>
           </button>
           {openId === faq.id && (
-            <div className="px-6 pb-4 text-gray-700">
+            <div className="px-6 pb-4 text-white/80">
               <p>{faq.answer}</p>
             </div>
           )}
