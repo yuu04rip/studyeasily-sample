@@ -31,11 +31,11 @@ export default function SearchBar({ redirectToDashboard = false }: SearchBarProp
         placeholder="Search courses..."
         value={query}
         onChange={(e) => setQuery(e.target.value)}
-        className="w-full md:w-64 px-4 py-2 pr-10 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+        className="w-full md:w-64 px-4 py-2 pr-10 border-2 border-primary/30 rounded-lg focus:outline-none focus:border-primary focus:shadow-[0_0_20px_rgba(91,77,157,0.5),0_0_40px_rgba(232,76,180,0.3)] transition-all duration-300 bg-white/90 hover:shadow-[0_0_15px_rgba(91,77,157,0.3),0_0_25px_rgba(232,76,180,0.2)]"
       />
       <button
         type="submit"
-        className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 hover:text-primary"
+        className="absolute right-2 top-1/2 -translate-y-1/2 text-primary hover:text-accent transition-colors duration-300"
       >
         <svg
           className="w-5 h-5"
