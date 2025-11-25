@@ -281,5 +281,255 @@
       { "name": "Design", "count": 28 },
       { "name": "Marketing", "count": 25 }
     ]
+  },
+  "dashboard": {
+    "user": {
+      "id": "student_42",
+      "name": "Marco Rossi",
+      "email": "marco.rossi@studyeasily.com",
+      "avatar": "/assets/avatar-1.jpg",
+      "role": "student"
+    },
+    "quickWidgets": [
+      {
+        "id": "w1",
+        "title": "Corsi Attivi",
+        "value": 4,
+        "image": "/assets/course-1.jpg",
+        "progress": 68
+      },
+      {
+        "id": "w2",
+        "title": "Esercizi Completati",
+        "value": 127,
+        "image": "/assets/course-2.jpg",
+        "progress": 85
+      }
+    ],
+    "cards": [
+      {
+        "id": "c1",
+        "title": "Materiale didattico",
+        "subtitle": "Risorse per il tuo apprendimento",
+        "type": "material"
+      },
+      {
+        "id": "c2",
+        "title": "Esercizi",
+        "subtitle": "Pratica e migliora le tue competenze",
+        "type": "exercises"
+      },
+      {
+        "id": "c3",
+        "title": "Quiz",
+        "subtitle": "Metti alla prova le tue conoscenze",
+        "type": "quiz"
+      },
+      {
+        "id": "c4",
+        "title": "Progetti",
+        "subtitle": "Progetti pratici e casi studio",
+        "type": "projects"
+      }
+    ],
+    "recentItems": [
+      {
+        "id": "r1",
+        "title": "React Hooks",
+        "type": "lesson",
+        "image": "/assets/course-2.jpg",
+        "lastAccessed": "2025-11-25T10:30:00Z"
+      },
+      {
+        "id": "r2",
+        "title": "CSS Flexbox",
+        "type": "exercise",
+        "image": "/assets/course-1.jpg",
+        "lastAccessed": "2025-11-24T15:45:00Z"
+      },
+      {
+        "id": "r3",
+        "title": "Python Basics",
+        "type": "lesson",
+        "image": "/assets/course-3.jpg",
+        "lastAccessed": "2025-11-24T09:20:00Z"
+      }
+    ]
+  },
+  "events": [
+    {
+      "id": "evt_1",
+      "title": "Lezione Matematica",
+      "start": "2025-12-03T10:00:00Z",
+      "end": "2025-12-03T11:30:00Z",
+      "color": "#FF66D7",
+      "description": "Link: zoom/abc123"
+    },
+    {
+      "id": "evt_2",
+      "title": "Esame React",
+      "start": "2025-12-10T09:00:00Z",
+      "end": "2025-12-10T12:00:00Z",
+      "color": "#9B6BFF",
+      "description": "Esame finale del corso React"
+    },
+    {
+      "id": "evt_3",
+      "title": "Workshop Python",
+      "start": "2025-12-15T14:00:00Z",
+      "end": "2025-12-15T17:00:00Z",
+      "color": "#35D6C6",
+      "description": "Workshop pratico su data science"
+    },
+    {
+      "id": "evt_4",
+      "title": "Tutoring Session",
+      "start": "2025-12-05T16:00:00Z",
+      "end": "2025-12-05T17:00:00Z",
+      "color": "#FF66D7",
+      "description": "Sessione di tutoring individuale"
+    },
+    {
+      "id": "evt_5",
+      "title": "Team Project Meeting",
+      "start": "2025-12-08T11:00:00Z",
+      "end": "2025-12-08T12:30:00Z",
+      "color": "#9B6BFF",
+      "description": "Riunione settimanale del team"
+    },
+    {
+      "id": "evt_6",
+      "title": "JavaScript Avanzato",
+      "start": "2025-12-20T10:00:00Z",
+      "end": "2025-12-20T12:00:00Z",
+      "color": "#35D6C6",
+      "description": "Lezione su patterns avanzati JS"
+    }
+  ],
+  "chats": [
+    {
+      "id": "chat_1",
+      "name": "Prof. Mario Bianchi",
+      "type": "one-to-one",
+      "avatar": "/assets/avatar-2.jpg",
+      "lastMessage": "Ottimo lavoro sull'esercizio!",
+      "lastMessageAt": "2025-11-25T08:30:00Z",
+      "unreadCount": 2
+    },
+    {
+      "id": "chat_2",
+      "name": "Gruppo React Avanzato",
+      "type": "group",
+      "avatar": null,
+      "participants": ["Marco R.", "Anna S.", "Luca M.", "Prof. Bianchi"],
+      "lastMessage": "Qualcuno può aiutarmi con useEffect?",
+      "lastMessageAt": "2025-11-25T07:15:00Z",
+      "unreadCount": 0
+    }
+  ],
+  "messages": {
+    "chat_1": [
+      {
+        "id": "msg_1",
+        "chatId": "chat_1",
+        "authorId": "student_42",
+        "authorName": "Marco Rossi",
+        "text": "Buongiorno Prof! Ho una domanda sull'esercizio 3",
+        "createdAt": "2025-11-25T08:12:34Z",
+        "status": "read"
+      },
+      {
+        "id": "msg_2",
+        "chatId": "chat_1",
+        "authorId": "prof_1",
+        "authorName": "Prof. Bianchi",
+        "text": "Ciao Marco! Certo, dimmi pure",
+        "createdAt": "2025-11-25T08:15:00Z",
+        "status": "read"
+      },
+      {
+        "id": "msg_3",
+        "chatId": "chat_1",
+        "authorId": "student_42",
+        "authorName": "Marco Rossi",
+        "text": "Non capisco come implementare il useCallback nel secondo componente",
+        "createdAt": "2025-11-25T08:18:00Z",
+        "status": "read"
+      },
+      {
+        "id": "msg_4",
+        "chatId": "chat_1",
+        "authorId": "prof_1",
+        "authorName": "Prof. Bianchi",
+        "text": "useCallback serve per memoizzare funzioni. Nel tuo caso devi wrappare la funzione handleClick",
+        "createdAt": "2025-11-25T08:22:00Z",
+        "status": "read"
+      },
+      {
+        "id": "msg_5",
+        "chatId": "chat_1",
+        "authorId": "student_42",
+        "authorName": "Marco Rossi",
+        "text": "Ah capito! E le dipendenze come le gestisco?",
+        "createdAt": "2025-11-25T08:25:00Z",
+        "status": "read"
+      },
+      {
+        "id": "msg_6",
+        "chatId": "chat_1",
+        "authorId": "prof_1",
+        "authorName": "Prof. Bianchi",
+        "text": "Devi inserire nell'array delle dipendenze tutte le variabili esterne usate nella funzione",
+        "createdAt": "2025-11-25T08:28:00Z",
+        "status": "delivered"
+      },
+      {
+        "id": "msg_7",
+        "chatId": "chat_1",
+        "authorId": "prof_1",
+        "authorName": "Prof. Bianchi",
+        "text": "Ottimo lavoro sull'esercizio!",
+        "createdAt": "2025-11-25T08:30:00Z",
+        "status": "delivered"
+      }
+    ],
+    "chat_2": [
+      {
+        "id": "msg_8",
+        "chatId": "chat_2",
+        "authorId": "anna_s",
+        "authorName": "Anna S.",
+        "text": "Ciao a tutti! Come sta andando il progetto?",
+        "createdAt": "2025-11-25T07:00:00Z",
+        "status": "read"
+      },
+      {
+        "id": "msg_9",
+        "chatId": "chat_2",
+        "authorId": "luca_m",
+        "authorName": "Luca M.",
+        "text": "Bene! Ho finito la parte di autenticazione",
+        "createdAt": "2025-11-25T07:05:00Z",
+        "status": "read"
+      },
+      {
+        "id": "msg_10",
+        "chatId": "chat_2",
+        "authorId": "student_42",
+        "authorName": "Marco Rossi",
+        "text": "Ottimo Luca! Io sto lavorando sul dashboard",
+        "createdAt": "2025-11-25T07:10:00Z",
+        "status": "read"
+      },
+      {
+        "id": "msg_11",
+        "chatId": "chat_2",
+        "authorId": "anna_s",
+        "authorName": "Anna S.",
+        "text": "Qualcuno può aiutarmi con useEffect?",
+        "createdAt": "2025-11-25T07:15:00Z",
+        "status": "read"
+      }
+    ]
   }
 }
