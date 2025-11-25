@@ -1,7 +1,10 @@
 import Link from "next/link";
 import SearchBar from "@/components/SearchBar";
 import Hero from "@/components/Hero";
-import PricingCard from "@/components/PricingCard";
+import PricingSection from "@/components/PricingSection";
+import BusinessSection from "@/components/BusinessSection";
+import FAQSection from "@/components/FAQSection";
+import ContactSection from "@/components/ContactSection";
 
 type Channel = { icon: string; title: string };
 
@@ -12,34 +15,6 @@ export default function Home() {
         { icon: "discord-icon-svgrepo-com.svg", title: "Discord" },
         { icon: "icons8-youtube.svg", title: "YouTube" },
         { icon: "icons8-telegram.svg", title: "Telegram" },
-    ];
-
-    // pricing data adapted to the PricingCard props (price: number, period: string)
-    const plans = [
-        {
-            id: "freemium",
-            title: "Freemium",
-            price: 0,
-            period: "m",
-            features: ["Accesso limitato ai corsi", "Community", "Risorse base"],
-            cta: "/piani/freemium",
-        },
-        {
-            id: "premium",
-            title: "Premium",
-            price: 9.99,
-            period: "m",
-            features: ["Accesso completo ai corsi", "Certificati", "Supporto prioritario"],
-            cta: "/piani/premium",
-        },
-        {
-            id: "premium-plus",
-            title: "Premium Plus",
-            price: 19.99,
-            period: "m",
-            features: ["Tutto in Premium", "Coaching 1:1", "Materiali esclusivi"],
-            cta: "/piani/premium-plus",
-        },
     ];
 
     return (
@@ -78,28 +53,8 @@ export default function Home() {
                 </div>
             </section>
 
-            {/* Pricing Plans Section - uses PricingCard component */}
-            <section className="bg-gradient-to-b from-primary via-purple-800 to-accent py-16">
-                <div className="container mx-auto px-4">
-                    <h2 className="text-3xl md:text-5xl font-bold text-center text-white mb-12 uppercase tracking-wide">
-                        I Nostri Piani
-                    </h2>
-
-                    <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
-                        {plans.map((plan) => (
-                            <div key={plan.id}>
-                                <PricingCard
-                                    title={plan.title}
-                                    price={plan.price}
-                                    period={plan.period}
-                                    features={plan.features}
-                                    highlighted={plan.id === "premium-plus"}
-                                />
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </section>
+            {/* Pricing Plans Section */}
+            <PricingSection />
 
             {/* Channels Section */}
             <section className="bg-gradient-to-b from-accent via-purple-600 to-accent py-16">
@@ -128,108 +83,13 @@ export default function Home() {
             </section>
 
             {/* Business Section */}
-            <section className="bg-gradient-to-b from-accent via-purple-700 to-darkPurple py-16">
-                <div className="container mx-auto px-4">
-                    <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-                        <div className="relative">
-                            {/* Chart placeholder */}
-                            <div className="aspect-square bg-gradient-to-br from-purple-600 to-accent/50 rounded-3xl p-8 relative overflow-hidden">
-                                <div className="absolute inset-0 grid grid-cols-8 grid-rows-8">
-                                    {Array.from({ length: 64 }).map((_, i) => (
-                                        <div key={i} className="border border-purple-400/30" />
-                                    ))}
-                                </div>
-                                <div className="absolute bottom-0 left-0 right-0 h-2/3">
-                                    <svg viewBox="0 0 200 100" className="w-full h-full">
-                                        <path d="M 0,80 Q 50,20 100,40 T 200,30" fill="none" stroke="#E84CB4" strokeWidth="3" />
-                                        <path d="M 0,80 Q 50,20 100,40 T 200,30 L 200,100 L 0,100 Z" fill="url(#gradient1)" opacity="0.6" />
-                                        <defs>
-                                            <linearGradient id="gradient1" x1="0%" y1="0%" x2="0%" y2="100%">
-                                                <stop offset="0%" stopColor="#E84CB4" stopOpacity="0.8" />
-                                                <stop offset="100%" stopColor="#5B4D9D" stopOpacity="0.3" />
-                                            </linearGradient>
-                                        </defs>
-                                    </svg>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="text-white">
-                            <h2 className="text-3xl md:text-5xl font-bold mb-6">Let's talk business.</h2>
-                            <Link href="/business" className="inline-block bg-accent hover:bg-accent/90 text-white px-8 py-3 rounded-lg font-semibold transition">
-                                Learn More
-                            </Link>
-                        </div>
-                    </div>
-                </div>
-            </section>
+            <BusinessSection />
 
             {/* FAQ Section */}
-            <section className="bg-gradient-to-b from-darkPurple to-primary py-16">
-                <div className="container mx-auto px-4">
-                    <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12">
-                        <div>
-                            <h2 className="text-4xl md:text-6xl font-bold text-accent mb-8">FAQ</h2>
-                            <div className="space-y-4">
-                                {[1, 2, 3, 4].map((i) => (
-                                    <div key={i} className="bg-white/10 backdrop-blur-sm rounded-xl p-4 flex items-center justify-between border border-white/20">
-                                        <span className="text-white">Question {i}</span>
-                                        <button className="text-white hover:text-accent transition">
-                                            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                                            </svg>
-                                        </button>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                        <div className="flex items-center justify-center">
-                            <div className="bg-white rounded-3xl p-8 shadow-2xl max-w-sm">
-                                <div className="aspect-[3/4] bg-gradient-to-br from-purple-100 to-pink-100 rounded-2xl flex items-center justify-center">
-                                    <span className="text-6xl">📄</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
+            <FAQSection />
 
             {/* Contact Section */}
-            <section className="bg-gradient-to-b from-primary to-darkPurple py-16">
-                <div className="container mx-auto px-4">
-                    <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-                        <div className="text-white">
-                            <h2 className="text-3xl md:text-5xl font-bold mb-8 uppercase tracking-wide">Contatti</h2>
-                            <div className="space-y-4">
-                                <div>
-                                    <p className="text-white/70 mb-1">Email:</p>
-                                    <p className="text-xl">study.easilyhm@gmail.com</p>
-                                </div>
-                                <div>
-                                    <p className="text-white/70 mb-1">Telefono:</p>
-                                    <p className="text-xl">xxxxxx-xxxx</p>
-                                </div>
-                            </div>
-                            <div className="mt-8 flex items-center gap-4">
-                                <span className="text-white/70">social</span>
-                                <div className="flex gap-3">
-                                    <a href="#" className="text-white hover:text-accent transition text-xl">f</a>
-                                    <a href="#" className="text-white hover:text-accent transition text-xl">@</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="flex justify-center">
-                            <div className="text-accent/30">
-                                <svg className="w-48 h-48 md:w-64 md:h-64" viewBox="0 0 200 200" fill="none">
-                                    {/* Graduation cap icon */}
-                                    <path d="M100 50 L180 80 L100 110 L20 80 Z" fill="currentColor" />
-                                    <path d="M180 80 L180 120 L100 150 L20 120 L20 80" stroke="currentColor" strokeWidth="3" fill="none" />
-                                    <circle cx="100" cy="130" r="40" stroke="currentColor" strokeWidth="3" fill="none" />
-                                </svg>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
+            <ContactSection />
         </div>
     );
 }
