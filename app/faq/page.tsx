@@ -45,7 +45,7 @@ export default function FAQPage() {
             {/* Read more link */}
             <div className="mt-8">
               <Link 
-                href="/blog/faq-detailed" 
+                href="/blog"
                 className="inline-flex items-center text-accent hover:text-accent/80 font-semibold text-lg transition group"
               >
                 Read more in our blog

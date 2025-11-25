@@ -1,9 +1,6 @@
-import DashboardPreview from '@/components/DashboardPreview';
+
 import { Suspense } from 'react';
 
-function DashboardSection() {
-  return <DashboardPreview className="mt-16" />;
-}
 
 export default function ContattiPage() {
   return (
@@ -85,14 +82,7 @@ export default function ContattiPage() {
             </form>
           </div>
 
-          {/* Dashboard Preview */}
-          <Suspense fallback={
-            <div className="mt-16 flex justify-center">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-accent"></div>
-            </div>
-          }>
-            <DashboardSection />
-          </Suspense>
+
         </div>
       </div>
     </div>
