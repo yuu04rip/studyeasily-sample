@@ -131,11 +131,16 @@ export default function DashboardPage() {
     }
   }, []);
 
+  // MSW initialization delay constant
+  // MSW service worker needs time to register and start intercepting requests
+  const MSW_INIT_DELAY_MS = 100;
+
   useEffect(() => {
-    // Small delay to allow MSW to initialize
+    // Small delay to allow MSW (Mock Service Worker) to initialize before making API requests
+    // This prevents race conditions where fetch calls are made before MSW is ready
     const timer = setTimeout(() => {
       fetchData();
-    }, 100);
+    }, MSW_INIT_DELAY_MS);
     
     return () => clearTimeout(timer);
   }, [fetchData]);

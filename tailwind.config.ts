@@ -25,13 +25,11 @@ const config: Config = {
                 gradientBlueEnd: "#8B5CF6",
                 darkPurple: "#2D1B69",
                 lightPurple: "#8B7FC7",
-                // Neon dashboard colors
+                // Neon dashboard colors - primary palette
                 neon: {
-                    magenta: "#FF66D7",
-                    violet: "#9B6BFF",
-                    cyan: "#35D6C6",
-                    pink: "#FF66D7",
-                    purple: "#9B6BFF",
+                    magenta: "#FF66D7",  // Primary accent color
+                    violet: "#9B6BFF",   // Secondary accent color
+                    cyan: "#35D6C6",     // Tertiary accent color
                 },
                 dashboard: {
                     bg: "#3b2863",
@@ -69,6 +67,7 @@ const config: Config = {
                     '50%': { opacity: '1' },
                 },
                 'progress-ring': {
+                    // 283 = circumference of circle with radius 45 (2 * π * 45 ≈ 283)
                     '0%': { strokeDashoffset: '283' },
                     '100%': { strokeDashoffset: '0' },
                 },

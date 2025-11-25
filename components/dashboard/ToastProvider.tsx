@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface Toast {
@@ -24,19 +24,42 @@ export const showToast = (message: string, type: Toast['type'] = 'info') => {
 
 export default function ToastProvider({ children }: { children: React.ReactNode }) {
   const [toasts, setToasts] = useState<Toast[]>([]);
+  const timeoutsRef = useRef<Map<string, NodeJS.Timeout>>(new Map());
 
   const addToast = useCallback((message: string, type: Toast['type'] = 'info') => {
-    const id = Math.random().toString(36).substring(7);
+    // Use crypto.randomUUID if available, fallback to timestamp-based ID
+    const id = typeof crypto !== 'undefined' && crypto.randomUUID 
+      ? crypto.randomUUID() 
+      : `toast-${Date.now()}-${Math.random().toString(36).substring(7)}`;
+    
     setToasts(prev => [...prev, { id, message, type }]);
 
-    // Auto remove after 4 seconds
-    setTimeout(() => {
+    // Auto remove after 4 seconds with cleanup tracking
+    const timeoutId = setTimeout(() => {
       setToasts(prev => prev.filter(t => t.id !== id));
+      timeoutsRef.current.delete(id);
     }, 4000);
+    
+    timeoutsRef.current.set(id, timeoutId);
   }, []);
 
   const removeToast = useCallback((id: string) => {
+    // Clear the timeout when manually removing
+    const timeoutId = timeoutsRef.current.get(id);
+    if (timeoutId) {
+      clearTimeout(timeoutId);
+      timeoutsRef.current.delete(id);
+    }
     setToasts(prev => prev.filter(t => t.id !== id));
+  }, []);
+
+  // Cleanup all timeouts on unmount
+  useEffect(() => {
+    const timeouts = timeoutsRef.current;
+    return () => {
+      timeouts.forEach((timeoutId) => clearTimeout(timeoutId));
+      timeouts.clear();
+    };
   }, []);
 
   // Register the callback
