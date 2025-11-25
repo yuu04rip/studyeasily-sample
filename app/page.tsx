@@ -90,7 +90,7 @@ export default function Home() {
               { name: "Telegram", icon: "✈️" }
             ].map((platform) => (
               <div key={platform.name} className="flex flex-col items-center group cursor-pointer">
-                <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-white flex items-center justify-center shadow-lg transform transition group-hover:scale-110 mb-3">
+                <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-white flex items-center justify-center shadow-lg social-icon-glow mb-3">
                   <span className="text-3xl md:text-4xl">{platform.icon}</span>
                 </div>
                 <p className="text-white text-sm md:text-base font-medium">{platform.name}</p>
