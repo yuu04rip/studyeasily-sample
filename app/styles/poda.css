@@ -32,7 +32,7 @@ html, body {
     font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 
-.grid {
+.poda-grid {
     height: 100vh;
     width: 100vw;
     background-color: var(--bg);
@@ -150,7 +150,7 @@ html, body {
 }
 
 /* Filter border ring */
-.filterBorder {
+.poda-filterBorder {
     height: 42px;
     width: 40px;
     position: absolute;
@@ -160,7 +160,7 @@ html, body {
     overflow: hidden;
     z-index: 3;
 }
-.filterBorder::before {
+.poda-filterBorder::before {
     content: "";
     text-align: center;
     top: 50%;
@@ -184,10 +184,10 @@ html, body {
 }
 
 /* Layered gradient frames (behind input) */
-.white,
-.border,
-.darkBorderBg,
-.glow {
+.poda-white,
+.poda-border,
+.poda-darkBorderBg,
+.poda-glow {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -198,9 +198,9 @@ html, body {
     z-index: 1;
 }
 
-.white,
-.border,
-.darkBorderBg {
+.poda-white,
+.poda-border,
+.poda-darkBorderBg {
     width: var(--frame-w);
     height: var(--frame-h);
     filter: blur(3px);
@@ -208,12 +208,12 @@ html, body {
     max-height: 70px;
 }
 
-.white {
+.poda-white {
     filter: blur(2px);
     max-width: 307px;
     max-height: 63px;
 }
-.white::before {
+.poda-white::before {
     content: "";
     position: absolute;
     inset: 0;
@@ -236,12 +236,12 @@ html, body {
     transition: transform 2s ease;
 }
 
-.border {
+.poda-border {
     filter: blur(0.5px);
     max-width: 303px;
     max-height: 59px;
 }
-.border::before {
+.poda-border::before {
     content: "";
     position: absolute;
     inset: 0;
@@ -264,11 +264,11 @@ html, body {
     transition: transform 2s ease;
 }
 
-.darkBorderBg {
+.poda-darkBorderBg {
     max-width: 312px;
     max-height: 65px;
 }
-.darkBorderBg::before {
+.poda-darkBorderBg::before {
     content: "";
     position: absolute;
     inset: 0;
@@ -291,7 +291,7 @@ html, body {
 }
 
 /* Glow layer larger than frames */
-.glow {
+.poda-glow {
     width: var(--frame2-w);
     height: var(--frame2-h);
     filter: blur(30px);
@@ -299,7 +299,7 @@ html, body {
     max-width: 354px;
     max-height: 130px;
 }
-.glow::before {
+.poda-glow::before {
     content: "";
     position: absolute;
     inset: 0;
@@ -322,41 +322,41 @@ html, body {
 }
 
 /* Interactions: hover */
-.poda-root:hover > .darkBorderBg::before,
-#poda:hover > .darkBorderBg::before {
+.poda-root:hover > .poda-darkBorderBg::before,
+#poda:hover > .poda-darkBorderBg::before {
     transform: translate(-50%, -50%) rotate(262deg);
 }
-.poda-root:hover > .glow::before,
-#poda:hover > .glow::before {
+.poda-root:hover > .poda-glow::before,
+#poda:hover > .poda-glow::before {
     transform: translate(-50%, -50%) rotate(240deg);
 }
-.poda-root:hover > .white::before,
-#poda:hover > .white::before {
+.poda-root:hover > .poda-white::before,
+#poda:hover > .poda-white::before {
     transform: translate(-50%, -50%) rotate(263deg);
 }
-.poda-root:hover > .border::before,
-#poda:hover > .border::before {
+.poda-root:hover > .poda-border::before,
+#poda:hover > .poda-border::before {
     transform: translate(-50%, -50%) rotate(250deg);
 }
 
 /* Interactions: focus within (keyboard focus on input) */
-.poda-root:focus-within > .darkBorderBg::before,
-#poda:focus-within > .darkBorderBg::before {
+.poda-root:focus-within > .poda-darkBorderBg::before,
+#poda:focus-within > .poda-darkBorderBg::before {
     transform: translate(-50%, -50%) rotate(442deg);
     transition: transform 4s ease;
 }
-.poda-root:focus-within > .glow::before,
-#poda:focus-within > .glow::before {
+.poda-root:focus-within > .poda-glow::before,
+#poda:focus-within > .poda-glow::before {
     transform: translate(-50%, -50%) rotate(420deg);
     transition: transform 4s ease;
 }
-.poda-root:focus-within > .white::before,
-#poda:focus-within > .white::before {
+.poda-root:focus-within > .poda-white::before,
+#poda:focus-within > .poda-white::before {
     transform: translate(-50%, -50%) rotate(443deg);
     transition: transform 4s ease;
 }
-.poda-root:focus-within > .border::before,
-#poda:focus-within > .border::before {
+.poda-root:focus-within > .poda-border::before,
+#poda:focus-within > .poda-border::before {
     transform: translate(-50%, -50%) rotate(430deg);
     transition: transform 4s ease;
 }
@@ -376,13 +376,13 @@ html, body {
 
 /* Respect reduced motion preference */
 @media (prefers-reduced-motion: reduce) {
-    .glow::before,
-    .darkBorderBg::before,
-    .white::before,
-    .border::before,
-    .filterBorder::before,
-    .poda-root:hover > .glow::before,
-    .poda-root:hover > .darkBorderBg::before {
+    .poda-glow::before,
+    .poda-darkBorderBg::before,
+    .poda-white::before,
+    .poda-border::before,
+    .poda-filterBorder::before,
+    .poda-root:hover > .poda-glow::before,
+    .poda-root:hover > .poda-darkBorderBg::before {
         animation: none !important;
         transition: none !important;
     }
@@ -390,8 +390,8 @@ html, body {
 /* ---------- NEON GLOW + PULSE (paste at end of your CSS file) ---------- */
 
 /* stronger glow on hover / focus */
-.poda-root:hover > .glow::before,
-.poda-root:focus-within > .glow::before {
+.poda-root:hover > .poda-glow::before,
+.poda-root:focus-within > .poda-glow::before {
     /* make the gradient colors pop more and speed up response */
     transform: translate(-50%, -50%) rotate(240deg);
     opacity: 1;
@@ -402,10 +402,10 @@ html, body {
 }
 
 /* subtle brightness boost on the framed gradients */
-.poda-root:hover > .border::before,
-.poda-root:focus-within > .border::before,
-.poda-root:hover > .white::before,
-.poda-root:focus-within > .white::before {
+.poda-root:hover > .poda-border::before,
+.poda-root:focus-within > .poda-border::before,
+.poda-root:hover > .poda-white::before,
+.poda-root:focus-within > .poda-white::before {
     filter: brightness(1.45);
     transition: filter 0.35s ease, transform 0.45s ease;
 }
@@ -445,7 +445,7 @@ html, body {
     100% { transform: translate(-50%, -50%) scale(1); opacity: 0.92; }
 }
 
-.poda-root:focus-within > .glow::before {
+.poda-root:focus-within > .poda-glow::before {
     animation: poda-pulse 2.2s ease-in-out infinite;
 }
 
@@ -457,17 +457,17 @@ html, body {
 }
 
 /* make sure the glow sits behind the input but is visible */
-.glow { z-index: 1; pointer-events: none; }
+.poda-glow { z-index: 1; pointer-events: none; }
 .poda-main { z-index: 3; position: relative; }
 
 /* accessibility: respect reduced motion */
 @media (prefers-reduced-motion: reduce) {
-    .poda-root:focus-within > .glow::before,
-    .poda-root:hover > .glow::before,
-    .poda-root:focus-within > .border::before,
-    .poda-root:hover > .border::before,
-    .poda-root:focus-within > .white::before,
-    .poda-root:hover > .white::before {
+    .poda-root:focus-within > .poda-glow::before,
+    .poda-root:hover > .poda-glow::before,
+    .poda-root:focus-within > .poda-border::before,
+    .poda-root:hover > .poda-border::before,
+    .poda-root:focus-within > .poda-white::before,
+    .poda-root:hover > .poda-white::before {
         animation: none !important;
         transition: none !important;
     }
