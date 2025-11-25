@@ -6,7 +6,6 @@ interface Plan {
     price: number;
     period: string;
     features: string[];
-    cta: string;
 }
 
 interface PricingSectionProps {
@@ -20,7 +19,6 @@ const defaultPlans: Plan[] = [
         price: 0,
         period: "m",
         features: ["Accesso limitato ai corsi", "Community", "Risorse base"],
-        cta: "/piani/freemium",
     },
     {
         id: "premium",
@@ -28,7 +26,6 @@ const defaultPlans: Plan[] = [
         price: 9.99,
         period: "m",
         features: ["Accesso completo ai corsi", "Certificati", "Supporto prioritario"],
-        cta: "/piani/premium",
     },
     {
         id: "premium-plus",
@@ -36,7 +33,6 @@ const defaultPlans: Plan[] = [
         price: 19.99,
         period: "m",
         features: ["Tutto in Premium", "Coaching 1:1", "Materiali esclusivi"],
-        cta: "/piani/premium-plus",
     },
 ];
 

@@ -20,8 +20,8 @@ export default function ContactSection() {
                         <div className="mt-8 flex items-center gap-4">
                             <span className="text-white/70">social</span>
                             <div className="flex gap-3">
-                                <a href="#" className="text-white hover:text-accent transition text-xl">f</a>
-                                <a href="#" className="text-white hover:text-accent transition text-xl">@</a>
+                                <a href="#" aria-label="Facebook" className="text-white hover:text-accent transition text-xl">f</a>
+                                <a href="#" aria-label="Twitter" className="text-white hover:text-accent transition text-xl">@</a>
                             </div>
                         </div>
                         <div className="mt-8">
