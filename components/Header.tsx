@@ -42,7 +42,7 @@ export default function Header() {
 
           <div className="hidden md:flex items-center space-x-4">
             {/* Inline compact PodaSearch in header: wrapper gives width */}
-            <div className="w-[280px]">
+            <div className="w-[280px] scale-75 mr-8">
               <PodaSearch inline redirectToDashboard={false} />
             </div>
             <Link

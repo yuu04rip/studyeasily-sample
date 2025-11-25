@@ -15,13 +15,44 @@ export default function Hero() {
         const startSphereScale = 1.2;
         const endSphereScale = 0.6;
 
-        // respect reduced motion
-        const prefersReduced = typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        if (prefersReduced) {
-            document.documentElement.style.setProperty('--hero-scale', String(1));
-            document.documentElement.style.setProperty('--hero-brightness', String(1));
-            document.documentElement.style.setProperty('--sphere-global-scale', String(1));
+        // valori iniziali
+        document.documentElement.style.setProperty('--hero-scale', '1');
+        document.documentElement.style.setProperty('--hero-brightness', '1');
+        document.documentElement.style.setProperty('--sphere-global-scale', '1');
+
+        // Legge override da URL / localStorage
+        const urlParams = typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : null;
+        const motionParam = urlParams?.get('motion') ?? null;
+        const motionOverrideStore = typeof window !== 'undefined' ? localStorage.getItem('motionOverride') : null;
+
+        // preferenza di sistema (non la applichiamo direttamente, ma la teniamo come fallback)
+        const systemPrefersReduced =
+            typeof window !== 'undefined' && window.matchMedia
+                ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
+                : false;
+
+        // Decide se usare reduced motion; default = false (animazioni abilitate)
+        let useReducedMotion = false;
+
+        // Applica override
+        if (motionParam === 'reduce') useReducedMotion = true;
+        if (motionParam === 'full') useReducedMotion = false;
+        if (motionOverrideStore === 'reduce') useReducedMotion = true;
+        if (motionOverrideStore === 'full') useReducedMotion = false;
+
+        // Se non ci sono override e vuoi rispettare il sistema, decommenta la riga sotto:
+        // if (motionParam === null && motionOverrideStore === null) useReducedMotion = systemPrefersReduced;
+
+        // Applica/aggiorna la classe reduced-motion su <html> così il CSS può gestirla
+        if (useReducedMotion) {
+            document.documentElement.classList.add('reduced-motion');
+            // set neutral values ed esci
+            document.documentElement.style.setProperty('--hero-scale', '1');
+            document.documentElement.style.setProperty('--hero-brightness', '1');
+            document.documentElement.style.setProperty('--sphere-global-scale', '1');
             return;
+        } else {
+            document.documentElement.classList.remove('reduced-motion');
         }
 
         const update = () => {
@@ -34,11 +65,11 @@ export default function Hero() {
             const t = Math.min(Math.max(scrollY / maxScroll, 0), 1);
 
             const heroScale = startHeroScale + (endHeroScale - startHeroScale) * t;
-            const heroBright = startHeroBright + (endHeroBright - startHeroBright) * t; // defensive name fix below
-            // NOTE: If linter errors about startHeroStartBright, replace previous line with:
-            // const heroBright = startHeroBright + (endHeroBright - startHeroBright) * t;
-
+            const heroBright = startHeroBright + (endHeroBright - startHeroBright) * t;
             const sphereScale = startSphereScale + (endSphereScale - startSphereScale) * t;
+
+            // DEBUG: decommenta per vedere i valori in console
+            // console.log('Hero update', { scrollY, t, heroScale, heroBright, sphereScale });
 
             document.documentElement.style.setProperty('--hero-scale', String(heroScale));
             document.documentElement.style.setProperty('--hero-brightness', String(heroBright));
@@ -47,29 +78,28 @@ export default function Hero() {
             rafRef.current = requestAnimationFrame(update);
         };
 
-        // Pause when tab hidden
         const onVisibility = () => {
             runningRef.current = !document.hidden;
         };
         document.addEventListener('visibilitychange', onVisibility);
 
-        // Start loop
+        // avvia il loop RAF
         rafRef.current = requestAnimationFrame(update);
 
         return () => {
-            if (rafRef.current) cancelAnimationFrame(rafRef.current);
+            if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
             rafRef.current = null;
             document.removeEventListener('visibilitychange', onVisibility);
-            // reset
+            // reset variabili CSS e classe
             document.documentElement.style.setProperty('--hero-scale', '1');
             document.documentElement.style.setProperty('--hero-brightness', '1');
             document.documentElement.style.setProperty('--sphere-global-scale', '1');
+            document.documentElement.classList.remove('reduced-motion');
         };
     }, []);
 
     return (
         <section className="relative overflow-hidden">
-            {/* background gradient */}
             <div
                 className="absolute inset-0 bg-gradient-to-r from-gradientStart to-gradientEnd will-change-transform"
                 style={{ transform: 'translateZ(0)' }}
@@ -84,7 +114,7 @@ export default function Hero() {
                         filter: 'brightness(var(--hero-brightness))',
                     }}
                 >
-                    {/* Left text column */}
+                    {/* Left */}
                     <div className="w-full lg:w-1/2">
                         <h1
                             className="hero-title text-[6.25rem] md:text-[8rem] leading-none text-white select-none"
@@ -93,7 +123,6 @@ export default function Hero() {
                             StudyEasily
                         </h1>
 
-                        {/* Quote */}
                         <div className="mt-8">
                             <p className="quote-line text-3xl md:text-4xl lg:text-5xl uppercase tracking-wider font-futura text-white/95">
                                 L'UOMO COLTO È COLUI
@@ -108,9 +137,8 @@ export default function Hero() {
                         </div>
                     </div>
 
-                    {/* Right side: decorative spheres */}
+                    {/* Right: spheres */}
                     <div className="hidden lg:block lg:w-1/2 relative" aria-hidden>
-                        {/* Main big sphere */}
                         <div
                             className="absolute right-12 top-6"
                             style={{
@@ -122,7 +150,6 @@ export default function Hero() {
                             <div className="w-full h-full rounded-full hero-sphere sphere-1 shadow-2xl animate-float" />
                         </div>
 
-                        {/* medium sphere */}
                         <div
                             className="absolute right-36 top-32"
                             style={{
@@ -131,11 +158,9 @@ export default function Hero() {
                                 transform: 'scale(calc(var(--sphere-global-scale) * 0.98))',
                             }}
                         >
-                            <div className="w-full h-full rounded-full hero-sphere sphere-2 shadow-xl animate-float-alt"
-                                 style={{ animationDuration: '7s' }} />
+                            <div className="w-full h-full rounded-full hero-sphere sphere-2 shadow-xl animate-float-alt" style={{ animationDuration: '7s' }} />
                         </div>
 
-                        {/* dark large bottom */}
                         <div
                             className="absolute right-24 bottom-6"
                             style={{
@@ -144,11 +169,9 @@ export default function Hero() {
                                 transform: 'scale(calc(var(--sphere-global-scale) * 1.02))',
                             }}
                         >
-                            <div className="w-full h-full rounded-full hero-sphere sphere-3 shadow-2xl animate-float"
-                                 style={{ animationDuration: '6.2s' }} />
+                            <div className="w-full h-full rounded-full hero-sphere sphere-3 shadow-2xl animate-float" style={{ animationDuration: '6.2s' }} />
                         </div>
 
-                        {/* small accents */}
                         <div
                             className="absolute right-48 top-8"
                             style={{
@@ -157,9 +180,9 @@ export default function Hero() {
                                 transform: 'scale(calc(var(--sphere-global-scale) * 0.72))',
                             }}
                         >
-                            <div className="w-full h-full rounded-full hero-sphere sphere-4 shadow-lg animate-float-delayed"
-                                 style={{ animationDuration: '5s' }} />
+                            <div className="w-full h-full rounded-full hero-sphere sphere-4 shadow-lg animate-float-delayed" style={{ animationDuration: '5s' }} />
                         </div>
+
                         <div
                             className="absolute right-6 top-44"
                             style={{
@@ -168,8 +191,7 @@ export default function Hero() {
                                 transform: 'scale(calc(var(--sphere-global-scale) * 0.82))',
                             }}
                         >
-                            <div className="w-full h-full rounded-full hero-sphere sphere-5 shadow-lg animate-float-alt"
-                                 style={{ animationDuration: '6.8s' }} />
+                            <div className="w-full h-full rounded-full hero-sphere sphere-5 shadow-lg animate-float-alt" style={{ animationDuration: '6.8s' }} />
                         </div>
                     </div>
                 </div>

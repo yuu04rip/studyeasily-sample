@@ -2,30 +2,27 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Font-face: mettere reali .woff2 in /public/fonts */
+/* Font-face: mettere reali .woff2 o .ttf/.otf in /public/fonts */
 @font-face {
     font-family: 'Futura';
-    src: url('/fonts/Futura.ttf') format('truetype');
+    src: url('/fonts/Futura.woff2') format('woff2');
     font-weight: 400;
     font-style: normal;
     font-display: swap;
 }
 @font-face {
-    font-family: 'Higuan Elegant Serif';
-    src: url('/fonts/Higuen Serif.otf') format('opentype');
+    font-family: 'Higuen Elegant Serif';
+    src: url('/fonts/Higuen Serif.woff2') format('woff2');
     font-weight: 700;
     font-style: normal;
     font-display: swap;
 }
 
-/* CSS variables used by Hero and animations */
+/* root CSS vars used by Hero */
 :root {
     --hero-scale: 1;
     --hero-brightness: 1;
     --sphere-global-scale: 1;
-    --wave-speed: 1;
-    --wave-amplitude: 1;
-    --gauge-duration: 4000ms;
 }
 
 /* Base */
@@ -42,7 +39,6 @@ html, body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-shadow: 2px 6px 0 rgba(0,0,0,0.12), 0 2px 18px rgba(0,0,0,0.25);
-    color: #fff;
 }
 
 /* Quote glow */
@@ -89,50 +85,21 @@ html, body {
     100% { transform: translateY(0) translateZ(0); }
 }
 
-@keyframes pulse-slow {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.8; }
-}
-
-@keyframes slide-in {
-    0% { transform: translateX(-100%); opacity: 0; }
-    100% { transform: translateX(0); opacity: 1; }
-}
-
-@keyframes fade-in {
-    0% { opacity: 0; }
-    100% { opacity: 1; }
-}
-
 /* utility animations */
 .animate-float { animation: float 6s ease-in-out infinite; }
 .animate-float-alt { animation: floatAlt 7s ease-in-out infinite; }
 .animate-float-delayed { animation: float 8s ease-in-out infinite; animation-delay: 1s; }
-.animate-pulse-slow { animation: pulse-slow 3s ease-in-out infinite; }
-.animate-slide-in { animation: slide-in 0.5s ease-out; }
-.animate-fade-in { animation: fade-in 0.5s ease-out; }
 
-/* reduced motion */
-@media (prefers-reduced-motion: reduce) {
-    *,
-    *::before,
-    *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-    }
-    
-    .animate-float, 
-    .animate-float-alt, 
-    .animate-float-delayed,
-    .animate-pulse-slow,
-    .animate-slide-in,
-    .animate-fade-in {
-        animation: none !important;
-    }
+/* Instead of using media query to cancel animations, use a class that JS can toggle.
+   This allows overrides via URL/localStorage while still supporting reduced-motion.
+*/
+.reduced-motion .animate-float,
+.reduced-motion .animate-float-alt,
+.reduced-motion .animate-float-delayed {
+    animation: none !important;
 }
 
-/* responsive: hide spheres on smaller screens */
+/* responsive: hide heavy decorative spheres on small screens */
 @media (max-width: 1024px) {
     .hero-sphere { display: none; }
     .hero-title { font-size: 3.25rem; }

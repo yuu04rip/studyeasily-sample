@@ -1,43 +1,38 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
-export default function MSWProvider({ children }: { children: React.ReactNode }) {
-  const [mswReady, setMswReady] = useState(false);
+type Props = {
+    children?: React.ReactNode;
+};
 
-  useEffect(() => {
-    const initMSW = async () => {
-      if (typeof window !== 'undefined') {
-        try {
-          const { worker } = await import('../mocks/browser');
-          await worker.start({
-            onUnhandledRequest: 'bypass',
-            serviceWorker: {
-              url: '/mockServiceWorker.js'
-            }
-          });
-          setMswReady(true);
-        } catch (error) {
-          console.error('MSW failed to start:', error);
-          // Continue anyway if MSW fails
-          setMswReady(true);
-        }
-      }
-    };
+/**
+ * MSW Provider (client-side only)
+ * - try to dynamically import ../mocks/browser in development and start the worker
+ * - if mocks/browser is missing it silently does nothing
+ *
+ * Place this file at app/msw-provider.tsx so the import in layout.tsx works.
+ */
+export default function MSWProvider({ children }: Props) {
+    useEffect(() => {
+        if (typeof window === 'undefined') return;
 
-    initMSW();
-  }, []);
+        // start worker only in development to avoid interfering in prod
+        if (process.env.NODE_ENV !== 'development') return;
 
-  if (!mswReady) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
-          <p className="mt-4 text-gray-600">Initializing...</p>
-        </div>
-      </div>
-    );
-  }
+        import('../mocks/browser')
+            .then((mod) => {
+                const worker = (mod as any).worker;
+                if (worker && typeof worker.start === 'function') {
+                    worker.start({ onUnhandledRequest: 'bypass' }).catch(() => {
+                        /* ignore start errors */
+                    });
+                }
+            })
+            .catch(() => {
+                // no mocks available — silent fallback
+            });
+    }, []);
 
-  return <>{children}</>;
+    return <>{children}</>;
 }
