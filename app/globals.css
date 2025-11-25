@@ -144,8 +144,8 @@ html, body {
 .poda-root {
     display: inline-block;
     position: relative; /* important: not absolute for header */
-    line-height: 0;
-    z-index: 20; /* above header content, but not fixed to top */
+    line-height: normal;
+    z-index: 1; /* low z-index to not overlap with Login/SignUp buttons */
 }
 
 /* compact header variant */
@@ -170,9 +170,59 @@ html, body {
 /* input styling for poda */
 .poda-input {
     color: #374151; /* text-gray-700 */
+    line-height: 1.5;
 }
 
 /* If there are rules with #poda (id), don't apply fixed/absolute centering */
 #poda, #poda-root {
     position: static !important;
+}
+
+/* RGB Glow animation for social channel icons */
+@keyframes rgb-glow {
+    0% {
+        box-shadow: 0 0 15px 3px rgba(255, 0, 0, 0.6),
+                    0 0 30px 6px rgba(255, 0, 0, 0.4),
+                    0 0 45px 9px rgba(255, 0, 0, 0.2);
+    }
+    16.67% {
+        box-shadow: 0 0 15px 3px rgba(255, 165, 0, 0.6),
+                    0 0 30px 6px rgba(255, 165, 0, 0.4),
+                    0 0 45px 9px rgba(255, 165, 0, 0.2);
+    }
+    33.33% {
+        box-shadow: 0 0 15px 3px rgba(255, 255, 0, 0.6),
+                    0 0 30px 6px rgba(255, 255, 0, 0.4),
+                    0 0 45px 9px rgba(255, 255, 0, 0.2);
+    }
+    50% {
+        box-shadow: 0 0 15px 3px rgba(0, 255, 0, 0.6),
+                    0 0 30px 6px rgba(0, 255, 0, 0.4),
+                    0 0 45px 9px rgba(0, 255, 0, 0.2);
+    }
+    66.67% {
+        box-shadow: 0 0 15px 3px rgba(0, 0, 255, 0.6),
+                    0 0 30px 6px rgba(0, 0, 255, 0.4),
+                    0 0 45px 9px rgba(0, 0, 255, 0.2);
+    }
+    83.33% {
+        box-shadow: 0 0 15px 3px rgba(138, 43, 226, 0.6),
+                    0 0 30px 6px rgba(138, 43, 226, 0.4),
+                    0 0 45px 9px rgba(138, 43, 226, 0.2);
+    }
+    100% {
+        box-shadow: 0 0 15px 3px rgba(255, 0, 0, 0.6),
+                    0 0 30px 6px rgba(255, 0, 0, 0.4),
+                    0 0 45px 9px rgba(255, 0, 0, 0.2);
+    }
+}
+
+.social-icon-glow {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.social-icon-glow:hover,
+.group:hover .social-icon-glow {
+    animation: rgb-glow 2s ease-in-out infinite;
+    transform: scale(1.15);
 }
