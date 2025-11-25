@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
-import SearchBar from './SearchBar';
+import PodaSearch from '@/components/PodaSearch';
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -41,7 +41,10 @@ export default function Header() {
           </nav>
 
           <div className="hidden md:flex items-center space-x-4">
-            <SearchBar />
+            {/* Inline compact PodaSearch in header: wrapper gives width */}
+            <div className="w-[280px]">
+              <PodaSearch inline redirectToDashboard={false} />
+            </div>
             <Link
               href="/login"
               className="text-primary hover:text-accent transition font-medium"
@@ -60,6 +63,7 @@ export default function Header() {
           <button
             className="md:hidden text-gray-700"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
+            aria-label="Toggle menu"
           >
             <svg
               className="w-6 h-6"
@@ -111,6 +115,10 @@ export default function Header() {
               <Link href="/contatti" className="text-gray-700 hover:text-primary py-2">
                 Contatti
               </Link>
+              {/* Mobile PodaSearch */}
+              <div className="py-2">
+                <PodaSearch inline redirectToDashboard={false} />
+              </div>
               <Link href="/login" className="text-primary py-2">
                 Login
               </Link>
