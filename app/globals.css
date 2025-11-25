@@ -138,3 +138,41 @@ html, body {
     .hero-title { font-size: 3.25rem; }
     .quote-line { font-size: 1.25rem; }
 }
+
+/* PodaSearch styles */
+/* base: inline-friendly, not absolute */
+.poda-root {
+    display: inline-block;
+    position: relative; /* important: not absolute for header */
+    line-height: 0;
+    z-index: 20; /* above header content, but not fixed to top */
+}
+
+/* compact header variant */
+.poda-inline {
+    /* static position in flow, doesn't center */
+    position: relative;
+    vertical-align: middle;
+    width: 100%;
+}
+
+/* explicit standalone hero centered variant */
+.poda-standalone {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: auto; /* don't force 100vh: be explicit in the page */
+    position: relative;
+    margin: 0 auto;
+}
+
+/* input styling for poda */
+.poda-input {
+    color: #374151; /* text-gray-700 */
+}
+
+/* If there are rules with #poda (id), don't apply fixed/absolute centering */
+#poda, #poda-root {
+    position: static !important;
+}
