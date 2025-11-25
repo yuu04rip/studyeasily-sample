@@ -2,9 +2,16 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 
-export default function SidebarDashboard() {
+interface SidebarDashboardProps {
+  onChatOpen?: () => void;
+}
+
+export default function SidebarDashboard({ onChatOpen }: SidebarDashboardProps) {
   const pathname = usePathname();
+  const [isCollapsed, setIsCollapsed] = useState(false);
 
   const menuItems = [
     { 
@@ -45,7 +52,8 @@ export default function SidebarDashboard() {
     },
     { 
       name: 'CHATS', 
-      path: '/dashboard/chats',
+      path: '#',
+      isChat: true,
       icon: (
         <svg className="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
@@ -55,29 +63,109 @@ export default function SidebarDashboard() {
   ];
 
   return (
-    <aside className="bg-gradient-to-b from-darkPurple to-primary min-h-screen w-64 lg:w-72 flex flex-col">
-      <div className="p-6 flex-1">
-        <nav className="space-y-6">
+    <aside 
+      className={`bg-gradient-neon-dashboard min-h-screen flex flex-col transition-all duration-300 ${
+        isCollapsed ? 'w-20' : 'w-64 lg:w-72'
+      }`}
+    >
+      {/* Collapse toggle button - mobile & desktop */}
+      <button
+        onClick={() => setIsCollapsed(!isCollapsed)}
+        className="absolute top-4 -right-3 z-10 bg-neon-violet/80 hover:bg-neon-violet p-1 rounded-full text-white shadow-neon focus-neon lg:hidden"
+        aria-label={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+      >
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={isCollapsed ? "M9 5l7 7-7 7" : "M15 19l-7-7 7-7"} />
+        </svg>
+      </button>
+
+      <div className="p-4 flex-1">
+        {/* Logo area */}
+        <AnimatePresence mode="wait">
+          {!isCollapsed && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="mb-8 text-center"
+            >
+              <h2 className="text-2xl font-bold text-white neon-text-glow font-playfair">
+                StudyEasily
+              </h2>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        <nav className="space-y-4" role="navigation" aria-label="Dashboard navigation">
           {menuItems.map((item) => {
-            const isActive = pathname === item.path;
-            return (
-              <Link
-                key={item.path}
-                href={item.path}
-                className={`flex flex-col items-center justify-center space-y-2 py-4 px-3 rounded-xl transition ${
-                  isActive
-                    ? 'bg-accent/30 text-white border-2 border-accent'
-                    : 'text-lightPurple hover:bg-white/10 hover:text-white'
-                }`}
-              >
-                <div className="flex items-center justify-center">
+            const isActive = !item.isChat && pathname === item.path;
+            const commonClassName = `sidebar-neon-item flex flex-col items-center justify-center space-y-2 py-4 px-3 rounded-xl transition-all duration-180 w-full focus-neon ${
+              isActive
+                ? 'active bg-neon-magenta/30 text-white border-2 border-neon-magenta'
+                : 'text-lightPurple hover:bg-white/10 hover:text-white'
+            }`;
+            
+            const content = (
+              <>
+                <div className={`flex items-center justify-center ${isActive ? 'neon-glow' : ''}`}>
                   {item.icon}
                 </div>
-                <span className="text-xs font-bold tracking-wide">{item.name}</span>
-              </Link>
+                <AnimatePresence mode="wait">
+                  {!isCollapsed && (
+                    <motion.span
+                      initial={{ opacity: 0, y: -5 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -5 }}
+                      className="text-xs font-bold tracking-wide"
+                    >
+                      {item.name}
+                    </motion.span>
+                  )}
+                </AnimatePresence>
+              </>
+            );
+            
+            return (
+              <motion.div
+                key={item.path + item.name}
+                whileHover={{ scale: 1.06 }}
+                whileTap={{ scale: 0.98 }}
+                transition={{ duration: 0.18, ease: 'easeOut' }}
+              >
+                {item.isChat ? (
+                  <button
+                    type="button"
+                    onClick={onChatOpen}
+                    className={commonClassName}
+                  >
+                    {content}
+                  </button>
+                ) : (
+                  <Link
+                    href={item.path}
+                    className={commonClassName}
+                    aria-current={isActive ? 'page' : undefined}
+                  >
+                    {content}
+                  </Link>
+                )}
+              </motion.div>
             );
           })}
         </nav>
+      </div>
+
+      {/* Bottom section */}
+      <div className="p-4 border-t border-white/10">
+        <button
+          onClick={() => setIsCollapsed(!isCollapsed)}
+          className="hidden lg:flex w-full items-center justify-center py-2 text-lightPurple hover:text-white transition-colors focus-neon rounded-lg"
+          aria-label={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+        >
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={isCollapsed ? "M13 5l7 7-7 7M5 5l7 7-7 7" : "M11 19l-7-7 7-7m8 14l-7-7 7-7"} />
+          </svg>
+        </button>
       </div>
     </aside>
   );
