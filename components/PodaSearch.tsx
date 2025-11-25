@@ -40,12 +40,12 @@ export default function PodaSearch({
 
     return (
         <div className={wrapperClass} role="search" aria-label="Futuristic search">
-            <div className="glow" aria-hidden="true" />
-            <div className="darkBorderBg" aria-hidden="true" />
-            <div className="darkBorderBg" aria-hidden="true" />
-            <div className="darkBorderBg" aria-hidden="true" />
-            <div className="white" aria-hidden="true" />
-            <div className="border" aria-hidden="true" />
+            <div className="poda-glow" aria-hidden="true" />
+            <div className="poda-darkBorderBg" aria-hidden="true" />
+            <div className="poda-darkBorderBg" aria-hidden="true" />
+            <div className="poda-darkBorderBg" aria-hidden="true" />
+            <div className="poda-white" aria-hidden="true" />
+            <div className="poda-border" aria-hidden="true" />
 
             <form id="main" onSubmit={handleSubmit} className="poda-main" aria-label="Search form">
                 <label htmlFor="poda-search-input" className="visually-hidden">
@@ -66,7 +66,7 @@ export default function PodaSearch({
                 <div id="input-mask" aria-hidden="true" />
                 <div id="pink-mask" aria-hidden="true" />
 
-                <div className="filterBorder" aria-hidden="true" />
+                <div className="poda-filterBorder" aria-hidden="true" />
 
                 <button
                     id="filter-icon"
