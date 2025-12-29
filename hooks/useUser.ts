@@ -21,6 +21,12 @@ export function useUser(): UseUserReturn {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    // Check if we're in a browser environment
+    if (typeof window === 'undefined') {
+      setLoading(false);
+      return;
+    }
+    
     // Get user from localStorage
     const storedUser = localStorage.getItem('user');
     if (storedUser) {

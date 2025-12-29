@@ -72,8 +72,8 @@ export interface CourseProgress {
 // Permission types
 export interface Permission {
   canCreateCourse: boolean;
-  canEditCourse: boolean;
-  canDeleteCourse: boolean;
+  canEditOwnCourse: boolean; // Can edit their own courses
+  canDeleteOwnCourse: boolean; // Can delete their own courses
   canEnrollCourse: boolean;
   canManageUsers: boolean;
   canApproveCourses: boolean;

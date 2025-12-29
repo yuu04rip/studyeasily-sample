@@ -10,9 +10,9 @@ export function getPermissions(role: UserRole): Permission {
     case 'admin':
       return {
         canCreateCourse: true,
-        canEditCourse: true,
-        canDeleteCourse: true,
-        canEnrollCourse: true,
+        canEditOwnCourse: true, // Admins can edit any course
+        canDeleteOwnCourse: true, // Admins can delete any course
+        canEnrollCourse: false, // Admins typically don't enroll as students
         canManageUsers: true,
         canApproveCourses: true,
         canViewAnalytics: true,
@@ -22,8 +22,8 @@ export function getPermissions(role: UserRole): Permission {
     case 'instructor':
       return {
         canCreateCourse: true,
-        canEditCourse: true, // Only their own courses
-        canDeleteCourse: true, // Only their own courses
+        canEditOwnCourse: true, // Only their own courses
+        canDeleteOwnCourse: true, // Only their own courses
         canEnrollCourse: false,
         canManageUsers: false,
         canApproveCourses: false,
@@ -34,8 +34,8 @@ export function getPermissions(role: UserRole): Permission {
     case 'tutor':
       return {
         canCreateCourse: false,
-        canEditCourse: false,
-        canDeleteCourse: false,
+        canEditOwnCourse: false,
+        canDeleteOwnCourse: false,
         canEnrollCourse: true,
         canManageUsers: false,
         canApproveCourses: false,
@@ -47,8 +47,8 @@ export function getPermissions(role: UserRole): Permission {
     default:
       return {
         canCreateCourse: false,
-        canEditCourse: false,
-        canDeleteCourse: false,
+        canEditOwnCourse: false,
+        canDeleteOwnCourse: false,
         canEnrollCourse: true,
         canManageUsers: false,
         canApproveCourses: false,

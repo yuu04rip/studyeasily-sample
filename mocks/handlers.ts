@@ -129,7 +129,7 @@ export const handlers = [
     }
     
     const newCourse: Course = {
-      id: String(coursesStore.length + 1),
+      id: `course_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
       title: body.title,
       description: body.description,
       instructor: instructor.name,
@@ -314,7 +314,8 @@ export const handlers = [
     const { courseId, userId, role } = body;
     
     // Permission check: only students and tutors can enroll
-    if (role !== 'student' && role !== 'tutor' && role !== 'admin') {
+    // Admins have viewing access but typically don't enroll as students
+    if (role !== 'student' && role !== 'tutor') {
       return HttpResponse.json(
         { error: 'Only students and tutors can enroll in courses' },
         { status: 403 }

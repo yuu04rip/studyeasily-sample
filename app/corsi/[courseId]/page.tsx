@@ -230,12 +230,18 @@ export default function CourseDetailPage() {
                   <p className="text-gray-600">One-time payment</p>
                 </div>
                 {isEnrolled ? (
-                  <Link
-                    href={`/corsi/${course.id}/lezione/${course.curriculum[0]?.id}`}
-                    className="block w-full bg-gradient-to-r from-green-500 to-green-600 text-white py-3 rounded-lg font-semibold hover:opacity-90 transition text-center"
-                  >
-                    Continue Learning
-                  </Link>
+                  course.curriculum && course.curriculum.length > 0 ? (
+                    <Link
+                      href={`/corsi/${course.id}/lezione/${course.curriculum[0].id}`}
+                      className="block w-full bg-gradient-to-r from-green-500 to-green-600 text-white py-3 rounded-lg font-semibold hover:opacity-90 transition text-center"
+                    >
+                      Continue Learning
+                    </Link>
+                  ) : (
+                    <div className="w-full bg-gray-400 text-white py-3 rounded-lg font-semibold text-center cursor-not-allowed">
+                      No lessons available yet
+                    </div>
+                  )
                 ) : (
                   <button
                     onClick={handleEnroll}

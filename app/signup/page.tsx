@@ -122,6 +122,11 @@ export default function SignupPage() {
                 <option value="instructor">Instructor - I want to teach</option>
                 <option value="tutor">Tutor - I want to assist</option>
               </select>
+              {formData.role === 'instructor' && (
+                <p className="mt-2 text-xs text-white/70">
+                  Note: Instructor accounts may require approval before you can publish courses.
+                </p>
+              )}
             </div>
 
             <div>
