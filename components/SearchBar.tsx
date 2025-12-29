@@ -114,7 +114,6 @@ const SearchBar: React.FC = () => {
                     color: #a855f7;
                     opacity: 0;
                     pointer-events: none;
-                    animation: hintAnim 1.2s infinite;
                 }
 
                 .search-btn:not(.open) .click-hint {
