@@ -117,6 +117,10 @@ const SearchBar: React.FC = () => {
                     animation: hintAnim 1.2s infinite;
                 }
 
+                .search-btn:not(.open) .click-hint {
+                    animation: hintAnim 1.2s infinite;
+                }
+
                 @keyframes hintAnim {
                     0%, 100% { transform: translateY(0); opacity: 0; }
                     50% { transform: translateY(-5px); opacity: 1; }

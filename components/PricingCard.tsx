@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 interface PricingCardProps {
     title: string;
     price: number;
@@ -58,9 +60,11 @@ export default function PricingCard({
                 ))}
             </ul>
 
-            <button className="w-full bg-accent hover:bg-accent/90 text-white py-3 rounded-lg font-semibold transition">
-                Inizia Ora
-            </button>
+            <Link href="/signup" className="block w-full">
+                <button className="w-full bg-accent hover:bg-accent/90 text-white py-3 rounded-lg font-semibold transition">
+                    Inizia Ora
+                </button>
+            </Link>
         </div>
     );
 }

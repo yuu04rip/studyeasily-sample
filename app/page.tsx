@@ -67,7 +67,7 @@ export default function Home() {
                     </p>
                     <div className="flex flex-wrap justify-center items-center gap-8 md:gap-12">
                         {channels.map((platform) => (
-                            <div key={platform.title} className="flex flex-col items-center group cursor-pointer">
+                            <Link key={platform.title} href="/canali" className="flex flex-col items-center group cursor-pointer">
                                 <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-white flex items-center justify-center shadow-lg social-icon-glow mb-3 overflow-hidden">
                                     {typeof platform.icon === "string" && platform.icon.endsWith(".svg") ? (
                                         <img src={`/icons/${platform.icon}`} alt={platform.title} className="w-10 h-10 object-contain" />
@@ -76,7 +76,7 @@ export default function Home() {
                                     )}
                                 </div>
                                 <p className="text-white text-sm md:text-base font-medium">{platform.title}</p>
-                            </div>
+                            </Link>
                         ))}
                     </div>
                 </div>
