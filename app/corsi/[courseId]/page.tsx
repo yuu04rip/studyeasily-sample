@@ -1,21 +1,12 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { useUser } from '@/hooks/useUser';
+import { Course as CourseType } from '@/types';
 
-interface Course {
-  id: string;
-  title: string;
-  description: string;
-  instructor: string;
-  duration: string;
-  level: string;
-  price: number;
-  image: string;
-  category: string;
-  enrolled: number;
-  rating: number;
+interface Course extends CourseType {
   curriculum: Array<{
     id: string;
     title: string;
@@ -25,10 +16,13 @@ interface Course {
 
 export default function CourseDetailPage() {
   const params = useParams();
+  const router = useRouter();
+  const { user, role, isStudent, isInstructor, isAdmin, isTutor } = useUser();
   const [course, setCourse] = useState<Course | null>(null);
   const [loading, setLoading] = useState(true);
   const [enrolling, setEnrolling] = useState(false);
   const [enrollMessage, setEnrollMessage] = useState('');
+  const [isEnrolled, setIsEnrolled] = useState(false);
 
   useEffect(() => {
     const fetchCourse = async () => {
@@ -41,7 +35,29 @@ export default function CourseDetailPage() {
     fetchCourse();
   }, [params.courseId]);
 
+  useEffect(() => {
+    // Check if user is enrolled
+    const checkEnrollment = async () => {
+      if (!user) return;
+      
+      try {
+        const response = await fetch(`/api/enrollments?userId=${user.id}&courseId=${params.courseId}`);
+        const data = await response.json();
+        setIsEnrolled(data.enrollments && data.enrollments.length > 0);
+      } catch (error) {
+        console.error('Error checking enrollment:', error);
+      }
+    };
+
+    checkEnrollment();
+  }, [user, params.courseId]);
+
   const handleEnroll = async () => {
+    if (!user) {
+      router.push('/login');
+      return;
+    }
+
     setEnrolling(true);
     setEnrollMessage('');
 
@@ -53,17 +69,32 @@ export default function CourseDetailPage() {
         },
         body: JSON.stringify({
           courseId: params.courseId,
-          userId: '1', // Mock user ID
+          userId: user.id,
+          role: role,
         }),
       });
 
       const data = await response.json();
-      setEnrollMessage(data.message);
+      
+      if (response.ok) {
+        setEnrollMessage(data.message);
+        setIsEnrolled(true);
+      } else {
+        setEnrollMessage(data.error || 'Failed to enroll');
+      }
     } catch {
       setEnrollMessage('Failed to enroll. Please try again.');
     } finally {
       setEnrolling(false);
     }
+  };
+
+  const handleEditCourse = () => {
+    router.push(`/corsi/${params.courseId}/edit`);
+  };
+
+  const handleViewStudents = () => {
+    router.push(`/corsi/${params.courseId}/students`);
   };
 
   if (loading) {
@@ -84,6 +115,9 @@ export default function CourseDetailPage() {
       </div>
     );
   }
+
+  const isOwner = isInstructor && course.instructorId === user?.id;
+  const canManage = isAdmin || isOwner;
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -143,42 +177,111 @@ export default function CourseDetailPage() {
         {/* Sidebar */}
         <div>
           <div className="bg-white rounded-lg shadow-lg p-6 sticky top-24">
-            <div className="text-center mb-6">
-              <div className="text-4xl font-bold text-primary mb-2">${course.price}</div>
-              <p className="text-gray-600">One-time payment</p>
-            </div>
-            <button
-              onClick={handleEnroll}
-              disabled={enrolling}
-              className="w-full bg-gradient-to-r from-gradientStart to-gradientEnd text-white py-3 rounded-lg font-semibold hover:opacity-90 transition disabled:opacity-50"
-            >
-              {enrolling ? 'Enrolling...' : 'Enroll Now'}
-            </button>
-            {enrollMessage && (
-              <div className="mt-4 p-3 bg-green-100 text-green-700 rounded-lg text-sm">
-                {enrollMessage}
+            {/* Role-based actions */}
+            {canManage ? (
+              // Instructor/Admin view
+              <div className="space-y-4">
+                <div className="text-center mb-4">
+                  <span className="inline-block px-4 py-2 bg-purple-100 text-purple-700 rounded-full text-sm font-semibold">
+                    {isAdmin ? 'Admin' : 'Your Course'}
+                  </span>
+                </div>
+                <button
+                  onClick={handleEditCourse}
+                  className="w-full bg-gradient-to-r from-gradientStart to-gradientEnd text-white py-3 rounded-lg font-semibold hover:opacity-90 transition"
+                >
+                  Edit Course
+                </button>
+                <button
+                  onClick={handleViewStudents}
+                  className="w-full bg-white border-2 border-primary text-primary py-3 rounded-lg font-semibold hover:bg-primary/5 transition"
+                >
+                  View Students ({course.enrolled})
+                </button>
+                {isAdmin && course.status === 'draft' && (
+                  <button
+                    className="w-full bg-green-600 text-white py-3 rounded-lg font-semibold hover:bg-green-700 transition"
+                  >
+                    Approve Course
+                  </button>
+                )}
+                <div className="pt-4 border-t">
+                  <div className="text-sm text-gray-600 space-y-2">
+                    <div className="flex justify-between">
+                      <span>Status:</span>
+                      <span className="font-semibold capitalize">{course.status}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Students:</span>
+                      <span className="font-semibold">{course.enrolled}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Rating:</span>
+                      <span className="font-semibold">{course.rating} / 5</span>
+                    </div>
+                  </div>
+                </div>
               </div>
+            ) : (
+              // Student/Tutor view
+              <>
+                <div className="text-center mb-6">
+                  <div className="text-4xl font-bold text-primary mb-2">${course.price}</div>
+                  <p className="text-gray-600">One-time payment</p>
+                </div>
+                {isEnrolled ? (
+                  course.curriculum && course.curriculum.length > 0 ? (
+                    <Link
+                      href={`/corsi/${course.id}/lezione/${course.curriculum[0].id}`}
+                      className="block w-full bg-gradient-to-r from-green-500 to-green-600 text-white py-3 rounded-lg font-semibold hover:opacity-90 transition text-center"
+                    >
+                      Continue Learning
+                    </Link>
+                  ) : (
+                    <div className="w-full bg-gray-400 text-white py-3 rounded-lg font-semibold text-center cursor-not-allowed">
+                      No lessons available yet
+                    </div>
+                  )
+                ) : (
+                  <button
+                    onClick={handleEnroll}
+                    disabled={enrolling || !user}
+                    className="w-full bg-gradient-to-r from-gradientStart to-gradientEnd text-white py-3 rounded-lg font-semibold hover:opacity-90 transition disabled:opacity-50"
+                  >
+                    {!user ? 'Login to Enroll' : enrolling ? 'Enrolling...' : 'Enroll Now'}
+                  </button>
+                )}
+                {enrollMessage && (
+                  <div className={`mt-4 p-3 rounded-lg text-sm ${
+                    enrollMessage.includes('error') || enrollMessage.includes('Failed')
+                      ? 'bg-red-100 text-red-700'
+                      : 'bg-green-100 text-green-700'
+                  }`}>
+                    {enrollMessage}
+                  </div>
+                )}
+                <div className="mt-6 space-y-3 text-sm">
+                  <div className="flex items-center">
+                    <svg className="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    Lifetime access
+                  </div>
+                  <div className="flex items-center">
+                    <svg className="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    Certificate of completion
+                  </div>
+                  <div className="flex items-center">
+                    <svg className="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    30-day money-back guarantee
+                  </div>
+                </div>
+              </>
             )}
-            <div className="mt-6 space-y-3 text-sm">
-              <div className="flex items-center">
-                <svg className="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                </svg>
-                Lifetime access
-              </div>
-              <div className="flex items-center">
-                <svg className="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                </svg>
-                Certificate of completion
-              </div>
-              <div className="flex items-center">
-                <svg className="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                </svg>
-                30-day money-back guarantee
-              </div>
-            </div>
           </div>
         </div>
       </div>

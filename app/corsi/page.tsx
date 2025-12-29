@@ -1,9 +1,11 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
+import Link from 'next/link';
 import CourseCard from '@/components/CourseCard';
 import SearchBar from '@/components/SearchBar';
+import { useUser } from '@/hooks/useUser';
 
 interface Course {
   id: string;
@@ -19,9 +21,10 @@ interface Course {
   rating: number;
 }
 
-export default function CorsiPage() {
+function CoursesContent() {
   const searchParams = useSearchParams();
   const search = searchParams.get('search');
+  const { isInstructor, isAdmin } = useUser();
   const [courses, setCourses] = useState<Course[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -49,6 +52,19 @@ export default function CorsiPage() {
           <p className="text-white/90 text-lg mb-8 max-w-2xl mx-auto">
             Esplora la nostra vasta selezione di corsi e trova quello perfetto per te
           </p>
+          
+          {/* Show create course button for instructors/admins */}
+          {(isInstructor || isAdmin) && (
+            <div className="mb-6">
+              <Link
+                href="/instructor/create-course"
+                className="inline-block bg-accent hover:bg-accent/90 text-white px-6 py-3 rounded-lg font-semibold transition shadow-lg"
+              >
+                + Create New Course
+              </Link>
+            </div>
+          )}
+          
           <div className="max-w-2xl mx-auto">
             <div className="bg-white rounded-full px-6 py-4 flex items-center shadow-lg">
               <input
@@ -87,5 +103,17 @@ export default function CorsiPage() {
         )}
       </div>
     </div>
+  );
+}
+
+export default function CorsiPage() {
+  return (
+    <Suspense fallback={
+      <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-primary via-purple-700 to-accent">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-accent"></div>
+      </div>
+    }>
+      <CoursesContent />
+    </Suspense>
   );
 }

@@ -11,11 +11,12 @@ export default function SignupPage() {
     email: '',
     password: '',
     confirmPassword: '',
+    role: 'student', // Default role
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
@@ -43,13 +44,14 @@ export default function SignupPage() {
           name: formData.name,
           email: formData.email,
           password: formData.password,
+          role: formData.role,
         }),
       });
 
       const data = await response.json();
 
       if (response.ok) {
-        // Store token in localStorage (mock authentication)
+        // Store token and user data in localStorage (mock authentication)
         localStorage.setItem('token', data.token);
         localStorage.setItem('user', JSON.stringify(data.user));
         
@@ -107,6 +109,28 @@ export default function SignupPage() {
 
             <div>
               <label className="block text-sm font-medium text-white mb-2">
+                I am a
+              </label>
+              <select
+                name="role"
+                value={formData.role}
+                onChange={handleChange}
+                className="w-full px-4 py-2 border border-white/20 bg-white/90 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
+                required
+              >
+                <option value="student">Student - I want to learn</option>
+                <option value="instructor">Instructor - I want to teach</option>
+                <option value="tutor">Tutor - I want to assist</option>
+              </select>
+              {formData.role === 'instructor' && (
+                <p className="mt-2 text-xs text-white/70">
+                  Note: Instructor accounts may require approval before you can publish courses.
+                </p>
+              )}
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-white mb-2">
                 Password
               </label>
               <input
@@ -136,7 +160,7 @@ export default function SignupPage() {
             </div>
 
             {error && (
-              <div className="bg-red-50 text-red-600 p-3 rounded-lg text-sm">
+              <div className="bg-red-500/20 text-white p-3 rounded-lg text-sm border border-red-500/30">
                 {error}
               </div>
             )}
@@ -146,11 +170,11 @@ export default function SignupPage() {
                 <input type="checkbox" className="mr-2 mt-1" required />
                 <span>
                   I agree to the{' '}
-                  <a href="#" className="text-primary hover:underline">
+                  <a href="#" className="text-accent hover:underline">
                     Terms of Service
                   </a>{' '}
                   and{' '}
-                  <a href="#" className="text-primary hover:underline">
+                  <a href="#" className="text-accent hover:underline">
                     Privacy Policy
                   </a>
                 </span>
@@ -168,7 +192,7 @@ export default function SignupPage() {
 
           <div className="mt-6 text-center text-sm text-white/80">
             Already have an account?{' '}
-            <Link href="/login" className="text-primary hover:underline font-medium">
+            <Link href="/login" className="text-accent hover:underline font-medium">
               Sign in
             </Link>
           </div>
