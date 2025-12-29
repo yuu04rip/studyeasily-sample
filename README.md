@@ -89,6 +89,26 @@ cp .env.example .env.local
 
 No actual environment variables are required for the mock setup, but you can add them for future integrations.
 
+## 🗄️ Database Setup (Optional)
+
+This project currently uses mock data (`mock-data.json`) with MSW for API simulation. However, if you want to connect to a real database:
+
+1. **See database setup guide**: Check `database/README.md` for detailed instructions
+2. **Choose your database**: MySQL or PostgreSQL schemas are provided
+3. **Run the schema**: Import `database/schema.sql` (MySQL) or `database/schema-postgresql.sql` (PostgreSQL)
+4. **Configure connection**: Update `.env.local` with your database credentials
+
+**Quick Start with Database:**
+```bash
+# For MySQL
+mysql -u root -p < database/schema.sql
+
+# For PostgreSQL  
+psql -U postgres -d studyeasily -f database/schema-postgresql.sql
+```
+
+For detailed setup instructions, see the [Database Setup Guide](database/README.md).
+
 ## 📁 Project Structure
 
 ```
@@ -103,6 +123,11 @@ studyeasily-sample/
 │   ├── Header.tsx
 │   ├── Footer.tsx
 │   ├── CourseCard.tsx
+│   └── ...
+├── database/              # Database schemas and docs
+│   ├── schema.sql         # MySQL schema
+│   ├── schema-postgresql.sql  # PostgreSQL schema
+│   ├── README.md          # Database setup guide
 │   └── ...
 ├── mocks/                 # MSW mock API
 │   ├── handlers.ts        # API handlers
