@@ -231,11 +231,19 @@ export const handlers = [
   // POST /api/auth/login
   http.post('/api/auth/login', async ({ request }) => {
     const body = await request.json() as { email: string; password: string };
-    const { email } = body;
+    const { email, password } = body;
     
     const user = usersStore.find((u) => u.email === email);
     
     if (!user) {
+      return HttpResponse.json(
+        { error: 'Invalid credentials' },
+        { status: 401 }
+      );
+    }
+    
+    // Check password for admin user
+    if (user.email === 'admin@studyeasily.com' && password !== 'admin') {
       return HttpResponse.json(
         { error: 'Invalid credentials' },
         { status: 401 }
