@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { useUser } from '@/hooks/useUser';
+import { showToast } from '@/components/dashboard';
 
 type TabType = 'content' | 'materials' | 'tests' | 'appearance';
 
@@ -109,11 +110,13 @@ export default function CourseEditorPage() {
       });
 
       if (response.ok) {
-        alert('Course saved successfully!');
+        showToast('Course saved successfully!', 'success');
+      } else {
+        showToast('Failed to save course', 'error');
       }
     } catch (error) {
       console.error('Error saving course:', error);
-      alert('Failed to save course');
+      showToast('Failed to save course', 'error');
     } finally {
       setSaving(false);
     }
@@ -121,7 +124,7 @@ export default function CourseEditorPage() {
 
   const handleAddMaterial = async () => {
     if (!newMaterial.title || !newMaterial.url) {
-      alert('Please fill in all required fields');
+      showToast('Please fill in all required fields', 'error');
       return;
     }
 
@@ -182,10 +185,13 @@ export default function CourseEditorPage() {
       if (response.ok) {
         setTests([...tests, currentTest]);
         setCurrentTest(null);
-        alert('Test saved successfully!');
+        showToast('Test saved successfully!', 'success');
+      } else {
+        showToast('Failed to save test', 'error');
       }
     } catch (error) {
       console.error('Error saving test:', error);
+      showToast('Failed to save test', 'error');
     }
   };
 

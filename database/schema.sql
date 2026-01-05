@@ -324,6 +324,8 @@ CREATE TABLE question_options (
 
 -- Insert sample users (passwords should be hashed with bcrypt in production)
 -- Including all new fields: first_name, last_name, avatar, birth_date, description, online_status
+-- IMPORTANT: The password hashes below are EXAMPLES ONLY and should be replaced with proper bcrypt hashes
+-- generated using a library like bcryptjs before deployment to production
 INSERT INTO users (name, first_name, last_name, email, password, role, avatar, online_status) VALUES
 ('Admin User', 'Admin', 'User', 'admin@studyeasily.com', '$2a$10$example.hash.admin', 'admin', '/assets/avatar-default.jpg', 'online'),
 ('John Doe', 'John', 'Doe', 'john.doe@studyeasily.com', '$2a$10$example.hash.instructor1', 'instructor', '/assets/avatar-default.jpg', 'online'),
