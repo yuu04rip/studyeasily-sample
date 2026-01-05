@@ -6,6 +6,10 @@ import SidebarDashboard from '@/components/SidebarDashboard';
 import { ChatPanel, ToastProvider } from '@/components/dashboard';
 import { ThemeProvider } from '@/contexts/ThemeContext';
 
+// Default fallback values for unauthenticated users
+const DEFAULT_USER_ID = 'guest';
+const DEFAULT_USER_NAME = 'Guest User';
+
 export default function DashboardLayout({
   children,
 }: {
@@ -25,8 +29,8 @@ export default function DashboardLayout({
     } else {
       setIsAuthenticated(true);
       const userData = JSON.parse(user);
-      setCurrentUserId(userData.id || 'student_42');
-      setCurrentUserName(userData.name || 'User');
+      setCurrentUserId(userData.id || DEFAULT_USER_ID);
+      setCurrentUserName(userData.name || DEFAULT_USER_NAME);
     }
   }, [router]);
 
