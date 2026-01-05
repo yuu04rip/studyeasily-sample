@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import { useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
+import { FaUserCircle } from 'react-icons/fa';
 
 interface User {
   id: string;
@@ -79,7 +80,7 @@ export default function ProfileCard({ user }: ProfileCardProps) {
             className="group w-16 h-16 md:w-20 md:h-20 rounded-full overflow-hidden border-2 border-neon-violet shadow-neon focus-neon cursor-pointer relative"
             aria-label="Carica foto profilo"
           >
-            {avatar ? (
+            {avatar && avatar !== '/assets/avatar-default.jpg' ? (
               <div 
                 className="w-full h-full bg-cover bg-center"
                 style={{ backgroundImage: `url(${avatar})` }}
@@ -88,9 +89,7 @@ export default function ProfileCard({ user }: ProfileCardProps) {
               />
             ) : (
               <div className="w-full h-full bg-gradient-to-br from-neon-violet to-neon-magenta flex items-center justify-center">
-                <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
-                </svg>
+                <FaUserCircle className="w-full h-full text-white/90" />
               </div>
             )}
             {/* Upload overlay on hover */}

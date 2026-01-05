@@ -6,6 +6,7 @@ import { motion } from 'framer-motion';
 import { showToast } from '@/components/dashboard';
 import { User, OnlineStatus, ThemeColor } from '@/types';
 import { useTheme, themeConfigs } from '@/contexts/ThemeContext';
+import { FaUserCircle } from 'react-icons/fa';
 
 export default function SettingsPage() {
   const router = useRouter();
@@ -238,16 +239,14 @@ export default function SettingsPage() {
                 onClick={handleAvatarClick}
                 className="group relative w-32 h-32 rounded-full overflow-hidden border-4 border-theme-primary shadow-neon focus-neon cursor-pointer"
               >
-                {avatar ? (
+                {avatar && avatar !== '/assets/avatar-default.jpg' ? (
                   <div 
                     className="w-full h-full bg-cover bg-center"
                     style={{ backgroundImage: `url(${avatar})` }}
                   />
                 ) : (
                   <div className="w-full h-full bg-gradient-to-br from-theme-primary to-theme-secondary flex items-center justify-center">
-                    <svg className="w-16 h-16 text-white" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
-                    </svg>
+                    <FaUserCircle className="w-full h-full text-white/90" />
                   </div>
                 )}
                 <div className="absolute inset-0 bg-black/60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
