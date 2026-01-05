@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import PodaSearch from '@/components/PodaSearch';
 import { useUser, clearUser } from '@/hooks/useUser';
+import { FaUserCircle } from 'react-icons/fa';
 
 export default function Header() {
   const router = useRouter();
@@ -57,11 +58,19 @@ export default function Header() {
                   onClick={() => setShowProfileMenu(!showProfileMenu)}
                   className="flex items-center space-x-2 bg-gradient-purple-pink text-white px-4 py-2 rounded-full hover:opacity-90 transition font-semibold shadow-lg"
                 >
-                  <img 
-                    src={user?.avatar || '/assets/avatar-default.jpg'} 
-                    alt={user?.name || 'Profile'} 
-                    className="w-8 h-8 rounded-full object-cover"
-                  />
+                  {user?.avatar && user.avatar !== '/assets/avatar-default.jpg' ? (
+                    <img 
+                      src={user.avatar} 
+                      alt={user?.name || 'Profile'} 
+                      className="w-8 h-8 rounded-full object-cover"
+                      onError={(e) => {
+                        // If image fails to load, hide it and show the icon instead
+                        e.currentTarget.style.display = 'none';
+                      }}
+                    />
+                  ) : (
+                    <FaUserCircle className="w-8 h-8" />
+                  )}
                   <span className="max-w-[120px] truncate">{user?.name || 'User'}</span>
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />

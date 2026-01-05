@@ -27,17 +27,45 @@ export function useUser(): UseUserReturn {
       return;
     }
     
-    // Get user from localStorage
-    const storedUser = localStorage.getItem('user');
-    if (storedUser) {
-      try {
-        const parsedUser = JSON.parse(storedUser);
-        setUser(parsedUser);
-      } catch (error) {
-        console.error('Error parsing user data:', error);
+    // Function to load user from localStorage
+    const loadUser = () => {
+      const storedUser = localStorage.getItem('user');
+      if (storedUser) {
+        try {
+          const parsedUser = JSON.parse(storedUser);
+          setUser(parsedUser);
+        } catch (error) {
+          console.error('Error parsing user data:', error);
+          setUser(null);
+        }
+      } else {
+        setUser(null);
       }
-    }
+    };
+    
+    // Initial load
+    loadUser();
     setLoading(false);
+    
+    // Listen for custom event when user data is updated
+    const handleUserDataUpdate = () => {
+      loadUser();
+    };
+    
+    // Listen for storage events (from other tabs)
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key === 'user') {
+        loadUser();
+      }
+    };
+    
+    window.addEventListener('userDataUpdated', handleUserDataUpdate);
+    window.addEventListener('storage', handleStorageChange);
+    
+    return () => {
+      window.removeEventListener('userDataUpdated', handleUserDataUpdate);
+      window.removeEventListener('storage', handleStorageChange);
+    };
   }, []);
 
   const role = user?.role || null;
