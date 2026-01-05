@@ -274,14 +274,22 @@ export const handlers = [
     // Generate fake JWT token
     const token = `fake-jwt-token-${Date.now()}`;
     
+    // Return complete user data
     return HttpResponse.json({
       token,
       user: {
         id: user.id,
         email: user.email,
         name: user.name,
+        firstName: user.firstName,
+        lastName: user.lastName,
         avatar: user.avatar,
         role: user.role,
+        onlineStatus: user.onlineStatus,
+        birthDate: user.birthDate,
+        description: user.description,
+        enrolledCourses: user.enrolledCourses,
+        createdAt: user.createdAt,
       },
     });
   }),
@@ -497,8 +505,32 @@ export const handlers = [
   }),
 
   // GET /api/dashboard - Dashboard data
-  http.get('/api/dashboard', () => {
-    return HttpResponse.json(mockData.dashboard);
+  http.get('/api/dashboard', ({ request }) => {
+    // Try to get userId from query params or from localStorage
+    const url = new URL(request.url);
+    const userId = url.searchParams.get('userId');
+    
+    // Get user from store, or use fallback from mock data
+    let user = mockData.dashboard.user;
+    
+    if (userId) {
+      const foundUser = usersStore.find((u) => u.id === userId);
+      if (foundUser) {
+        user = {
+          id: foundUser.id,
+          name: foundUser.name,
+          email: foundUser.email,
+          avatar: foundUser.avatar,
+          role: foundUser.role,
+        };
+      }
+    }
+    
+    // Return dashboard data with actual user info
+    return HttpResponse.json({
+      ...mockData.dashboard,
+      user,
+    });
   }),
 
   // GET /api/events - Calendar events

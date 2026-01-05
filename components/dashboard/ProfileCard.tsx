@@ -25,13 +25,40 @@ export default function ProfileCard({ user }: ProfileCardProps) {
     fileInputRef.current?.click();
   };
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
       const reader = new FileReader();
-      reader.onloadend = () => {
-        setAvatar(reader.result as string);
-        // TODO: Upload to backend when real API is available
+      reader.onloadend = async () => {
+        const newAvatar = reader.result as string;
+        setAvatar(newAvatar);
+        
+        // Update avatar in backend
+        try {
+          const storedUser = localStorage.getItem('user');
+          if (storedUser) {
+            const userData = JSON.parse(storedUser);
+            const updatedUser = { ...userData, avatar: newAvatar };
+            
+            const response = await fetch('/api/user/profile', {
+              method: 'PUT',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(updatedUser),
+            });
+            
+            if (response.ok) {
+              const { user: savedUser } = await response.json();
+              localStorage.setItem('user', JSON.stringify(savedUser));
+              
+              // Dispatch custom event to notify other components
+              window.dispatchEvent(new Event('userDataUpdated'));
+            }
+          }
+        } catch (error) {
+          console.error('Failed to update avatar:', error);
+        }
       };
       reader.readAsDataURL(file);
     }

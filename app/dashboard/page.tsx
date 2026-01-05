@@ -52,29 +52,46 @@ interface CalendarEvent {
 }
 
 // Fallback data when API is not available
-const fallbackData: DashboardData = {
-  user: {
+const getFallbackData = (): DashboardData => {
+  // Try to get user from localStorage
+  const storedUser = typeof window !== 'undefined' ? localStorage.getItem('user') : null;
+  let user = {
     id: 'student_42',
     name: 'Marco Rossi',
     email: 'marco.rossi@studyeasily.com',
     avatar: '/assets/avatar-1.jpg',
     role: 'student'
-  },
-  quickWidgets: [
-    { id: 'w1', title: 'Corsi Attivi', value: 4, image: '/assets/course-1.jpg', progress: 68 },
-    { id: 'w2', title: 'Esercizi Completati', value: 127, image: '/assets/course-2.jpg', progress: 85 }
-  ],
-  cards: [
-    { id: 'c1', title: 'Materiale didattico', subtitle: 'Risorse per il tuo apprendimento', type: 'material' },
-    { id: 'c2', title: 'Esercizi', subtitle: 'Pratica e migliora le tue competenze', type: 'exercises' },
-    { id: 'c3', title: 'Quiz', subtitle: 'Metti alla prova le tue conoscenze', type: 'quiz' },
-    { id: 'c4', title: 'Progetti', subtitle: 'Progetti pratici e casi studio', type: 'projects' }
-  ],
-  recentItems: [
-    { id: 'r1', title: 'React Hooks', type: 'lesson', image: '/assets/course-2.jpg', lastAccessed: new Date().toISOString() },
-    { id: 'r2', title: 'CSS Flexbox', type: 'exercise', image: '/assets/course-1.jpg', lastAccessed: new Date().toISOString() },
-    { id: 'r3', title: 'Python Basics', type: 'lesson', image: '/assets/course-3.jpg', lastAccessed: new Date().toISOString() }
-  ]
+  };
+  
+  if (storedUser) {
+    const userData = JSON.parse(storedUser);
+    user = {
+      id: userData.id,
+      name: userData.name,
+      email: userData.email,
+      avatar: userData.avatar,
+      role: userData.role,
+    };
+  }
+  
+  return {
+    user,
+    quickWidgets: [
+      { id: 'w1', title: 'Corsi Attivi', value: 4, image: '/assets/course-1.jpg', progress: 68 },
+      { id: 'w2', title: 'Esercizi Completati', value: 127, image: '/assets/course-2.jpg', progress: 85 }
+    ],
+    cards: [
+      { id: 'c1', title: 'Materiale didattico', subtitle: 'Risorse per il tuo apprendimento', type: 'material' },
+      { id: 'c2', title: 'Esercizi', subtitle: 'Pratica e migliora le tue competenze', type: 'exercises' },
+      { id: 'c3', title: 'Quiz', subtitle: 'Metti alla prova le tue conoscenze', type: 'quiz' },
+      { id: 'c4', title: 'Progetti', subtitle: 'Progetti pratici e casi studio', type: 'projects' }
+    ],
+    recentItems: [
+      { id: 'r1', title: 'React Hooks', type: 'lesson', image: '/assets/course-2.jpg', lastAccessed: new Date().toISOString() },
+      { id: 'r2', title: 'CSS Flexbox', type: 'exercise', image: '/assets/course-1.jpg', lastAccessed: new Date().toISOString() },
+      { id: 'r3', title: 'Python Basics', type: 'lesson', image: '/assets/course-3.jpg', lastAccessed: new Date().toISOString() }
+    ]
+  };
 };
 
 const fallbackEvents: CalendarEvent[] = [
@@ -94,8 +111,16 @@ export default function DashboardPage() {
   // Fetch dashboard data with retry logic
   const fetchData = useCallback(async (retryCount = 0): Promise<void> => {
     try {
+      // Get user from localStorage
+      const storedUser = localStorage.getItem('user');
+      let userId = '';
+      if (storedUser) {
+        const userData = JSON.parse(storedUser);
+        userId = userData.id;
+      }
+      
       const [dashboardRes, eventsRes] = await Promise.all([
-        fetch('/api/dashboard'),
+        fetch(`/api/dashboard${userId ? `?userId=${userId}` : ''}`),
         fetch('/api/events')
       ]);
       
@@ -106,11 +131,23 @@ export default function DashboardPage() {
       const dashboardJson = await dashboardRes.json();
       const eventsJson = await eventsRes.json();
       
+      // Update user data with latest from localStorage
+      if (storedUser && dashboardJson) {
+        const userData = JSON.parse(storedUser);
+        dashboardJson.user = {
+          id: userData.id,
+          name: userData.name,
+          email: userData.email,
+          avatar: userData.avatar,
+          role: userData.role,
+        };
+      }
+      
       // Validate that we got actual data
       if (dashboardJson && dashboardJson.user) {
         setDashboardData(dashboardJson);
       } else {
-        setDashboardData(fallbackData);
+        setDashboardData(getFallbackData());
       }
       
       setEvents(eventsJson.events || fallbackEvents);
@@ -125,7 +162,7 @@ export default function DashboardPage() {
       }
       
       // Use fallback data after retries fail
-      setDashboardData(fallbackData);
+      setDashboardData(getFallbackData());
       setEvents(fallbackEvents);
       setLoading(false);
     }
@@ -142,7 +179,17 @@ export default function DashboardPage() {
       fetchData();
     }, MSW_INIT_DELAY_MS);
     
-    return () => clearTimeout(timer);
+    // Listen for custom event to refresh dashboard when user data changes
+    const handleUserUpdate = () => {
+      fetchData();
+    };
+    
+    window.addEventListener('userDataUpdated', handleUserUpdate);
+    
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener('userDataUpdated', handleUserUpdate);
+    };
   }, [fetchData]);
 
   const handleDateClick = (date: Date, dayEvents: CalendarEvent[]) => {
