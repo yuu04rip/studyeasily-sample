@@ -237,7 +237,7 @@ export const handlers = [
   // GET /api/lessons/:id
   http.get('/api/lessons/:id', ({ params }) => {
     const { id } = params;
-    const lesson = mockData.lessons.find((l) => l.id === id);
+    const lesson = (mockData.lessons as any[]).find((l) => l.id === id);
     
     if (!lesson) {
       return HttpResponse.json(
