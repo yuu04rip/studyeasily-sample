@@ -45,13 +45,13 @@ export default function ChatPanel({ isOpen, onClose, currentUserId, currentUserN
 
   // Fetch chats
   useEffect(() => {
-    if (isOpen) {
-      fetch('/api/chats')
+    if (isOpen && currentUserId) {
+      fetch(`/api/chats?userId=${currentUserId}`)
         .then(res => res.json())
         .then(data => setChats(data.chats || []))
         .catch(console.error);
     }
-  }, [isOpen]);
+  }, [isOpen, currentUserId]);
 
   // Fetch messages when chat is selected
   useEffect(() => {

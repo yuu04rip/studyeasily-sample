@@ -271,7 +271,11 @@ export const handlers = [
       email: string; 
       password: string; 
       name: string;
+      firstName?: string;
+      lastName?: string;
       role?: UserRole;
+      avatar?: string;
+      onlineStatus?: 'online' | 'offline' | 'do-not-disturb';
     };
     
     // Default role is student if not specified
@@ -290,9 +294,15 @@ export const handlers = [
       id: `user_${Date.now()}`,
       email: body.email,
       name: body.name,
-      avatar: '/assets/avatar-default.jpg',
+      firstName: body.firstName || '',
+      lastName: body.lastName || '',
+      avatar: body.avatar || '/assets/avatar-default.jpg',
       role: role,
+      onlineStatus: body.onlineStatus || 'online',
+      birthDate: '',
+      description: '',
       enrolledCourses: [],
+      createdAt: new Date().toISOString(),
     };
     
     usersStore.push(newUser);
@@ -306,8 +316,13 @@ export const handlers = [
         id: newUser.id,
         email: newUser.email,
         name: newUser.name,
+        firstName: newUser.firstName,
+        lastName: newUser.lastName,
         avatar: newUser.avatar,
         role: newUser.role,
+        onlineStatus: newUser.onlineStatus,
+        birthDate: newUser.birthDate,
+        description: newUser.description,
       },
     });
   }),
@@ -540,9 +555,113 @@ export const handlers = [
     return HttpResponse.json({ success: true });
   }),
 
-  // GET /api/chats - List chats
-  http.get('/api/chats', () => {
-    return HttpResponse.json({ chats: mockData.chats });
+  // GET /api/chats - List chats for a user based on their enrolled courses
+  http.get('/api/chats', ({ request }) => {
+    const url = new URL(request.url);
+    const userId = url.searchParams.get('userId');
+    
+    if (!userId) {
+      return HttpResponse.json({ chats: [] });
+    }
+    
+    // Get user's enrollments to find course-based contacts
+    const userEnrollments = enrollmentsStore.filter(e => e.userId === userId);
+    const userCourses = userEnrollments.map(e => e.courseId);
+    
+    // Find other students in the same courses
+    const coursemates = enrollmentsStore
+      .filter(e => userCourses.includes(e.courseId) && e.userId !== userId)
+      .map(e => usersStore.find(u => u.id === e.userId))
+      .filter((u, i, arr) => u && arr.findIndex(user => user?.id === u.id) === i); // unique
+    
+    // Convert to chat format
+    const chats = coursemates.map(user => ({
+      id: `chat_${userId}_${user!.id}`,
+      name: user!.name,
+      type: 'one-to-one' as const,
+      avatar: user!.avatar,
+      participants: [userId, user!.id],
+      lastMessage: '',
+      lastMessageAt: new Date().toISOString(),
+      unreadCount: 0,
+    }));
+    
+    return HttpResponse.json({ chats });
+  }),
+
+  // POST /api/chats - Create a new chat
+  http.post('/api/chats', async ({ request }) => {
+    const body = await request.json() as {
+      type: 'one-to-one' | 'group';
+      participants: string[];
+      name?: string;
+      groupId?: string;
+    };
+    
+    const newChat = {
+      id: `chat_${Date.now()}`,
+      type: body.type,
+      name: body.name || '',
+      participants: body.participants,
+      groupId: body.groupId,
+      createdAt: new Date().toISOString(),
+    };
+    
+    return HttpResponse.json({ chat: newChat }, { status: 201 });
+  }),
+
+  // GET /api/groups - List groups for courses
+  http.get('/api/groups', ({ request }) => {
+    const url = new URL(request.url);
+    const courseId = url.searchParams.get('courseId');
+    const userId = url.searchParams.get('userId');
+    
+    // This would filter groups by course or user
+    // For now, return empty array as groups need to be created
+    return HttpResponse.json({ groups: [] });
+  }),
+
+  // POST /api/groups - Create a new group (admin/instructor only)
+  http.post('/api/groups', async ({ request }) => {
+    const body = await request.json() as {
+      name: string;
+      courseId: string;
+      createdBy: string;
+      description?: string;
+      role: UserRole;
+    };
+    
+    // Check permission
+    if (body.role !== 'admin' && body.role !== 'instructor') {
+      return HttpResponse.json(
+        { error: 'Only admins and instructors can create groups' },
+        { status: 403 }
+      );
+    }
+    
+    const newGroup = {
+      id: `group_${Date.now()}`,
+      name: body.name,
+      courseId: body.courseId,
+      createdBy: body.createdBy,
+      description: body.description || '',
+      avatar: null,
+      createdAt: new Date().toISOString(),
+      members: [body.createdBy],
+    };
+    
+    return HttpResponse.json({ group: newGroup }, { status: 201 });
+  }),
+
+  // POST /api/groups/:groupId/members - Add member to group
+  http.post('/api/groups/:groupId/members', async ({ params, request }) => {
+    const { groupId } = params;
+    const body = await request.json() as { userId: string };
+    
+    return HttpResponse.json({
+      success: true,
+      message: 'Member added to group',
+    }, { status: 201 });
   }),
 
   // GET /api/chats/:chatId/messages - Get messages for a chat
@@ -625,5 +744,27 @@ export const handlers = [
     // For mock purposes, we just acknowledge the password change
     
     return HttpResponse.json({ user: updatedUser });
+  }),
+
+  // DELETE /api/user/delete - Delete user account
+  http.delete('/api/user/delete', async ({ request }) => {
+    const body = await request.json() as { userId: string };
+    
+    const userIndex = usersStore.findIndex((u) => u.id === body.userId);
+    
+    if (userIndex === -1) {
+      return HttpResponse.json(
+        { error: 'User not found' },
+        { status: 404 }
+      );
+    }
+    
+    // Remove user from store
+    usersStore = usersStore.filter((u) => u.id !== body.userId);
+    
+    // Also remove their enrollments
+    enrollmentsStore = enrollmentsStore.filter((e) => e.userId !== body.userId);
+    
+    return HttpResponse.json({ success: true, message: 'Account deleted successfully' });
   }),
 ];

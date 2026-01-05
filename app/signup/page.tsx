@@ -42,9 +42,13 @@ export default function SignupPage() {
         },
         body: JSON.stringify({
           name: formData.name,
+          firstName: formData.name.split(' ')[0] || '',
+          lastName: formData.name.split(' ').slice(1).join(' ') || '',
           email: formData.email,
           password: formData.password,
           role: formData.role,
+          avatar: '/assets/avatar-default.jpg',
+          onlineStatus: 'online',
         }),
       });
 
