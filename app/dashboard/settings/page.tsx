@@ -122,6 +122,9 @@ export default function SettingsPage() {
       localStorage.setItem('user', JSON.stringify(savedUser));
       setUser(savedUser);
       
+      // Dispatch custom event to notify other components
+      window.dispatchEvent(new Event('userDataUpdated'));
+      
       // Clear password fields
       setCurrentPassword('');
       setNewPassword('');

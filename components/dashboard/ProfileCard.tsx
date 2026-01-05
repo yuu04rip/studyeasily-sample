@@ -51,6 +51,9 @@ export default function ProfileCard({ user }: ProfileCardProps) {
             if (response.ok) {
               const { user: savedUser } = await response.json();
               localStorage.setItem('user', JSON.stringify(savedUser));
+              
+              // Dispatch custom event to notify other components
+              window.dispatchEvent(new Event('userDataUpdated'));
             }
           }
         } catch (error) {

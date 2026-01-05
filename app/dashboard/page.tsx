@@ -179,7 +179,17 @@ export default function DashboardPage() {
       fetchData();
     }, MSW_INIT_DELAY_MS);
     
-    return () => clearTimeout(timer);
+    // Listen for custom event to refresh dashboard when user data changes
+    const handleUserUpdate = () => {
+      fetchData();
+    };
+    
+    window.addEventListener('userDataUpdated', handleUserUpdate);
+    
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener('userDataUpdated', handleUserUpdate);
+    };
   }, [fetchData]);
 
   const handleDateClick = (date: Date, dayEvents: CalendarEvent[]) => {
