@@ -106,3 +106,18 @@ export interface EnrollmentResponse {
   message: string;
   enrollmentId: string;
 }
+
+// Theme types
+export type ThemeColor = 'purple' | 'orange' | 'green' | 'red' | 'black' | 'blue';
+
+export interface ThemeConfig {
+  name: string;
+  primary: string;
+  secondary: string;
+  accent: string;
+  gradientStart: string;
+  gradientEnd: string;
+  bgDark: string;
+  bgMid: string;
+  bg: string;
+}

@@ -74,14 +74,14 @@ export default function SidebarDashboard({ onChatOpen }: SidebarDashboardProps) 
 
   return (
     <aside 
-      className={`bg-gradient-neon-dashboard min-h-screen flex flex-col transition-all duration-300 ${
+      className={`bg-gradient-theme min-h-screen flex flex-col transition-all duration-300 ${
         isCollapsed ? 'w-20' : 'w-64 lg:w-72'
       }`}
     >
       {/* Collapse toggle button - mobile & desktop */}
       <button
         onClick={() => setIsCollapsed(!isCollapsed)}
-        className="absolute top-4 -right-3 z-10 bg-neon-violet/80 hover:bg-neon-violet p-1 rounded-full text-white shadow-neon focus-neon lg:hidden"
+        className="absolute top-4 -right-3 z-10 bg-theme-primary/80 hover:bg-theme-primary p-1 rounded-full text-white shadow-neon focus-neon lg:hidden"
         aria-label={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
       >
         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -111,7 +111,7 @@ export default function SidebarDashboard({ onChatOpen }: SidebarDashboardProps) 
             const isActive = !item.isChat && pathname === item.path;
             const commonClassName = `sidebar-neon-item flex flex-col items-center justify-center space-y-2 py-4 px-3 rounded-xl transition-all duration-180 w-full focus-neon ${
               isActive
-                ? 'active bg-neon-magenta/30 text-white border-2 border-neon-magenta'
+                ? 'active bg-theme-secondary/30 text-white border-2 border-theme-secondary'
                 : 'text-lightPurple hover:bg-white/10 hover:text-white'
             }`;
             

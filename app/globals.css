@@ -23,6 +23,16 @@
     --hero-scale: 1;
     --hero-brightness: 1;
     --sphere-global-scale: 1;
+    
+    /* Theme variables - default purple theme */
+    --theme-primary: #9B6BFF;
+    --theme-secondary: #FF66D7;
+    --theme-accent: #35D6C6;
+    --theme-gradient-start: #3b2863;
+    --theme-gradient-end: #5a37a6;
+    --theme-bg-dark: #2f1b4a;
+    --theme-bg-mid: #3b2863;
+    --theme-bg: #5a37a6;
 }
 
 /* Base */

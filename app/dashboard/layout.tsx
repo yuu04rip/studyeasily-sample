@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import SidebarDashboard from '@/components/SidebarDashboard';
 import { ChatPanel, ToastProvider } from '@/components/dashboard';
+import { ThemeProvider } from '@/contexts/ThemeContext';
 
 export default function DashboardLayout({
   children,
@@ -34,17 +35,19 @@ export default function DashboardLayout({
   }
 
   return (
-    <ToastProvider>
-      <div className="flex min-h-screen bg-gradient-neon-dashboard">
-        <SidebarDashboard onChatOpen={() => setIsChatOpen(true)} />
-        <div className="flex-1 relative">{children}</div>
-        <ChatPanel 
-          isOpen={isChatOpen} 
-          onClose={() => setIsChatOpen(false)}
-          currentUserId="student_42"
-          currentUserName="Marco Rossi"
-        />
-      </div>
-    </ToastProvider>
+    <ThemeProvider>
+      <ToastProvider>
+        <div className="flex min-h-screen bg-gradient-theme">
+          <SidebarDashboard onChatOpen={() => setIsChatOpen(true)} />
+          <div className="flex-1 relative">{children}</div>
+          <ChatPanel 
+            isOpen={isChatOpen} 
+            onClose={() => setIsChatOpen(false)}
+            currentUserId="student_42"
+            currentUserName="Marco Rossi"
+          />
+        </div>
+      </ToastProvider>
+    </ThemeProvider>
   );
 }
