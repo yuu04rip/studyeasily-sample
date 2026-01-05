@@ -4,12 +4,19 @@ export type UserRole = 'student' | 'instructor' | 'admin' | 'tutor';
 
 export type CourseStatus = 'draft' | 'published' | 'archived';
 
+export type OnlineStatus = 'online' | 'offline' | 'do-not-disturb';
+
 export interface User {
   id: string;
   email: string;
   name: string;
+  firstName?: string;
+  lastName?: string;
   avatar: string;
   role: UserRole;
+  birthDate?: string;
+  description?: string;
+  onlineStatus?: OnlineStatus;
   enrolledCourses?: string[];
   createdAt?: string;
 }
