@@ -5,9 +5,8 @@ import localFont from "next/font/local";
 import '../app/styles/poda.css';
 import './globals.css';
 
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
 import MSWProvider from "./msw-provider";
+import { ConditionalLayout } from "@/components/ConditionalLayout";
 
 const geistSans = localFont({
     src: "./fonts/GeistVF.woff",
@@ -34,9 +33,9 @@ export default function RootLayout({
         <html lang="en">
         <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gray-50`}>
         <MSWProvider>
-            <Header />
-            <main className="min-h-screen">{children}</main>
-            <Footer />
+            <ConditionalLayout>
+                {children}
+            </ConditionalLayout>
         </MSWProvider>
         </body>
         </html>

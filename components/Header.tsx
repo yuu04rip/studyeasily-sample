@@ -1,11 +1,16 @@
 'use client';
 
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import PodaSearch from '@/components/PodaSearch';
+import { useUser, clearUser } from '@/hooks/useUser';
 
 export default function Header() {
+  const router = useRouter();
+  const { user, isLoggedIn } = useUser();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [showProfileMenu, setShowProfileMenu] = useState(false);
 
   return (
     <header className="bg-white shadow-lg sticky top-0 z-50 border-b-2 border-accent/20">
@@ -45,18 +50,70 @@ export default function Header() {
             <div className="w-[280px] scale-75 mr-8">
               <PodaSearch inline redirectToDashboard={false} />
             </div>
-            <Link
-              href="/login"
-              className="text-primary hover:text-accent transition font-medium"
-            >
-              Login
-            </Link>
-            <Link
-              href="/signup"
-              className="bg-gradient-purple-pink text-white px-6 py-2 rounded-full hover:opacity-90 transition font-semibold shadow-lg"
-            >
-              Sign Up
-            </Link>
+            
+            {isLoggedIn ? (
+              <div className="relative">
+                <button
+                  onClick={() => setShowProfileMenu(!showProfileMenu)}
+                  className="flex items-center space-x-2 bg-gradient-purple-pink text-white px-4 py-2 rounded-full hover:opacity-90 transition font-semibold shadow-lg"
+                >
+                  <img 
+                    src={user?.avatar || '/assets/avatar-default.jpg'} 
+                    alt={user?.name || 'Profile'} 
+                    className="w-8 h-8 rounded-full object-cover"
+                  />
+                  <span className="max-w-[120px] truncate">{user?.name || 'User'}</span>
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+                
+                {showProfileMenu && (
+                  <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-xl py-2 z-50">
+                    <Link
+                      href="/dashboard"
+                      className="block px-4 py-2 text-gray-800 hover:bg-purple-50 transition"
+                      onClick={() => setShowProfileMenu(false)}
+                    >
+                      Dashboard
+                    </Link>
+                    <Link
+                      href="/dashboard/settings"
+                      className="block px-4 py-2 text-gray-800 hover:bg-purple-50 transition"
+                      onClick={() => setShowProfileMenu(false)}
+                    >
+                      Settings
+                    </Link>
+                    <hr className="my-2" />
+                    <button
+                      onClick={() => {
+                        clearUser();
+                        setShowProfileMenu(false);
+                        router.push('/');
+                      }}
+                      className="block w-full text-left px-4 py-2 text-red-600 hover:bg-red-50 transition"
+                    >
+                      Logout
+                    </button>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <>
+                <Link
+                  href="/login"
+                  className="text-primary hover:text-accent transition font-medium"
+                >
+                  Login
+                </Link>
+                <Link
+                  href="/signup"
+                  className="bg-gradient-purple-pink text-white px-6 py-2 rounded-full hover:opacity-90 transition font-semibold shadow-lg"
+                >
+                  Sign Up
+                </Link>
+              </>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -119,15 +176,39 @@ export default function Header() {
               <div className="py-2">
                 <PodaSearch inline redirectToDashboard={false} />
               </div>
-              <Link href="/login" className="text-primary py-2">
-                Login
-              </Link>
-              <Link
-                href="/signup"
-                className="bg-gradient-purple-pink text-white px-4 py-2 rounded-lg hover:opacity-90 transition text-center"
-              >
-                Sign Up
-              </Link>
+              
+              {isLoggedIn ? (
+                <>
+                  <Link href="/dashboard" className="text-primary py-2">
+                    Dashboard
+                  </Link>
+                  <Link href="/dashboard/settings" className="text-gray-700 py-2">
+                    Settings
+                  </Link>
+                  <button
+                    onClick={() => {
+                      clearUser();
+                      setIsMenuOpen(false);
+                      router.push('/');
+                    }}
+                    className="text-red-600 py-2 text-left w-full"
+                  >
+                    Logout
+                  </button>
+                </>
+              ) : (
+                <>
+                  <Link href="/login" className="text-primary py-2">
+                    Login
+                  </Link>
+                  <Link
+                    href="/signup"
+                    className="bg-gradient-purple-pink text-white px-4 py-2 rounded-lg hover:opacity-90 transition text-center"
+                  >
+                    Sign Up
+                  </Link>
+                </>
+              )}
             </nav>
           </div>
         )}

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
@@ -15,6 +15,14 @@ export default function SignupPage() {
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+
+  // Redirect if already logged in
+  useEffect(() => {
+    const user = localStorage.getItem('user');
+    if (user) {
+      router.replace('/dashboard');
+    }
+  }, [router]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setFormData({
@@ -59,8 +67,8 @@ export default function SignupPage() {
         localStorage.setItem('token', data.token);
         localStorage.setItem('user', JSON.stringify(data.user));
         
-        // Redirect to dashboard
-        router.push('/dashboard');
+        // Redirect to dashboard with replace to prevent going back
+        router.replace('/dashboard');
       } else {
         setError(data.error || 'Signup failed');
       }
