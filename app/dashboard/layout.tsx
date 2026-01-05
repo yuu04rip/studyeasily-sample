@@ -6,6 +6,10 @@ import SidebarDashboard from '@/components/SidebarDashboard';
 import { ChatPanel, ToastProvider } from '@/components/dashboard';
 import { ThemeProvider } from '@/contexts/ThemeContext';
 
+// Default fallback values for unauthenticated users
+const DEFAULT_USER_ID = 'guest';
+const DEFAULT_USER_NAME = 'Guest User';
+
 export default function DashboardLayout({
   children,
 }: {
@@ -14,6 +18,8 @@ export default function DashboardLayout({
   const router = useRouter();
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [currentUserId, setCurrentUserId] = useState('');
+  const [currentUserName, setCurrentUserName] = useState('');
 
   useEffect(() => {
     // Check if user is logged in
@@ -22,6 +28,9 @@ export default function DashboardLayout({
       router.replace('/login');
     } else {
       setIsAuthenticated(true);
+      const userData = JSON.parse(user);
+      setCurrentUserId(userData.id || DEFAULT_USER_ID);
+      setCurrentUserName(userData.name || DEFAULT_USER_NAME);
     }
   }, [router]);
 
@@ -43,8 +52,8 @@ export default function DashboardLayout({
           <ChatPanel 
             isOpen={isChatOpen} 
             onClose={() => setIsChatOpen(false)}
-            currentUserId="student_42"
-            currentUserName="Marco Rossi"
+            currentUserId={currentUserId}
+            currentUserName={currentUserName}
           />
         </div>
       </ToastProvider>

@@ -81,18 +81,19 @@ const themeConfigs: Record<ThemeColor, ThemeConfig> = {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [currentTheme, setCurrentTheme] = useState<ThemeColor>('purple');
-
-  useEffect(() => {
-    // Load theme from localStorage
-    const savedTheme = localStorage.getItem('dashboardTheme') as ThemeColor;
-    if (savedTheme && themeConfigs[savedTheme]) {
-      setCurrentTheme(savedTheme);
+  // Initialize theme from localStorage immediately or use default
+  const [currentTheme, setCurrentTheme] = useState<ThemeColor>(() => {
+    if (typeof window !== 'undefined') {
+      const savedTheme = localStorage.getItem('dashboardTheme') as ThemeColor;
+      if (savedTheme && themeConfigs[savedTheme]) {
+        return savedTheme;
+      }
     }
-  }, []);
+    return 'purple';
+  });
 
+  // Apply theme CSS variables immediately on mount and whenever theme changes
   useEffect(() => {
-    // Apply theme CSS variables
     const config = themeConfigs[currentTheme];
     const root = document.documentElement;
     

@@ -40,8 +40,8 @@ export default function LoginPage() {
         localStorage.setItem('token', data.token);
         localStorage.setItem('user', JSON.stringify(data.user));
         
-        // Redirect to dashboard with replace to prevent going back
-        router.replace('/dashboard');
+        // Force a full page reload to ensure dashboard refreshes with new user data
+        window.location.href = '/dashboard';
       } else {
         setError(data.error || 'Login failed');
       }
