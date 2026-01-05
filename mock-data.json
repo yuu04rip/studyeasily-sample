@@ -1,264 +1,104 @@
 {
-  "courses": [
-    {
-      "id": "1",
-      "title": "Introduction to Web Development",
-      "description": "Learn the fundamentals of web development including HTML, CSS, and JavaScript",
-      "instructor": "John Doe",
-      "instructorId": "instructor_1",
-      "duration": "8 weeks",
-      "level": "Beginner",
-      "price": 49.99,
-      "image": "/assets/course-1.jpg",
-      "category": "Web Development",
-      "enrolled": 1250,
-      "rating": 4.8,
-      "status": "published",
-      "curriculum": [
-        { "id": "1", "title": "Getting Started with HTML", "duration": "45 min" },
-        { "id": "2", "title": "CSS Basics", "duration": "60 min" },
-        { "id": "3", "title": "JavaScript Introduction", "duration": "90 min" }
-      ]
-    },
-    {
-      "id": "2",
-      "title": "Advanced React Development",
-      "description": "Master React hooks, context, and advanced patterns",
-      "instructor": "Jane Smith",
-      "instructorId": "instructor_2",
-      "duration": "12 weeks",
-      "level": "Advanced",
-      "price": 99.99,
-      "image": "/assets/course-2.jpg",
-      "category": "Frontend Development",
-      "enrolled": 850,
-      "rating": 4.9,
-      "status": "published",
-      "curriculum": [
-        { "id": "4", "title": "React Hooks Deep Dive", "duration": "120 min" },
-        { "id": "5", "title": "State Management with Context", "duration": "90 min" },
-        { "id": "6", "title": "Performance Optimization", "duration": "75 min" }
-      ]
-    },
-    {
-      "id": "3",
-      "title": "Python for Data Science",
-      "description": "Learn Python programming for data analysis and machine learning",
-      "instructor": "Michael Johnson",
-      "instructorId": "instructor_3",
-      "duration": "10 weeks",
-      "level": "Intermediate",
-      "price": 79.99,
-      "image": "/assets/course-3.jpg",
-      "category": "Data Science",
-      "enrolled": 2100,
-      "rating": 4.7,
-      "status": "published",
-      "curriculum": [
-        { "id": "7", "title": "Python Basics", "duration": "60 min" },
-        { "id": "8", "title": "NumPy and Pandas", "duration": "120 min" },
-        { "id": "9", "title": "Machine Learning Fundamentals", "duration": "150 min" }
-      ]
-    },
-    {
-      "id": "4",
-      "title": "Digital Marketing Masterclass",
-      "description": "Complete guide to digital marketing strategies and tools",
-      "instructor": "Sarah Williams",
-      "instructorId": "instructor_4",
-      "duration": "6 weeks",
-      "level": "Beginner",
-      "price": 59.99,
-      "image": "/assets/course-4.jpg",
-      "category": "Marketing",
-      "enrolled": 980,
-      "rating": 4.6,
-      "status": "published",
-      "curriculum": [
-        { "id": "10", "title": "SEO Fundamentals", "duration": "45 min" },
-        { "id": "11", "title": "Social Media Marketing", "duration": "60 min" },
-        { "id": "12", "title": "Content Marketing Strategy", "duration": "90 min" }
-      ]
-    }
-  ],
-  "lessons": [
-    {
-      "id": "1",
-      "courseId": "1",
-      "title": "Getting Started with HTML",
-      "description": "Introduction to HTML elements and structure",
-      "videoUrl": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-      "duration": "45 min",
-      "content": "In this lesson, you'll learn the basics of HTML, including tags, elements, attributes, and document structure. We'll cover semantic HTML and best practices for creating accessible web pages.",
-      "order": 1
-    },
-    {
-      "id": "2",
-      "courseId": "1",
-      "title": "CSS Basics",
-      "description": "Learn how to style your web pages with CSS",
-      "videoUrl": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-      "duration": "60 min",
-      "content": "Discover the power of CSS styling. Learn about selectors, properties, the box model, flexbox, and responsive design fundamentals.",
-      "order": 2
-    },
-    {
-      "id": "3",
-      "courseId": "1",
-      "title": "JavaScript Introduction",
-      "description": "Introduction to JavaScript programming fundamentals",
-      "videoUrl": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-      "duration": "90 min",
-      "content": "Learn JavaScript fundamentals including variables, data types, functions, loops, and DOM manipulation. Start building interactive web applications.",
-      "order": 3
-    },
-    {
-      "id": "4",
-      "courseId": "2",
-      "title": "React Hooks Deep Dive",
-      "description": "Master useState, useEffect, and custom hooks",
-      "videoUrl": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-      "duration": "120 min",
-      "content": "Deep dive into React Hooks. Learn how to use useState for state management, useEffect for side effects, and create your own custom hooks.",
-      "order": 1
-    },
-    {
-      "id": "5",
-      "courseId": "2",
-      "title": "State Management with Context",
-      "description": "Learn to manage global state with React Context API",
-      "videoUrl": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-      "duration": "90 min",
-      "content": "Master the React Context API for managing global application state. Learn when to use Context vs prop drilling and best practices for context providers.",
-      "order": 2
-    },
-    {
-      "id": "6",
-      "courseId": "2",
-      "title": "Performance Optimization",
-      "description": "Optimize your React applications for better performance",
-      "videoUrl": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-      "duration": "75 min",
-      "content": "Learn React performance optimization techniques including memoization, lazy loading, code splitting, and profiling with React DevTools.",
-      "order": 3
-    },
-    {
-      "id": "7",
-      "courseId": "3",
-      "title": "Python Basics",
-      "description": "Introduction to Python programming language",
-      "videoUrl": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-      "duration": "60 min",
-      "content": "Learn Python fundamentals including syntax, data types, control structures, functions, and object-oriented programming basics.",
-      "order": 1
-    },
-    {
-      "id": "8",
-      "courseId": "3",
-      "title": "NumPy and Pandas",
-      "description": "Data manipulation with NumPy and Pandas libraries",
-      "videoUrl": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-      "duration": "120 min",
-      "content": "Master NumPy for numerical computing and Pandas for data manipulation. Learn to work with arrays, DataFrames, and perform data analysis.",
-      "order": 2
-    },
-    {
-      "id": "9",
-      "courseId": "3",
-      "title": "Machine Learning Fundamentals",
-      "description": "Introduction to machine learning concepts and algorithms",
-      "videoUrl": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-      "duration": "150 min",
-      "content": "Learn machine learning fundamentals including supervised and unsupervised learning, classification, regression, and model evaluation.",
-      "order": 3
-    },
-    {
-      "id": "10",
-      "courseId": "4",
-      "title": "SEO Fundamentals",
-      "description": "Learn the basics of Search Engine Optimization",
-      "videoUrl": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-      "duration": "45 min",
-      "content": "Master SEO fundamentals including keyword research, on-page optimization, technical SEO, and link building strategies.",
-      "order": 1
-    },
-    {
-      "id": "11",
-      "courseId": "4",
-      "title": "Social Media Marketing",
-      "description": "Effective social media marketing strategies",
-      "videoUrl": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-      "duration": "60 min",
-      "content": "Learn to create effective social media marketing campaigns across platforms like Facebook, Instagram, Twitter, and LinkedIn.",
-      "order": 2
-    },
-    {
-      "id": "12",
-      "courseId": "4",
-      "title": "Content Marketing Strategy",
-      "description": "Build a successful content marketing strategy",
-      "videoUrl": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-      "duration": "90 min",
-      "content": "Learn to create, distribute, and promote valuable content that attracts and retains your target audience.",
-      "order": 3
-    }
-  ],
+  "courses": [],
+  "lessons": [],
   "users": [
     {
       "id": "1",
       "email": "demo@studyeasily.com",
       "name": "Demo User",
+      "firstName": "Demo",
+      "lastName": "User",
       "avatar": "/assets/avatar-1.jpg",
       "role": "student",
-      "enrolledCourses": []
+      "onlineStatus": "online",
+      "birthDate": "",
+      "description": "",
+      "enrolledCourses": [],
+      "createdAt": "2024-01-01T00:00:00.000Z"
     },
     {
       "id": "2",
       "email": "test@example.com",
       "name": "Test User",
+      "firstName": "Test",
+      "lastName": "User",
       "avatar": "/assets/avatar-2.jpg",
       "role": "student",
-      "enrolledCourses": []
+      "onlineStatus": "online",
+      "birthDate": "",
+      "description": "",
+      "enrolledCourses": [],
+      "createdAt": "2024-01-01T00:00:00.000Z"
     },
     {
       "id": "instructor_1",
       "email": "john.doe@studyeasily.com",
       "name": "John Doe",
+      "firstName": "John",
+      "lastName": "Doe",
       "avatar": "/assets/avatar-1.jpg",
       "role": "instructor",
-      "enrolledCourses": []
+      "onlineStatus": "online",
+      "birthDate": "",
+      "description": "",
+      "enrolledCourses": [],
+      "createdAt": "2024-01-01T00:00:00.000Z"
     },
     {
       "id": "instructor_2",
       "email": "jane.smith@studyeasily.com",
       "name": "Jane Smith",
+      "firstName": "Jane",
+      "lastName": "Smith",
       "avatar": "/assets/avatar-2.jpg",
       "role": "instructor",
-      "enrolledCourses": []
+      "onlineStatus": "online",
+      "birthDate": "",
+      "description": "",
+      "enrolledCourses": [],
+      "createdAt": "2024-01-01T00:00:00.000Z"
     },
     {
       "id": "instructor_3",
       "email": "michael.johnson@studyeasily.com",
       "name": "Michael Johnson",
+      "firstName": "Michael",
+      "lastName": "Johnson",
       "avatar": "/assets/avatar-1.jpg",
       "role": "instructor",
-      "enrolledCourses": []
+      "onlineStatus": "online",
+      "birthDate": "",
+      "description": "",
+      "enrolledCourses": [],
+      "createdAt": "2024-01-01T00:00:00.000Z"
     },
     {
       "id": "instructor_4",
       "email": "sarah.williams@studyeasily.com",
       "name": "Sarah Williams",
+      "firstName": "Sarah",
+      "lastName": "Williams",
       "avatar": "/assets/avatar-2.jpg",
       "role": "instructor",
-      "enrolledCourses": []
+      "onlineStatus": "online",
+      "birthDate": "",
+      "description": "",
+      "enrolledCourses": [],
+      "createdAt": "2024-01-01T00:00:00.000Z"
     },
     {
       "id": "admin_1",
       "email": "admin@studyeasily.com",
       "name": "Admin User",
+      "firstName": "Admin",
+      "lastName": "User",
       "avatar": "/assets/avatar-1.jpg",
       "role": "admin",
-      "enrolledCourses": []
+      "onlineStatus": "online",
+      "birthDate": "",
+      "description": "",
+      "enrolledCourses": [],
+      "createdAt": "2024-01-01T00:00:00.000Z"
     }
   ],
   "enrollments": [],

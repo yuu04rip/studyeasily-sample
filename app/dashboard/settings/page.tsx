@@ -1,11 +1,13 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
+import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { showToast } from '@/components/dashboard';
 import { User, OnlineStatus } from '@/types';
 
 export default function SettingsPage() {
+  const router = useRouter();
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -131,6 +133,57 @@ export default function SettingsPage() {
       showToast('Errore durante l\'aggiornamento del profilo', 'error');
     } finally {
       setSaving(false);
+    }
+  };
+
+  const handleLogout = () => {
+    // Clear localStorage
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    
+    showToast('Logout effettuato con successo', 'success');
+    
+    // Redirect to login page
+    setTimeout(() => {
+      router.push('/login');
+    }, 1000);
+  };
+
+  const handleDeleteAccount = async () => {
+    if (!user) return;
+
+    const confirmed = confirm(
+      'Sei sicuro di voler eliminare il tuo account? Questa azione è irreversibile e tutti i tuoi dati verranno eliminati.'
+    );
+    
+    if (!confirmed) return;
+
+    try {
+      const response = await fetch('/api/user/delete', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ userId: user.id }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Errore durante l\'eliminazione dell\'account');
+      }
+
+      // Clear localStorage
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      
+      showToast('Account eliminato con successo', 'success');
+      
+      // Redirect to home page
+      setTimeout(() => {
+        router.push('/');
+      }, 1500);
+    } catch (error) {
+      console.error('Error deleting account:', error);
+      showToast('Errore durante l\'eliminazione dell\'account', 'error');
     }
   };
 
@@ -331,6 +384,31 @@ export default function SettingsPage() {
               </motion.button>
             </div>
           </form>
+
+          {/* Logout and Delete Account Section */}
+          <div className="mt-8 pt-8 border-t border-white/10">
+            <h3 className="text-xl font-bold text-white mb-4">Azioni Account</h3>
+            <div className="flex flex-col sm:flex-row gap-4">
+              <motion.button
+                type="button"
+                onClick={handleLogout}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="px-6 py-3 bg-white/10 hover:bg-white/20 text-white font-semibold rounded-lg border border-white/20 transition-all"
+              >
+                Logout
+              </motion.button>
+              <motion.button
+                type="button"
+                onClick={handleDeleteAccount}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="px-6 py-3 bg-red-500/20 hover:bg-red-500/30 text-red-300 font-semibold rounded-lg border border-red-500/30 transition-all"
+              >
+                Elimina Account
+              </motion.button>
+            </div>
+          </div>
         </motion.div>
       </div>
     </div>
