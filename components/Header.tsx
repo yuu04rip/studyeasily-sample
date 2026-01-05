@@ -5,12 +5,19 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import PodaSearch from '@/components/PodaSearch';
 import { useUser, clearUser } from '@/hooks/useUser';
+import { FaUserCircle } from 'react-icons/fa';
 
 export default function Header() {
   const router = useRouter();
   const { user, isLoggedIn } = useUser();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showProfileMenu, setShowProfileMenu] = useState(false);
+  const [avatarLoadError, setAvatarLoadError] = useState(false);
+
+  // Reset avatar error when user changes
+  useEffect(() => {
+    setAvatarLoadError(false);
+  }, [user?.avatar]);
 
   return (
     <header className="bg-white shadow-lg sticky top-0 z-50 border-b-2 border-accent/20">
@@ -57,11 +64,16 @@ export default function Header() {
                   onClick={() => setShowProfileMenu(!showProfileMenu)}
                   className="flex items-center space-x-2 bg-gradient-purple-pink text-white px-4 py-2 rounded-full hover:opacity-90 transition font-semibold shadow-lg"
                 >
-                  <img 
-                    src={user?.avatar || '/assets/avatar-default.jpg'} 
-                    alt={user?.name || 'Profile'} 
-                    className="w-8 h-8 rounded-full object-cover"
-                  />
+                  {user?.avatar && user.avatar !== '/assets/avatar-default.jpg' && !avatarLoadError ? (
+                    <img 
+                      src={user.avatar} 
+                      alt={user?.name || 'Profile'} 
+                      className="w-8 h-8 rounded-full object-cover"
+                      onError={() => setAvatarLoadError(true)}
+                    />
+                  ) : (
+                    <FaUserCircle className="w-8 h-8" />
+                  )}
                   <span className="max-w-[120px] truncate">{user?.name || 'User'}</span>
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />

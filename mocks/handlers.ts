@@ -41,14 +41,40 @@ interface CourseTest {
   passingScore?: number;
 }
 
-// In-memory stores for mutable data
-let eventsStore: CalendarEvent[] = [...(mockData.events as CalendarEvent[])];
-const messagesStore: Record<string, ChatMessage[]> = { ...mockData.messages } as Record<string, ChatMessage[]>;
-let coursesStore: Course[] = [...(mockData.courses as Course[])];
-let usersStore: User[] = [...(mockData.users as User[])];
-let enrollmentsStore: Enrollment[] = [...(mockData.enrollments as Enrollment[])];
-let materialsStore: CourseMaterial[] = [];
-let testsStore: CourseTest[] = [];
+// In-memory stores for mutable data with localStorage backup
+// Helper to load data from localStorage with fallback
+function loadFromStorage<T>(key: string, fallback: T): T {
+  if (typeof window !== 'undefined') {
+    try {
+      const stored = localStorage.getItem(`msw_${key}`);
+      if (stored) {
+        return JSON.parse(stored);
+      }
+    } catch (error) {
+      console.error(`Error loading ${key} from localStorage:`, error);
+    }
+  }
+  return fallback;
+}
+
+// Helper to save data to localStorage
+function saveToStorage<T>(key: string, data: T): void {
+  if (typeof window !== 'undefined') {
+    try {
+      localStorage.setItem(`msw_${key}`, JSON.stringify(data));
+    } catch (error) {
+      console.error(`Error saving ${key} to localStorage:`, error);
+    }
+  }
+}
+
+let eventsStore: CalendarEvent[] = loadFromStorage('events', [...(mockData.events as CalendarEvent[])]);
+const messagesStore: Record<string, ChatMessage[]> = loadFromStorage('messages', { ...mockData.messages } as Record<string, ChatMessage[]>);
+let coursesStore: Course[] = loadFromStorage('courses', [...(mockData.courses as Course[])]);
+let usersStore: User[] = loadFromStorage('users', [...(mockData.users as User[])]);
+let enrollmentsStore: Enrollment[] = loadFromStorage('enrollments', [...(mockData.enrollments as Enrollment[])]);
+let materialsStore: CourseMaterial[] = loadFromStorage('materials', []);
+let testsStore: CourseTest[] = loadFromStorage('tests', []);
 
 // Helper function to get user from token
 function getUserFromToken(authHeader: string | null): User | null {
@@ -168,6 +194,9 @@ export const handlers = [
     
     coursesStore.push(newCourse);
     
+    // Save updated courses to localStorage for persistence
+    saveToStorage('courses', coursesStore);
+    
     return HttpResponse.json({ course: newCourse }, { status: 201 });
   }),
 
@@ -202,6 +231,9 @@ export const handlers = [
       instructorId: course.instructorId, // Preserve instructor
     };
     
+    // Save updated courses to localStorage for persistence
+    saveToStorage('courses', coursesStore);
+    
     return HttpResponse.json({ course: coursesStore[courseIndex] });
   }),
 
@@ -230,6 +262,9 @@ export const handlers = [
     }
     
     coursesStore = coursesStore.filter((c) => c.id !== id);
+    
+    // Save updated courses to localStorage for persistence
+    saveToStorage('courses', coursesStore);
     
     return HttpResponse.json({ success: true });
   }),
@@ -406,6 +441,9 @@ export const handlers = [
     
     enrollmentsStore.push(newEnrollment);
     
+    // Save updated enrollments to localStorage for persistence
+    saveToStorage('enrollments', enrollmentsStore);
+    
     // Update course enrolled count
     const courseIndex = coursesStore.findIndex((c) => c.id === courseId);
     if (courseIndex !== -1) {
@@ -565,6 +603,9 @@ export const handlers = [
     
     eventsStore.push(newEvent);
     
+    // Save updated events to localStorage for persistence
+    saveToStorage('events', eventsStore);
+    
     return HttpResponse.json({ event: newEvent }, { status: 201 });
   }),
 
@@ -587,6 +628,9 @@ export const handlers = [
       ...body,
     };
     
+    // Save updated events to localStorage for persistence
+    saveToStorage('events', eventsStore);
+    
     return HttpResponse.json({ event: eventsStore[eventIndex] });
   }),
 
@@ -604,6 +648,9 @@ export const handlers = [
     }
     
     eventsStore = eventsStore.filter((e) => e.id !== id);
+    
+    // Save updated events to localStorage for persistence
+    saveToStorage('events', eventsStore);
     
     return HttpResponse.json({ success: true });
   }),
@@ -792,6 +839,9 @@ export const handlers = [
     };
     
     usersStore[userIndex] = updatedUser;
+    
+    // Save updated users to localStorage for persistence
+    saveToStorage('users', usersStore);
     
     // In a real app, password would be hashed and stored separately
     // For mock purposes, we just acknowledge the password change
