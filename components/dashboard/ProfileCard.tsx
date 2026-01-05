@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { useState, useRef } from 'react';
+import { useRouter } from 'next/navigation';
 
 interface User {
   id: string;
@@ -16,6 +17,7 @@ interface ProfileCardProps {
 }
 
 export default function ProfileCard({ user }: ProfileCardProps) {
+  const router = useRouter();
   const [avatar, setAvatar] = useState(user.avatar);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -101,6 +103,7 @@ export default function ProfileCard({ user }: ProfileCardProps) {
         <motion.button
           whileHover={{ scale: 1.1, rotate: 90 }}
           whileTap={{ scale: 0.9 }}
+          onClick={() => router.push('/dashboard/settings')}
           className="p-2 rounded-full hover:bg-white/10 transition-colors focus-neon"
           aria-label="Impostazioni profilo"
         >

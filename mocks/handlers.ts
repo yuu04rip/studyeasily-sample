@@ -592,4 +592,38 @@ export const handlers = [
     
     return HttpResponse.json({ grades: userGrades });
   }),
+
+  // PUT /api/user/profile - Update user profile
+  http.put('/api/user/profile', async ({ request }) => {
+    const body = await request.json() as User & { password?: string };
+    
+    const userIndex = usersStore.findIndex((u) => u.id === body.id);
+    
+    if (userIndex === -1) {
+      return HttpResponse.json(
+        { error: 'User not found' },
+        { status: 404 }
+      );
+    }
+    
+    // Update user data
+    const updatedUser: User = {
+      ...usersStore[userIndex],
+      firstName: body.firstName,
+      lastName: body.lastName,
+      email: body.email,
+      birthDate: body.birthDate,
+      description: body.description,
+      onlineStatus: body.onlineStatus,
+      avatar: body.avatar,
+      name: body.name,
+    };
+    
+    usersStore[userIndex] = updatedUser;
+    
+    // In a real app, password would be hashed and stored separately
+    // For mock purposes, we just acknowledge the password change
+    
+    return HttpResponse.json({ user: updatedUser });
+  }),
 ];
