@@ -4,13 +4,15 @@ import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { showToast } from '@/components/dashboard';
-import { User, OnlineStatus } from '@/types';
+import { User, OnlineStatus, ThemeColor } from '@/types';
+import { useTheme, themeConfigs } from '@/contexts/ThemeContext';
 
 export default function SettingsPage() {
   const router = useRouter();
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const { currentTheme, setTheme } = useTheme();
   
   // Form state
   const [firstName, setFirstName] = useState('');
@@ -234,7 +236,7 @@ export default function SettingsPage() {
               <button
                 type="button"
                 onClick={handleAvatarClick}
-                className="group relative w-32 h-32 rounded-full overflow-hidden border-4 border-neon-violet shadow-neon focus-neon cursor-pointer"
+                className="group relative w-32 h-32 rounded-full overflow-hidden border-4 border-theme-primary shadow-neon focus-neon cursor-pointer"
               >
                 {avatar ? (
                   <div 
@@ -242,7 +244,7 @@ export default function SettingsPage() {
                     style={{ backgroundImage: `url(${avatar})` }}
                   />
                 ) : (
-                  <div className="w-full h-full bg-gradient-to-br from-neon-violet to-neon-magenta flex items-center justify-center">
+                  <div className="w-full h-full bg-gradient-to-br from-theme-primary to-theme-secondary flex items-center justify-center">
                     <svg className="w-16 h-16 text-white" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
                     </svg>
@@ -272,7 +274,7 @@ export default function SettingsPage() {
                   type="text"
                   value={firstName}
                   onChange={(e) => setFirstName(e.target.value)}
-                  className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-lightPurple/50 focus:outline-none focus:border-neon-violet focus:ring-2 focus:ring-neon-violet/50 transition"
+                  className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-lightPurple/50 focus:outline-none focus:border-theme-primary focus:ring-2 focus:ring-theme-primary/50 transition"
                   placeholder="Inserisci il tuo nome"
                 />
               </div>
@@ -283,7 +285,7 @@ export default function SettingsPage() {
                   type="text"
                   value={lastName}
                   onChange={(e) => setLastName(e.target.value)}
-                  className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-lightPurple/50 focus:outline-none focus:border-neon-violet focus:ring-2 focus:ring-neon-violet/50 transition"
+                  className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-lightPurple/50 focus:outline-none focus:border-theme-primary focus:ring-2 focus:ring-theme-primary/50 transition"
                   placeholder="Inserisci il tuo cognome"
                 />
               </div>
@@ -295,7 +297,7 @@ export default function SettingsPage() {
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-lightPurple/50 focus:outline-none focus:border-neon-violet focus:ring-2 focus:ring-neon-violet/50 transition"
+                className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-lightPurple/50 focus:outline-none focus:border-theme-primary focus:ring-2 focus:ring-theme-primary/50 transition"
                 placeholder="email@esempio.com"
               />
             </div>
@@ -306,7 +308,7 @@ export default function SettingsPage() {
                 type="date"
                 value={birthDate}
                 onChange={(e) => setBirthDate(e.target.value)}
-                className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-lightPurple/50 focus:outline-none focus:border-neon-violet focus:ring-2 focus:ring-neon-violet/50 transition"
+                className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-lightPurple/50 focus:outline-none focus:border-theme-primary focus:ring-2 focus:ring-theme-primary/50 transition"
               />
             </div>
 
@@ -316,7 +318,7 @@ export default function SettingsPage() {
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 rows={4}
-                className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-lightPurple/50 focus:outline-none focus:border-neon-violet focus:ring-2 focus:ring-neon-violet/50 transition resize-none"
+                className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-lightPurple/50 focus:outline-none focus:border-theme-primary focus:ring-2 focus:ring-theme-primary/50 transition resize-none"
                 placeholder="Racconta qualcosa di te..."
               />
             </div>
@@ -327,12 +329,59 @@ export default function SettingsPage() {
               <select
                 value={onlineStatus}
                 onChange={(e) => setOnlineStatus(e.target.value as OnlineStatus)}
-                className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:border-neon-violet focus:ring-2 focus:ring-neon-violet/50 transition"
+                className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:border-theme-primary focus:ring-2 focus:ring-theme-primary/50 transition"
               >
                 <option value="online" className="bg-dashboard-bg text-white">Online</option>
                 <option value="offline" className="bg-dashboard-bg text-white">Offline</option>
                 <option value="do-not-disturb" className="bg-dashboard-bg text-white">Non Disturbare</option>
               </select>
+            </div>
+
+            {/* Theme Color Section */}
+            <div className="pt-6 border-t border-white/10">
+              <h3 className="text-xl font-bold text-white mb-4">Tema Dashboard</h3>
+              <p className="text-lightPurple mb-4">Seleziona il colore del tema che preferisci</p>
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                {(Object.keys(themeConfigs) as ThemeColor[]).map((themeKey) => {
+                  const theme = themeConfigs[themeKey];
+                  const isSelected = currentTheme === themeKey;
+                  return (
+                    <motion.button
+                      key={themeKey}
+                      type="button"
+                      onClick={() => {
+                        setTheme(themeKey);
+                        showToast(`Tema cambiato a ${theme.name}`, 'success');
+                      }}
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      className={`relative p-4 rounded-xl border-2 transition-all ${
+                        isSelected
+                          ? 'border-white shadow-lg'
+                          : 'border-white/20 hover:border-white/40'
+                      }`}
+                      style={{
+                        background: `linear-gradient(135deg, ${theme.gradientStart} 0%, ${theme.gradientEnd} 100%)`,
+                      }}
+                    >
+                      {isSelected && (
+                        <div className="absolute top-2 right-2">
+                          <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                          </svg>
+                        </div>
+                      )}
+                      <div className="flex flex-col items-center space-y-2">
+                        <div 
+                          className="w-12 h-12 rounded-full border-2 border-white/50"
+                          style={{ backgroundColor: theme.primary }}
+                        />
+                        <span className="text-white font-semibold text-sm">{theme.name}</span>
+                      </div>
+                    </motion.button>
+                  );
+                })}
+              </div>
             </div>
 
             {/* Password Change Section */}
@@ -345,7 +394,7 @@ export default function SettingsPage() {
                     type="password"
                     value={currentPassword}
                     onChange={(e) => setCurrentPassword(e.target.value)}
-                    className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-lightPurple/50 focus:outline-none focus:border-neon-violet focus:ring-2 focus:ring-neon-violet/50 transition"
+                    className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-lightPurple/50 focus:outline-none focus:border-theme-primary focus:ring-2 focus:ring-theme-primary/50 transition"
                     placeholder="Inserisci la password attuale"
                   />
                 </div>
@@ -356,7 +405,7 @@ export default function SettingsPage() {
                     type="password"
                     value={newPassword}
                     onChange={(e) => setNewPassword(e.target.value)}
-                    className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-lightPurple/50 focus:outline-none focus:border-neon-violet focus:ring-2 focus:ring-neon-violet/50 transition"
+                    className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-lightPurple/50 focus:outline-none focus:border-theme-primary focus:ring-2 focus:ring-theme-primary/50 transition"
                     placeholder="Inserisci la nuova password"
                   />
                 </div>
@@ -367,7 +416,7 @@ export default function SettingsPage() {
                     type="password"
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
-                    className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-lightPurple/50 focus:outline-none focus:border-neon-violet focus:ring-2 focus:ring-neon-violet/50 transition"
+                    className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-lightPurple/50 focus:outline-none focus:border-theme-primary focus:ring-2 focus:ring-theme-primary/50 transition"
                     placeholder="Conferma la nuova password"
                   />
                 </div>
@@ -381,7 +430,7 @@ export default function SettingsPage() {
                 disabled={saving}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className="px-8 py-3 bg-gradient-to-r from-neon-violet to-neon-magenta text-white font-semibold rounded-lg shadow-neon hover:shadow-neon-hover transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                className="px-8 py-3 bg-gradient-to-r from-theme-primary to-theme-secondary text-white font-semibold rounded-lg shadow-neon hover:shadow-neon-hover transition-all disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {saving ? 'Salvataggio...' : 'Salva Modifiche'}
               </motion.button>

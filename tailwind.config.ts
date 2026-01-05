@@ -36,6 +36,15 @@ const config: Config = {
                     bgMid: "#5a37a6",
                     bgDark: "#2f1b4a",
                 },
+                // Theme-aware colors using CSS variables
+                theme: {
+                    primary: "var(--theme-primary)",
+                    secondary: "var(--theme-secondary)",
+                    accent: "var(--theme-accent)",
+                    bg: "var(--theme-bg)",
+                    bgMid: "var(--theme-bg-mid)",
+                    bgDark: "var(--theme-bg-dark)",
+                },
             },
             backgroundImage: {
                 'gradient-main': 'linear-gradient(135deg, #5B4D9D 0%, #4A5FD9 50%, #E84CB4 100%)',
@@ -44,6 +53,9 @@ const config: Config = {
                 'gradient-dark': 'linear-gradient(180deg, #2D1B69 0%, #1a103d 100%)',
                 'gradient-neon-dashboard': 'linear-gradient(180deg, #3b2863 0%, #5a37a6 45%, #2f1b4a 100%)',
                 'gradient-neon-card': 'linear-gradient(135deg, rgba(155,107,255,0.2) 0%, rgba(53,214,198,0.2) 100%)',
+                // Theme-aware gradients using CSS variables
+                'gradient-theme': 'linear-gradient(180deg, var(--theme-bg-mid) 0%, var(--theme-bg) 45%, var(--theme-bg-dark) 100%)',
+                'gradient-theme-card': 'linear-gradient(135deg, rgba(var(--theme-primary-rgb, 155,107,255),0.2) 0%, rgba(var(--theme-accent-rgb, 53,214,198),0.2) 100%)',
             },
             boxShadow: {
                 'neon': '0 0 20px rgba(155,107,255,0.4), 0 0 40px rgba(155,107,255,0.2)',
