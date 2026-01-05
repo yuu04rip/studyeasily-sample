@@ -20,34 +20,34 @@ export default function Header() {
   }, [user?.avatar]);
 
   return (
-    <header className="bg-white shadow-lg sticky top-0 z-50 border-b-2 border-accent/20">
+    <header className="bg-gradient-to-r from-primary/95 to-darkPurple/95 backdrop-blur-sm shadow-lg sticky top-0 z-50 border-b-2 border-accent/20">
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
-          <Link href="/" className="text-2xl md:text-3xl font-bold bg-gradient-purple-pink bg-clip-text text-transparent hover:opacity-80 transition">
+          <Link href="/" className="text-2xl md:text-3xl font-bold text-white hover:text-accent transition">
             StudyEasily
           </Link>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-6">
-            <Link href="/corsi" className="text-gray-700 hover:text-primary transition">
+            <Link href="/corsi" className="text-white/90 hover:text-accent transition">
               Corsi
             </Link>
-            <Link href="/piani" className="text-gray-700 hover:text-primary transition">
+            <Link href="/piani" className="text-white/90 hover:text-accent transition">
               Piani
             </Link>
-            <Link href="/canali" className="text-gray-700 hover:text-primary transition">
+            <Link href="/canali" className="text-white/90 hover:text-accent transition">
               Canali
             </Link>
-            <Link href="/business" className="text-gray-700 hover:text-primary transition">
+            <Link href="/business" className="text-white/90 hover:text-accent transition">
               Business
             </Link>
-            <Link href="/blog" className="text-gray-700 hover:text-primary transition">
+            <Link href="/blog" className="text-white/90 hover:text-accent transition">
               Blog
             </Link>
-            <Link href="/faq" className="text-gray-700 hover:text-primary transition">
+            <Link href="/faq" className="text-white/90 hover:text-accent transition">
               FAQ
             </Link>
-            <Link href="/contatti" className="text-gray-700 hover:text-primary transition">
+            <Link href="/contatti" className="text-white/90 hover:text-accent transition">
               Contatti
             </Link>
           </nav>
@@ -114,13 +114,13 @@ export default function Header() {
               <>
                 <Link
                   href="/login"
-                  className="text-primary hover:text-accent transition font-medium"
+                  className="text-white hover:text-accent transition font-medium"
                 >
                   Login
                 </Link>
                 <Link
                   href="/signup"
-                  className="bg-gradient-purple-pink text-white px-6 py-2 rounded-full hover:opacity-90 transition font-semibold shadow-lg"
+                  className="bg-accent text-white px-6 py-2 rounded-full hover:opacity-90 transition font-semibold shadow-lg"
                 >
                   Sign Up
                 </Link>
@@ -130,7 +130,7 @@ export default function Header() {
 
           {/* Mobile Menu Button */}
           <button
-            className="md:hidden text-gray-700"
+            className="md:hidden text-white"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             aria-label="Toggle menu"
           >
@@ -163,25 +163,25 @@ export default function Header() {
         {isMenuOpen && (
           <div className="md:hidden mt-4 pb-4">
             <nav className="flex flex-col space-y-2">
-              <Link href="/corsi" className="text-gray-700 hover:text-primary py-2">
+              <Link href="/corsi" className="text-white/90 hover:text-accent py-2">
                 Corsi
               </Link>
-              <Link href="/piani" className="text-gray-700 hover:text-primary py-2">
+              <Link href="/piani" className="text-white/90 hover:text-accent py-2">
                 Piani
               </Link>
-              <Link href="/canali" className="text-gray-700 hover:text-primary py-2">
+              <Link href="/canali" className="text-white/90 hover:text-accent py-2">
                 Canali
               </Link>
-              <Link href="/business" className="text-gray-700 hover:text-primary py-2">
+              <Link href="/business" className="text-white/90 hover:text-accent py-2">
                 Business
               </Link>
-              <Link href="/blog" className="text-gray-700 hover:text-primary py-2">
+              <Link href="/blog" className="text-white/90 hover:text-accent py-2">
                 Blog
               </Link>
-              <Link href="/faq" className="text-gray-700 hover:text-primary py-2">
+              <Link href="/faq" className="text-white/90 hover:text-accent py-2">
                 FAQ
               </Link>
-              <Link href="/contatti" className="text-gray-700 hover:text-primary py-2">
+              <Link href="/contatti" className="text-white/90 hover:text-accent py-2">
                 Contatti
               </Link>
               {/* Mobile PodaSearch */}
@@ -191,10 +191,10 @@ export default function Header() {
               
               {isLoggedIn ? (
                 <>
-                  <Link href="/dashboard" className="text-primary py-2">
+                  <Link href="/dashboard" className="text-accent py-2">
                     Dashboard
                   </Link>
-                  <Link href="/dashboard/settings" className="text-gray-700 py-2">
+                  <Link href="/dashboard/settings" className="text-white/90 py-2">
                     Settings
                   </Link>
                   <button
@@ -203,19 +203,19 @@ export default function Header() {
                       setIsMenuOpen(false);
                       router.push('/');
                     }}
-                    className="text-red-600 py-2 text-left w-full"
+                    className="text-red-400 py-2 text-left w-full"
                   >
                     Logout
                   </button>
                 </>
               ) : (
                 <>
-                  <Link href="/login" className="text-primary py-2">
+                  <Link href="/login" className="text-white py-2">
                     Login
                   </Link>
                   <Link
                     href="/signup"
-                    className="bg-gradient-purple-pink text-white px-4 py-2 rounded-lg hover:opacity-90 transition text-center"
+                    className="bg-accent text-white px-4 py-2 rounded-lg hover:opacity-90 transition text-center"
                   >
                     Sign Up
                   </Link>
