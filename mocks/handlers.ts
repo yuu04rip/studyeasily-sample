@@ -22,12 +22,33 @@ interface ChatMessage {
   status: string;
 }
 
+interface CourseMaterial {
+  id: string;
+  courseId: string;
+  title: string;
+  type: 'video' | 'document' | 'link' | 'image';
+  url: string;
+  description?: string;
+}
+
+interface CourseTest {
+  id: string;
+  courseId: string;
+  title: string;
+  description: string;
+  questions: any[];
+  timeLimit?: number;
+  passingScore?: number;
+}
+
 // In-memory stores for mutable data
 let eventsStore: CalendarEvent[] = [...(mockData.events as CalendarEvent[])];
 const messagesStore: Record<string, ChatMessage[]> = { ...mockData.messages } as Record<string, ChatMessage[]>;
 let coursesStore: Course[] = [...(mockData.courses as Course[])];
 let usersStore: User[] = [...(mockData.users as User[])];
 let enrollmentsStore: Enrollment[] = [...(mockData.enrollments as Enrollment[])];
+let materialsStore: CourseMaterial[] = [];
+let testsStore: CourseTest[] = [];
 
 // Helper function to get user from token
 function getUserFromToken(authHeader: string | null): User | null {
@@ -766,5 +787,61 @@ export const handlers = [
     enrollmentsStore = enrollmentsStore.filter((e) => e.userId !== body.userId);
     
     return HttpResponse.json({ success: true, message: 'Account deleted successfully' });
+  }),
+
+  // GET /api/courses/:courseId/materials - Get course materials
+  http.get('/api/courses/:courseId/materials', ({ params }) => {
+    const { courseId } = params;
+    const materials = materialsStore.filter(m => m.courseId === courseId);
+    return HttpResponse.json({ materials });
+  }),
+
+  // POST /api/courses/:courseId/materials - Add course material
+  http.post('/api/courses/:courseId/materials', async ({ params, request }) => {
+    const { courseId } = params;
+    const body = await request.json() as Omit<CourseMaterial, 'courseId'>;
+    
+    const material: CourseMaterial = {
+      ...body,
+      courseId: courseId as string,
+    };
+    
+    materialsStore.push(material);
+    return HttpResponse.json({ material }, { status: 201 });
+  }),
+
+  // DELETE /api/courses/:courseId/materials/:materialId - Delete course material
+  http.delete('/api/courses/:courseId/materials/:materialId', ({ params }) => {
+    const { materialId } = params;
+    materialsStore = materialsStore.filter(m => m.id !== materialId);
+    return HttpResponse.json({ success: true });
+  }),
+
+  // GET /api/courses/:courseId/tests - Get course tests
+  http.get('/api/courses/:courseId/tests', ({ params }) => {
+    const { courseId } = params;
+    const tests = testsStore.filter(t => t.courseId === courseId);
+    return HttpResponse.json({ tests });
+  }),
+
+  // POST /api/courses/:courseId/tests - Create course test
+  http.post('/api/courses/:courseId/tests', async ({ params, request }) => {
+    const { courseId } = params;
+    const body = await request.json() as Omit<CourseTest, 'courseId'>;
+    
+    const test: CourseTest = {
+      ...body,
+      courseId: courseId as string,
+    };
+    
+    testsStore.push(test);
+    return HttpResponse.json({ test }, { status: 201 });
+  }),
+
+  // DELETE /api/courses/:courseId/tests/:testId - Delete course test
+  http.delete('/api/courses/:courseId/tests/:testId', ({ params }) => {
+    const { testId } = params;
+    testsStore = testsStore.filter(t => t.id !== testId);
+    return HttpResponse.json({ success: true });
   }),
 ];
