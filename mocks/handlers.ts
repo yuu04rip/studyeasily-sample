@@ -567,4 +567,21 @@ export const handlers = [
     
     return HttpResponse.json({ message: newMessage }, { status: 201 });
   }),
+
+  // GET /api/grades - Get grades for a user
+  http.get('/api/grades', ({ request }) => {
+    const url = new URL(request.url);
+    const userId = url.searchParams.get('userId');
+    
+    if (!userId) {
+      return HttpResponse.json(
+        { error: 'User ID is required' },
+        { status: 400 }
+      );
+    }
+    
+    const userGrades = (mockData.grades as any[]).filter((g) => g.userId === userId);
+    
+    return HttpResponse.json({ grades: userGrades });
+  }),
 ];

@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { useState, useRef } from 'react';
 
 interface User {
   id: string;
@@ -15,6 +16,25 @@ interface ProfileCardProps {
 }
 
 export default function ProfileCard({ user }: ProfileCardProps) {
+  const [avatar, setAvatar] = useState(user.avatar);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleAvatarClick = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setAvatar(reader.result as string);
+        // TODO: Upload to backend when real API is available
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, x: 20 }}
@@ -25,11 +45,15 @@ export default function ProfileCard({ user }: ProfileCardProps) {
       <div className="flex items-center space-x-4">
         {/* Avatar */}
         <div className="relative">
-          <div className="w-16 h-16 md:w-20 md:h-20 rounded-full overflow-hidden border-2 border-neon-violet shadow-neon">
-            {user.avatar ? (
+          <button
+            onClick={handleAvatarClick}
+            className="group w-16 h-16 md:w-20 md:h-20 rounded-full overflow-hidden border-2 border-neon-violet shadow-neon focus-neon cursor-pointer relative"
+            aria-label="Carica foto profilo"
+          >
+            {avatar ? (
               <div 
                 className="w-full h-full bg-cover bg-center"
-                style={{ backgroundImage: `url(${user.avatar})` }}
+                style={{ backgroundImage: `url(${avatar})` }}
                 role="img"
                 aria-label={`Avatar di ${user.name}`}
               />
@@ -40,7 +64,22 @@ export default function ProfileCard({ user }: ProfileCardProps) {
                 </svg>
               </div>
             )}
-          </div>
+            {/* Upload overlay on hover */}
+            <div className="absolute inset-0 bg-black/60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+              <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+              </svg>
+            </div>
+          </button>
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="image/*"
+            onChange={handleFileChange}
+            className="hidden"
+            aria-label="Seleziona file immagine"
+          />
           {/* Online status indicator */}
           <div className="absolute bottom-0 right-0 w-4 h-4 bg-neon-cyan rounded-full border-2 border-dashboard-bg shadow-neon-cyan" />
         </div>

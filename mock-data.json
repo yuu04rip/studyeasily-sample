@@ -622,5 +622,84 @@
         "status": "read"
       }
     ]
-  }
+  },
+  "grades": [
+    {
+      "id": "grade_1",
+      "userId": "1",
+      "courseId": "1",
+      "courseName": "Introduction to Web Development",
+      "subject": "Web Development",
+      "grade": 85,
+      "maxGrade": 100,
+      "date": "2024-11-15T10:00:00Z",
+      "type": "quiz"
+    },
+    {
+      "id": "grade_2",
+      "userId": "1",
+      "courseId": "1",
+      "courseName": "Introduction to Web Development",
+      "subject": "Web Development",
+      "grade": 92,
+      "maxGrade": 100,
+      "date": "2024-11-22T10:00:00Z",
+      "type": "assignment"
+    },
+    {
+      "id": "grade_3",
+      "userId": "1",
+      "courseId": "2",
+      "courseName": "Advanced React Development",
+      "subject": "Frontend Development",
+      "grade": 78,
+      "maxGrade": 100,
+      "date": "2024-11-18T14:00:00Z",
+      "type": "exam"
+    },
+    {
+      "id": "grade_4",
+      "userId": "1",
+      "courseId": "2",
+      "courseName": "Advanced React Development",
+      "subject": "Frontend Development",
+      "grade": 88,
+      "maxGrade": 100,
+      "date": "2024-11-25T14:00:00Z",
+      "type": "quiz"
+    },
+    {
+      "id": "grade_5",
+      "userId": "2",
+      "courseId": "3",
+      "courseName": "Python for Data Science",
+      "subject": "Data Science",
+      "grade": 95,
+      "maxGrade": 100,
+      "date": "2024-12-01T09:00:00Z",
+      "type": "assignment"
+    },
+    {
+      "id": "grade_6",
+      "userId": "admin_1",
+      "courseId": "1",
+      "courseName": "Introduction to Web Development",
+      "subject": "Web Development",
+      "grade": 90,
+      "maxGrade": 100,
+      "date": "2024-11-20T10:00:00Z",
+      "type": "quiz"
+    },
+    {
+      "id": "grade_7",
+      "userId": "admin_1",
+      "courseId": "3",
+      "courseName": "Python for Data Science",
+      "subject": "Data Science",
+      "grade": 87,
+      "maxGrade": 100,
+      "date": "2024-12-05T11:00:00Z",
+      "type": "exam"
+    }
+  ]
 }
