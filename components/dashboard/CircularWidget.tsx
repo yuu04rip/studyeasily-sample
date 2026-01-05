@@ -68,17 +68,30 @@ export default function CircularWidget({
         {/* Content */}
         <div className="absolute inset-2 md:inset-3 rounded-full overflow-hidden bg-gradient-to-br from-dashboard-bg to-dashboard-bgDark flex items-center justify-center">
           {image ? (
-            <div 
-              className="w-full h-full bg-cover bg-center opacity-80"
-              style={{ backgroundImage: `url(${image})` }}
-              role="img"
-              aria-label={title}
-            />
+            <div className="relative w-full h-full">
+              <div 
+                className="w-full h-full bg-cover bg-center opacity-40"
+                style={{ backgroundImage: `url(${image})` }}
+                role="img"
+                aria-label={title}
+              />
+              {/* Overlay percentage in the center */}
+              <div className="absolute inset-0 flex flex-col items-center justify-center">
+                <div className="text-2xl md:text-3xl lg:text-4xl font-bold text-white neon-text-glow">
+                  {progress}%
+                </div>
+              </div>
+            </div>
           ) : (
             <div className="text-center p-2">
               <div className="text-3xl md:text-4xl font-bold text-white neon-text-glow">
                 {value}
               </div>
+              {progress > 0 && (
+                <div className="text-lg md:text-xl text-neon-cyan mt-1">
+                  {progress}%
+                </div>
+              )}
             </div>
           )}
         </div>
@@ -94,11 +107,6 @@ export default function CircularWidget({
         <h3 className="text-lg md:text-xl font-semibold text-white">
           {title}
         </h3>
-        {progress > 0 && (
-          <p className="text-sm text-neon-cyan mt-1">
-            {progress}% completato
-          </p>
-        )}
       </motion.div>
     </motion.div>
   );

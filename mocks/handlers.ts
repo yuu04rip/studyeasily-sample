@@ -231,11 +231,19 @@ export const handlers = [
   // POST /api/auth/login
   http.post('/api/auth/login', async ({ request }) => {
     const body = await request.json() as { email: string; password: string };
-    const { email } = body;
+    const { email, password } = body;
     
     const user = usersStore.find((u) => u.email === email);
     
     if (!user) {
+      return HttpResponse.json(
+        { error: 'Invalid credentials' },
+        { status: 401 }
+      );
+    }
+    
+    // Check password for admin user
+    if (user.email === 'admin@studyeasily.com' && password !== 'admin') {
       return HttpResponse.json(
         { error: 'Invalid credentials' },
         { status: 401 }
@@ -566,5 +574,22 @@ export const handlers = [
     messagesStore[chatId as string].push(newMessage);
     
     return HttpResponse.json({ message: newMessage }, { status: 201 });
+  }),
+
+  // GET /api/grades - Get grades for a user
+  http.get('/api/grades', ({ request }) => {
+    const url = new URL(request.url);
+    const userId = url.searchParams.get('userId');
+    
+    if (!userId) {
+      return HttpResponse.json(
+        { error: 'User ID is required' },
+        { status: 400 }
+      );
+    }
+    
+    const userGrades = (mockData.grades as any[]).filter((g) => g.userId === userId);
+    
+    return HttpResponse.json({ grades: userGrades });
   }),
 ];
