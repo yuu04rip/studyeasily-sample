@@ -64,7 +64,15 @@ export default function SettingsPage() {
     if (!user) return;
 
     // Validate passwords if changing
-    if (newPassword || confirmPassword) {
+    if (newPassword || confirmPassword || currentPassword) {
+      if (!currentPassword) {
+        showToast('Inserisci la password attuale', 'error');
+        return;
+      }
+      if (!newPassword || !confirmPassword) {
+        showToast('Inserisci e conferma la nuova password', 'error');
+        return;
+      }
       if (newPassword !== confirmPassword) {
         showToast('Le password non corrispondono', 'error');
         return;
@@ -78,6 +86,7 @@ export default function SettingsPage() {
     setSaving(true);
 
     try {
+      const fullName = `${firstName || ''} ${lastName || ''}`.trim();
       const updatedUser: User = {
         ...user,
         firstName,
@@ -87,7 +96,7 @@ export default function SettingsPage() {
         description,
         onlineStatus,
         avatar,
-        name: `${firstName} ${lastName}`.trim() || user.name,
+        name: fullName || user.name,
       };
 
       const response = await fetch('/api/user/profile', {
