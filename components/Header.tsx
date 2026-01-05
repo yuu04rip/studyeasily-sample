@@ -12,6 +12,12 @@ export default function Header() {
   const { user, isLoggedIn } = useUser();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showProfileMenu, setShowProfileMenu] = useState(false);
+  const [avatarLoadError, setAvatarLoadError] = useState(false);
+
+  // Reset avatar error when user changes
+  useEffect(() => {
+    setAvatarLoadError(false);
+  }, [user?.avatar]);
 
   return (
     <header className="bg-white shadow-lg sticky top-0 z-50 border-b-2 border-accent/20">
@@ -58,15 +64,12 @@ export default function Header() {
                   onClick={() => setShowProfileMenu(!showProfileMenu)}
                   className="flex items-center space-x-2 bg-gradient-purple-pink text-white px-4 py-2 rounded-full hover:opacity-90 transition font-semibold shadow-lg"
                 >
-                  {user?.avatar && user.avatar !== '/assets/avatar-default.jpg' ? (
+                  {user?.avatar && user.avatar !== '/assets/avatar-default.jpg' && !avatarLoadError ? (
                     <img 
                       src={user.avatar} 
                       alt={user?.name || 'Profile'} 
                       className="w-8 h-8 rounded-full object-cover"
-                      onError={(e) => {
-                        // If image fails to load, hide it and show the icon instead
-                        e.currentTarget.style.display = 'none';
-                      }}
+                      onError={() => setAvatarLoadError(true)}
                     />
                   ) : (
                     <FaUserCircle className="w-8 h-8" />
