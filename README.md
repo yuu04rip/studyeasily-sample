@@ -22,7 +22,6 @@ A modern online learning platform built with Next.js 14, TypeScript, and Tailwin
 - **Pricing** (`/piani`) - Subscription plans
 - **Support Channels** (`/canali`) - Contact options
 - **Business** (`/business`) - Enterprise solutions
-- **Analytics** (`/data-analytics`) - Platform metrics and charts
 - **FAQ** (`/faq`) - Frequently asked questions
 - **Blog** (`/blog`) - Articles and insights
 - **Blog Post** (`/blog/[slug]`) - Individual blog posts

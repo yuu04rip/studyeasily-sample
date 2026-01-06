@@ -62,7 +62,7 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/data-analytics" className="text-gray-300 hover:text-accent transition">
+                <Link href="/business" className="text-gray-300 hover:text-accent transition">
                   Analytics
                 </Link>
               </li>
