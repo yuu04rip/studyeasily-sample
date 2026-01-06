@@ -36,14 +36,14 @@ export default function LanguageSelector() {
         aria-label="Select language"
       >
         <span className="text-xl">{currentLanguage.flag}</span>
-        <span className="hidden md:inline text-sm font-medium">{currentLanguage.code.toUpperCase()}</span>
+        <span className="text-sm font-medium">{currentLanguage.code.toUpperCase()}</span>
         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
         </svg>
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-xl py-2 z-50">
+        <div className="absolute right-0 mt-2 w-32 bg-white rounded-lg shadow-xl py-2 z-50">
           {languages.map((lang) => (
             <button
               key={lang.code}
@@ -58,7 +58,7 @@ export default function LanguageSelector() {
               }`}
             >
               <span className="text-xl">{lang.flag}</span>
-              <span>{lang.name}</span>
+              <span>{lang.code.toUpperCase()}</span>
               {language === lang.code && (
                 <svg className="w-5 h-5 ml-auto text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
