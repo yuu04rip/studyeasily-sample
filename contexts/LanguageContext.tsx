@@ -36,7 +36,7 @@ const translations: Record<Language, Record<string, string>> = {
     
     // Blog
     'blog.title': 'BLOGS!',
-    'blog.working': 'Still in Working',
+    'blog.working': 'Work in Progress',
     'blog.working.desc': 'Stiamo attualmente sviluppando questa sezione per portarvi contenuti straordinari.',
     'blog.working.check': 'Torna presto per gli aggiornamenti!',
   },
@@ -65,7 +65,7 @@ const translations: Record<Language, Record<string, string>> = {
     
     // Blog
     'blog.title': 'BLOGS!',
-    'blog.working': 'Still in Working',
+    'blog.working': 'Work in Progress',
     'blog.working.desc': 'We\'re currently developing this section to bring you amazing content.',
     'blog.working.check': 'Check back soon for updates!',
   },
@@ -94,7 +94,7 @@ const translations: Record<Language, Record<string, string>> = {
     
     // Blog
     'blog.title': 'BLOGS!',
-    'blog.working': 'In Arbeit',
+    'blog.working': 'In Entwicklung',
     'blog.working.desc': 'Wir entwickeln derzeit diesen Bereich, um Ihnen erstaunliche Inhalte zu bieten.',
     'blog.working.check': 'Schauen Sie bald wieder vorbei!',
   },
