@@ -1,4 +1,7 @@
+'use client';
+
 import PricingCard from "./PricingCard";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface Plan {
     id: string;
@@ -37,11 +40,13 @@ const defaultPlans: Plan[] = [
 ];
 
 export default function PricingSection({ plans = defaultPlans }: PricingSectionProps) {
+    const { t } = useLanguage();
+    
     return (
         <section className="bg-gradient-to-b from-primary via-purple-800 to-accent py-16">
             <div className="container mx-auto px-4">
                 <h2 className="text-3xl md:text-5xl font-bold text-center text-white mb-12 uppercase tracking-wide">
-                    I Nostri Piani
+                    {t('pricing.title')}
                 </h2>
 
                 <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -53,6 +58,8 @@ export default function PricingSection({ plans = defaultPlans }: PricingSectionP
                                 period={plan.period}
                                 features={plan.features}
                                 highlighted={plan.id === "premium-plus"}
+                                ctaText={t('pricing.cta')}
+                                freeText={t('pricing.free')}
                             />
                         </div>
                     ))}
