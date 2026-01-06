@@ -3,10 +3,12 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useUser } from '@/hooks/useUser';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 export default function CreateCoursePage() {
   const router = useRouter();
   const { user, isInstructor, isAdmin } = useUser();
+  const { t } = useLanguage();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [formData, setFormData] = useState({
@@ -15,14 +17,27 @@ export default function CreateCoursePage() {
     category: 'Web Development',
     level: 'Beginner',
     duration: '',
-    price: '',
+    visibility: 'public',
   });
+  const [collaborators, setCollaborators] = useState<string[]>([]);
+  const [newCollaborator, setNewCollaborator] = useState('');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
     });
+  };
+
+  const handleAddCollaborator = () => {
+    if (newCollaborator && !collaborators.includes(newCollaborator)) {
+      setCollaborators([...collaborators, newCollaborator]);
+      setNewCollaborator('');
+    }
+  };
+
+  const handleRemoveCollaborator = (email: string) => {
+    setCollaborators(collaborators.filter(c => c !== email));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -44,9 +59,11 @@ export default function CreateCoursePage() {
         },
         body: JSON.stringify({
           ...formData,
-          price: parseFloat(formData.price),
+          price: 0, // Price is set to 0 as payment is not yet configured
           instructorId: user.id,
           role: user.role,
+          visibility: formData.visibility,
+          collaborators: collaborators,
         }),
       });
 
@@ -69,15 +86,15 @@ export default function CreateCoursePage() {
       <div className="container mx-auto px-4 py-12">
         <div className="max-w-3xl mx-auto">
           <div className="mb-8">
-            <h1 className="text-4xl font-bold text-white mb-2">Create New Course</h1>
-            <p className="text-white/80">Fill in the details to create your course</p>
+            <h1 className="text-4xl font-bold text-white mb-2">{t('course.create_title')}</h1>
+            <p className="text-white/80">{t('course.create_subtitle')}</p>
           </div>
 
           <div className="bg-white/10 backdrop-blur-md rounded-lg border border-white/20 p-8">
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
                 <label className="block text-white font-medium mb-2">
-                  Course Title *
+                  {t('course.title')} *
                 </label>
                 <input
                   type="text"
@@ -92,7 +109,7 @@ export default function CreateCoursePage() {
 
               <div>
                 <label className="block text-white font-medium mb-2">
-                  Description *
+                  {t('course.description')} *
                 </label>
                 <textarea
                   name="description"
@@ -108,7 +125,7 @@ export default function CreateCoursePage() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-white font-medium mb-2">
-                    Category *
+                    {t('course.category')} *
                   </label>
                   <select
                     name="category"
@@ -130,7 +147,7 @@ export default function CreateCoursePage() {
 
                 <div>
                   <label className="block text-white font-medium mb-2">
-                    Level *
+                    {t('course.level')} *
                   </label>
                   <select
                     name="level"
@@ -149,7 +166,7 @@ export default function CreateCoursePage() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-white font-medium mb-2">
-                    Duration *
+                    {t('course.duration')} *
                   </label>
                   <input
                     type="text"
@@ -164,20 +181,74 @@ export default function CreateCoursePage() {
 
                 <div>
                   <label className="block text-white font-medium mb-2">
-                    Price (USD) *
+                    {t('course.visibility')} *
                   </label>
-                  <input
-                    type="number"
-                    name="price"
-                    value={formData.price}
+                  <select
+                    name="visibility"
+                    value={formData.visibility}
                     onChange={handleChange}
-                    min="0"
-                    step="0.01"
                     className="w-full px-4 py-3 bg-white/90 rounded-lg focus:ring-2 focus:ring-accent focus:outline-none"
-                    placeholder="49.99"
                     required
-                  />
+                  >
+                    <option value="public">{t('course.public')}</option>
+                    <option value="private">{t('course.private')}</option>
+                  </select>
+                  <p className="text-white/60 text-sm mt-2">
+                    {formData.visibility === 'public' 
+                      ? t('course.visibility_public_desc')
+                      : t('course.visibility_private_desc')
+                    }
+                  </p>
                 </div>
+              </div>
+
+              {/* Collaborators Section */}
+              <div className="pt-4 border-t border-white/20">
+                <label className="block text-white font-medium mb-2">
+                  {t('course.collaborators')}
+                </label>
+                <p className="text-white/60 text-sm mb-4">
+                  Add other instructors or admins who can help manage this course
+                </p>
+                
+                <div className="flex gap-2 mb-4">
+                  <input
+                    type="email"
+                    value={newCollaborator}
+                    onChange={(e) => setNewCollaborator(e.target.value)}
+                    className="flex-1 px-4 py-3 bg-white/90 rounded-lg focus:ring-2 focus:ring-accent focus:outline-none"
+                    placeholder={t('course.collaborator_email')}
+                  />
+                  <button
+                    type="button"
+                    onClick={handleAddCollaborator}
+                    className="px-6 py-3 bg-accent hover:bg-accent/90 text-white rounded-lg font-semibold transition"
+                  >
+                    {t('course.add_collaborator')}
+                  </button>
+                </div>
+
+                {collaborators.length > 0 && (
+                  <div className="space-y-2">
+                    {collaborators.map((email) => (
+                      <div 
+                        key={email}
+                        className="flex items-center justify-between bg-white/5 rounded-lg px-4 py-2 border border-white/10"
+                      >
+                        <span className="text-white">{email}</span>
+                        <button
+                          type="button"
+                          onClick={() => handleRemoveCollaborator(email)}
+                          className="text-red-400 hover:text-red-300 transition"
+                        >
+                          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                          </svg>
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
 
               {error && (
@@ -192,14 +263,14 @@ export default function CreateCoursePage() {
                   disabled={loading}
                   className="flex-1 bg-accent hover:bg-accent/90 text-white py-3 rounded-lg font-semibold transition disabled:opacity-50"
                 >
-                  {loading ? 'Creating...' : 'Create Course'}
+                  {loading ? t('course.creating') : t('course.create_button')}
                 </button>
                 <button
                   type="button"
                   onClick={() => router.back()}
                   className="px-6 py-3 bg-white/10 hover:bg-white/20 text-white rounded-lg font-semibold transition border border-white/20"
                 >
-                  Cancel
+                  {t('course.cancel')}
                 </button>
               </div>
             </form>

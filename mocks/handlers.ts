@@ -157,6 +157,8 @@ export const handlers = [
       price: number;
       category: string;
       role: UserRole;
+      visibility?: 'public' | 'private';
+      collaborators?: string[];
     };
     
     // Permission check
@@ -183,12 +185,14 @@ export const handlers = [
       instructorId: body.instructorId,
       duration: body.duration,
       level: body.level,
-      price: body.price,
+      price: body.price || 0,
       image: '/assets/course-default.jpg',
       category: body.category,
       enrolled: 0,
       rating: 0,
       status: 'draft',
+      visibility: body.visibility || 'public',
+      collaborators: body.collaborators || [],
       curriculum: [],
     };
     

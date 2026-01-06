@@ -4,6 +4,8 @@ export type UserRole = 'student' | 'instructor' | 'admin' | 'tutor';
 
 export type CourseStatus = 'draft' | 'published' | 'archived';
 
+export type CourseVisibility = 'public' | 'private';
+
 export type OnlineStatus = 'online' | 'offline' | 'do-not-disturb';
 
 export interface User {
@@ -35,6 +37,8 @@ export interface Course {
   enrolled: number;
   rating: number;
   status: CourseStatus;
+  visibility?: CourseVisibility;
+  collaborators?: string[]; // Array of user IDs or emails
   curriculum?: CurriculumItem[];
   createdAt?: string;
   updatedAt?: string;

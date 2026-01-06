@@ -6,7 +6,15 @@ import { motion } from 'framer-motion';
 import { showToast } from '@/components/dashboard';
 import { User, OnlineStatus, ThemeColor } from '@/types';
 import { useTheme, themeConfigs } from '@/contexts/ThemeContext';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { FaUserCircle } from 'react-icons/fa';
+
+const languages = [
+  { code: 'it', name: 'Italiano', flag: '🇮🇹' },
+  { code: 'en', name: 'English', flag: '🇬🇧' },
+  { code: 'de', name: 'Deutsch', flag: '🇩🇪' },
+  { code: 'es', name: 'Español', flag: '🇪🇸' },
+] as const;
 
 export default function SettingsPage() {
   const router = useRouter();
@@ -14,6 +22,7 @@ export default function SettingsPage() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const { currentTheme, setTheme } = useTheme();
+  const { language, setLanguage, t } = useLanguage();
   
   // Form state
   const [firstName, setFirstName] = useState('');
@@ -71,19 +80,19 @@ export default function SettingsPage() {
     // Validate passwords if changing
     if (newPassword || confirmPassword || currentPassword) {
       if (!currentPassword) {
-        showToast('Inserisci la password attuale', 'error');
+        showToast(t('settings.current_password') + ' required', 'error');
         return;
       }
       if (!newPassword || !confirmPassword) {
-        showToast('Inserisci e conferma la nuova password', 'error');
+        showToast(t('settings.new_password') + ' required', 'error');
         return;
       }
       if (newPassword !== confirmPassword) {
-        showToast('Le password non corrispondono', 'error');
+        showToast('Passwords do not match', 'error');
         return;
       }
       if (newPassword.length < 6) {
-        showToast('La password deve essere di almeno 6 caratteri', 'error');
+        showToast('Password must be at least 6 characters', 'error');
         return;
       }
     }
@@ -216,10 +225,10 @@ export default function SettingsPage() {
           className="mb-8"
         >
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white neon-text-glow font-playfair">
-            IMPOSTAZIONI PROFILO
+            {t('settings.title')}
           </h1>
           <p className="text-lightPurple mt-2">
-            Configura il tuo profilo e le tue preferenze
+            {t('settings.subtitle')}
           </p>
         </motion.div>
 
@@ -233,7 +242,7 @@ export default function SettingsPage() {
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Avatar Section */}
             <div className="flex flex-col items-center space-y-4 pb-6 border-b border-white/10">
-              <label className="text-white font-semibold text-lg">Immagine Profilo</label>
+              <label className="text-white font-semibold text-lg">{t('settings.profile_image')}</label>
               <button
                 type="button"
                 onClick={handleAvatarClick}
@@ -268,41 +277,41 @@ export default function SettingsPage() {
             {/* Personal Information */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <label className="block text-white font-medium mb-2">Nome</label>
+                <label className="block text-white font-medium mb-2">{t('settings.first_name')}</label>
                 <input
                   type="text"
                   value={firstName}
                   onChange={(e) => setFirstName(e.target.value)}
                   className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-lightPurple/50 focus:outline-none focus:border-theme-primary focus:ring-2 focus:ring-theme-primary/50 transition"
-                  placeholder="Inserisci il tuo nome"
+                  placeholder={t('settings.first_name')}
                 />
               </div>
               
               <div>
-                <label className="block text-white font-medium mb-2">Cognome</label>
+                <label className="block text-white font-medium mb-2">{t('settings.last_name')}</label>
                 <input
                   type="text"
                   value={lastName}
                   onChange={(e) => setLastName(e.target.value)}
                   className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-lightPurple/50 focus:outline-none focus:border-theme-primary focus:ring-2 focus:ring-theme-primary/50 transition"
-                  placeholder="Inserisci il tuo cognome"
+                  placeholder={t('settings.last_name')}
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-white font-medium mb-2">Email</label>
+              <label className="block text-white font-medium mb-2">{t('settings.email')}</label>
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-lightPurple/50 focus:outline-none focus:border-theme-primary focus:ring-2 focus:ring-theme-primary/50 transition"
-                placeholder="email@esempio.com"
+                placeholder="email@example.com"
               />
             </div>
 
             <div>
-              <label className="block text-white font-medium mb-2">Data di Nascita</label>
+              <label className="block text-white font-medium mb-2">{t('settings.birth_date')}</label>
               <input
                 type="date"
                 value={birthDate}
@@ -312,34 +321,34 @@ export default function SettingsPage() {
             </div>
 
             <div>
-              <label className="block text-white font-medium mb-2">Descrizione</label>
+              <label className="block text-white font-medium mb-2">{t('settings.description')}</label>
               <textarea
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 rows={4}
                 className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-lightPurple/50 focus:outline-none focus:border-theme-primary focus:ring-2 focus:ring-theme-primary/50 transition resize-none"
-                placeholder="Racconta qualcosa di te..."
+                placeholder={t('settings.description')}
               />
             </div>
 
             {/* Online Status */}
             <div>
-              <label className="block text-white font-medium mb-2">Stato Online</label>
+              <label className="block text-white font-medium mb-2">{t('settings.online_status')}</label>
               <select
                 value={onlineStatus}
                 onChange={(e) => setOnlineStatus(e.target.value as OnlineStatus)}
                 className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:border-theme-primary focus:ring-2 focus:ring-theme-primary/50 transition"
               >
-                <option value="online" className="bg-dashboard-bg text-white">Online</option>
-                <option value="offline" className="bg-dashboard-bg text-white">Offline</option>
-                <option value="do-not-disturb" className="bg-dashboard-bg text-white">Non Disturbare</option>
+                <option value="online" className="bg-dashboard-bg text-white">{t('settings.online')}</option>
+                <option value="offline" className="bg-dashboard-bg text-white">{t('settings.offline')}</option>
+                <option value="do-not-disturb" className="bg-dashboard-bg text-white">{t('settings.do_not_disturb')}</option>
               </select>
             </div>
 
             {/* Theme Color Section */}
             <div className="pt-6 border-t border-white/10">
-              <h3 className="text-xl font-bold text-white mb-4">Tema Dashboard</h3>
-              <p className="text-lightPurple mb-4">Seleziona il colore del tema che preferisci</p>
+              <h3 className="text-xl font-bold text-white mb-4">{t('settings.theme')}</h3>
+              <p className="text-lightPurple mb-4">{t('settings.theme_subtitle')}</p>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                 {(Object.keys(themeConfigs) as ThemeColor[]).map((themeKey) => {
                   const theme = themeConfigs[themeKey];
@@ -350,7 +359,7 @@ export default function SettingsPage() {
                       type="button"
                       onClick={() => {
                         setTheme(themeKey);
-                        showToast(`Tema cambiato a ${theme.name}`, 'success');
+                        showToast(`Theme changed to ${theme.name}`, 'success');
                       }}
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
@@ -383,40 +392,80 @@ export default function SettingsPage() {
               </div>
             </div>
 
+            {/* Language Section */}
+            <div className="pt-6 border-t border-white/10">
+              <h3 className="text-xl font-bold text-white mb-4">{t('settings.language')}</h3>
+              <p className="text-lightPurple mb-4">{t('settings.language_subtitle')}</p>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                {languages.map((lang) => {
+                  const isSelected = language === lang.code;
+                  return (
+                    <motion.button
+                      key={lang.code}
+                      type="button"
+                      onClick={() => {
+                        setLanguage(lang.code);
+                        showToast(`Language changed to ${lang.name}`, 'success');
+                      }}
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      className={`relative p-4 rounded-xl border-2 transition-all ${
+                        isSelected
+                          ? 'border-white shadow-lg bg-white/20'
+                          : 'border-white/20 hover:border-white/40 bg-white/5'
+                      }`}
+                    >
+                      {isSelected && (
+                        <div className="absolute top-2 right-2">
+                          <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                          </svg>
+                        </div>
+                      )}
+                      <div className="flex flex-col items-center space-y-2">
+                        <span className="text-3xl">{lang.flag}</span>
+                        <span className="text-white font-semibold text-sm">{lang.name}</span>
+                      </div>
+                    </motion.button>
+                  );
+                })}
+              </div>
+            </div>
+
             {/* Password Change Section */}
             <div className="pt-6 border-t border-white/10">
-              <h3 className="text-xl font-bold text-white mb-4">Cambia Password</h3>
+              <h3 className="text-xl font-bold text-white mb-4">{t('settings.change_password')}</h3>
               <div className="space-y-4">
                 <div>
-                  <label className="block text-white font-medium mb-2">Password Attuale</label>
+                  <label className="block text-white font-medium mb-2">{t('settings.current_password')}</label>
                   <input
                     type="password"
                     value={currentPassword}
                     onChange={(e) => setCurrentPassword(e.target.value)}
                     className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-lightPurple/50 focus:outline-none focus:border-theme-primary focus:ring-2 focus:ring-theme-primary/50 transition"
-                    placeholder="Inserisci la password attuale"
+                    placeholder={t('settings.current_password')}
                   />
                 </div>
                 
                 <div>
-                  <label className="block text-white font-medium mb-2">Nuova Password</label>
+                  <label className="block text-white font-medium mb-2">{t('settings.new_password')}</label>
                   <input
                     type="password"
                     value={newPassword}
                     onChange={(e) => setNewPassword(e.target.value)}
                     className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-lightPurple/50 focus:outline-none focus:border-theme-primary focus:ring-2 focus:ring-theme-primary/50 transition"
-                    placeholder="Inserisci la nuova password"
+                    placeholder={t('settings.new_password')}
                   />
                 </div>
                 
                 <div>
-                  <label className="block text-white font-medium mb-2">Conferma Nuova Password</label>
+                  <label className="block text-white font-medium mb-2">{t('settings.confirm_password')}</label>
                   <input
                     type="password"
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
                     className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-lightPurple/50 focus:outline-none focus:border-theme-primary focus:ring-2 focus:ring-theme-primary/50 transition"
-                    placeholder="Conferma la nuova password"
+                    placeholder={t('settings.confirm_password')}
                   />
                 </div>
               </div>
@@ -431,14 +480,14 @@ export default function SettingsPage() {
                 whileTap={{ scale: 0.98 }}
                 className="px-8 py-3 bg-gradient-to-r from-theme-primary to-theme-secondary text-white font-semibold rounded-lg shadow-neon hover:shadow-neon-hover transition-all disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {saving ? 'Salvataggio...' : 'Salva Modifiche'}
+                {saving ? t('settings.saving') : t('settings.save')}
               </motion.button>
             </div>
           </form>
 
           {/* Logout and Delete Account Section */}
           <div className="mt-8 pt-8 border-t border-white/10">
-            <h3 className="text-xl font-bold text-white mb-4">Azioni Account</h3>
+            <h3 className="text-xl font-bold text-white mb-4">{t('settings.account_actions')}</h3>
             <div className="flex flex-col sm:flex-row gap-4">
               <motion.button
                 type="button"
@@ -447,7 +496,7 @@ export default function SettingsPage() {
                 whileTap={{ scale: 0.98 }}
                 className="px-6 py-3 bg-white/10 hover:bg-white/20 text-white font-semibold rounded-lg border border-white/20 transition-all"
               >
-                Logout
+                {t('settings.logout')}
               </motion.button>
               <motion.button
                 type="button"
@@ -456,7 +505,7 @@ export default function SettingsPage() {
                 whileTap={{ scale: 0.98 }}
                 className="px-6 py-3 bg-red-500/20 hover:bg-red-500/30 text-red-300 font-semibold rounded-lg border border-red-500/30 transition-all"
               >
-                Elimina Account
+                {t('settings.delete_account')}
               </motion.button>
             </div>
           </div>

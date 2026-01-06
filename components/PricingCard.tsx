@@ -64,7 +64,7 @@ export default function PricingCard({
                 ))}
             </ul>
 
-            <Link href="/signup" className="block w-full mt-auto">
+            <Link href="/work-in-progress" className="block w-full mt-auto">
                 <button className="w-full bg-accent hover:bg-accent/90 text-white py-3 rounded-lg font-semibold transition">
                     {ctaText}
                 </button>
