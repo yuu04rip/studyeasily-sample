@@ -32,6 +32,9 @@ export default function CoursesPage() {
   const [loading, setLoading] = useState(true);
   const [userRole, setUserRole] = useState<string>('student');
   const [userId, setUserId] = useState<string>('');
+  const [searchTerm, setSearchTerm] = useState('');
+  const [sortBy, setSortBy] = useState<'progress' | 'title' | 'recent'>('recent');
+  const [filterCategory, setFilterCategory] = useState<string>('all');
 
   useEffect(() => {
     // Get user from localStorage
@@ -86,6 +89,48 @@ export default function CoursesPage() {
     }
   };
 
+  // Filter and sort enrolled courses
+  const getFilteredAndSortedCourses = (courses: Course[]) => {
+    let filtered = courses;
+
+    // Apply search filter
+    if (searchTerm) {
+      filtered = filtered.filter(course =>
+        course.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        course.description.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    }
+
+    // Apply category filter
+    if (filterCategory !== 'all') {
+      filtered = filtered.filter(course => course.category === filterCategory);
+    }
+
+    // Apply sorting
+    const sorted = [...filtered].sort((a, b) => {
+      if (sortBy === 'progress') {
+        return (b.progress || 0) - (a.progress || 0);
+      } else if (sortBy === 'title') {
+        return a.title.localeCompare(b.title);
+      }
+      return 0; // 'recent' - keep original order
+    });
+
+    return sorted;
+  };
+
+  // Get unique categories
+  const categories = ['all', ...Array.from(new Set(enrolledCourses.map(c => c.category)))];
+
+  // Calculate stats
+  const totalEnrolled = enrolledCourses.length;
+  const averageProgress = enrolledCourses.length > 0
+    ? Math.round(enrolledCourses.reduce((sum, c) => sum + (c.progress || 0), 0) / enrolledCourses.length)
+    : 0;
+  const completedCourses = enrolledCourses.filter(c => (c.progress || 0) >= 100).length;
+
+  const filteredEnrolledCourses = getFilteredAndSortedCourses(enrolledCourses);
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -116,6 +161,44 @@ export default function CoursesPage() {
           </p>
         </motion.div>
 
+        {/* Stats Cards */}
+        {enrolledCourses.length > 0 && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8"
+          >
+            <div className="card-neon p-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-lightPurple text-sm">Corsi Iscritti</p>
+                  <p className="text-3xl font-bold text-white mt-1">{totalEnrolled}</p>
+                </div>
+                <div className="text-4xl">📚</div>
+              </div>
+            </div>
+            <div className="card-neon p-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-lightPurple text-sm">Progresso Medio</p>
+                  <p className="text-3xl font-bold text-white mt-1">{averageProgress}%</p>
+                </div>
+                <div className="text-4xl">📊</div>
+              </div>
+            </div>
+            <div className="card-neon p-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-lightPurple text-sm">Corsi Completati</p>
+                  <p className="text-3xl font-bold text-white mt-1">{completedCourses}</p>
+                </div>
+                <div className="text-4xl">✅</div>
+              </div>
+            </div>
+          </motion.div>
+        )}
+
         {/* Enrolled Courses Section */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -123,9 +206,50 @@ export default function CoursesPage() {
           transition={{ duration: 0.5, delay: 0.1 }}
           className="mb-12"
         >
-          <h2 className="text-2xl font-bold text-white mb-6">
-            Corsi a cui Partecipo
-          </h2>
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6 gap-4">
+            <h2 className="text-2xl font-bold text-white">
+              Corsi a cui Partecipo
+            </h2>
+            
+            {/* Search and Filters */}
+            {enrolledCourses.length > 0 && (
+              <div className="flex flex-col sm:flex-row gap-3">
+                {/* Search */}
+                <input
+                  type="text"
+                  placeholder="Cerca corsi..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="px-4 py-2 bg-dashboard-bgDark text-white rounded-lg border border-neon-violet/30 focus:border-neon-violet focus:outline-none"
+                />
+                
+                {/* Category Filter */}
+                <select
+                  value={filterCategory}
+                  onChange={(e) => setFilterCategory(e.target.value)}
+                  className="px-4 py-2 bg-dashboard-bgDark text-white rounded-lg border border-neon-violet/30 focus:border-neon-violet focus:outline-none"
+                >
+                  {categories.map(cat => (
+                    <option key={cat} value={cat}>
+                      {cat === 'all' ? 'Tutte le categorie' : cat}
+                    </option>
+                  ))}
+                </select>
+                
+                {/* Sort */}
+                <select
+                  value={sortBy}
+                  onChange={(e) => setSortBy(e.target.value as 'progress' | 'title' | 'recent')}
+                  className="px-4 py-2 bg-dashboard-bgDark text-white rounded-lg border border-neon-violet/30 focus:border-neon-violet focus:outline-none"
+                >
+                  <option value="recent">Più recenti</option>
+                  <option value="progress">Per progresso</option>
+                  <option value="title">Per titolo</option>
+                </select>
+              </div>
+            )}
+          </div>
+          
           {enrolledCourses.length === 0 ? (
             <div className="card-neon p-8 text-center">
               <p className="text-lightPurple">Non sei iscritto a nessun corso</p>
@@ -136,9 +260,22 @@ export default function CoursesPage() {
                 Esplora Corsi
               </Link>
             </div>
+          ) : filteredEnrolledCourses.length === 0 ? (
+            <div className="card-neon p-8 text-center">
+              <p className="text-lightPurple">Nessun corso trovato con i filtri selezionati</p>
+              <button
+                onClick={() => {
+                  setSearchTerm('');
+                  setFilterCategory('all');
+                }}
+                className="btn-neon-secondary inline-block mt-4"
+              >
+                Rimuovi filtri
+              </button>
+            </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {enrolledCourses.map((course, index) => (
+              {filteredEnrolledCourses.map((course, index) => (
                 <motion.div
                   key={course.id}
                   initial={{ opacity: 0, y: 20 }}
