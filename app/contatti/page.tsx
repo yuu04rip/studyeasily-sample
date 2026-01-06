@@ -27,7 +27,7 @@ export default function ContattiPage() {
                     <span className="text-white/70 text-lg">social</span>
                     <div className="flex gap-4">
                       <a
-                          href="https://www.facebook.com/tuoprofilo"
+                          href="https://www.facebook.com/share/17Q4zCmjpu/"
                           target="_blank"
                           rel="noopener noreferrer"
                           className="text-white hover:text-accent transition text-2xl font-bold"
