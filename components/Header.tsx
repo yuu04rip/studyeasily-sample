@@ -5,11 +5,14 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import PodaSearch from '@/components/PodaSearch';
 import { useUser, clearUser } from '@/hooks/useUser';
+import { useLanguage } from '@/contexts/LanguageContext';
+import LanguageSelector from '@/components/LanguageSelector';
 import { FaUserCircle } from 'react-icons/fa';
 
 export default function Header() {
   const router = useRouter();
   const { user, isLoggedIn } = useUser();
+  const { t } = useLanguage();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showProfileMenu, setShowProfileMenu] = useState(false);
   const [avatarLoadError, setAvatarLoadError] = useState(false);
@@ -30,29 +33,32 @@ export default function Header() {
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-6">
             <Link href="/corsi" className="text-white/90 hover:text-accent transition">
-              Corsi
+              {t('nav.courses')}
             </Link>
             <Link href="/piani" className="text-white/90 hover:text-accent transition">
-              Piani
+              {t('nav.plans')}
             </Link>
             <Link href="/canali" className="text-white/90 hover:text-accent transition">
-              Canali
+              {t('nav.channels')}
             </Link>
             <Link href="/business" className="text-white/90 hover:text-accent transition">
-              Business
+              {t('nav.business')}
             </Link>
             <Link href="/blog" className="text-white/90 hover:text-accent transition">
-              Blog
+              {t('nav.blog')}
             </Link>
             <Link href="/faq" className="text-white/90 hover:text-accent transition">
-              FAQ
+              {t('nav.faq')}
             </Link>
             <Link href="/contatti" className="text-white/90 hover:text-accent transition">
-              Contatti
+              {t('nav.contacts')}
             </Link>
           </nav>
 
           <div className="hidden md:flex items-center space-x-4">
+            {/* Language Selector */}
+            <LanguageSelector />
+            
             {/* Inline compact PodaSearch in header: wrapper gives width */}
             <div className="w-[280px] scale-75 mr-8">
               <PodaSearch inline redirectToDashboard={false} />
@@ -87,14 +93,14 @@ export default function Header() {
                       className="block px-4 py-2 text-gray-800 hover:bg-purple-50 transition"
                       onClick={() => setShowProfileMenu(false)}
                     >
-                      Dashboard
+                      {t('nav.dashboard')}
                     </Link>
                     <Link
                       href="/dashboard/settings"
                       className="block px-4 py-2 text-gray-800 hover:bg-purple-50 transition"
                       onClick={() => setShowProfileMenu(false)}
                     >
-                      Settings
+                      {t('nav.settings')}
                     </Link>
                     <hr className="my-2" />
                     <button
@@ -105,7 +111,7 @@ export default function Header() {
                       }}
                       className="block w-full text-left px-4 py-2 text-red-600 hover:bg-red-50 transition"
                     >
-                      Logout
+                      {t('nav.logout')}
                     </button>
                   </div>
                 )}
@@ -116,13 +122,13 @@ export default function Header() {
                   href="/login"
                   className="text-white hover:text-accent transition font-medium"
                 >
-                  Login
+                  {t('nav.login')}
                 </Link>
                 <Link
                   href="/signup"
                   className="bg-accent text-white px-6 py-2 rounded-full hover:opacity-90 transition font-semibold shadow-lg"
                 >
-                  Sign Up
+                  {t('nav.signup')}
                 </Link>
               </>
             )}
@@ -164,26 +170,32 @@ export default function Header() {
           <div className="md:hidden mt-4 pb-4">
             <nav className="flex flex-col space-y-2">
               <Link href="/corsi" className="text-white/90 hover:text-accent py-2">
-                Corsi
+                {t('nav.courses')}
               </Link>
               <Link href="/piani" className="text-white/90 hover:text-accent py-2">
-                Piani
+                {t('nav.plans')}
               </Link>
               <Link href="/canali" className="text-white/90 hover:text-accent py-2">
-                Canali
+                {t('nav.channels')}
               </Link>
               <Link href="/business" className="text-white/90 hover:text-accent py-2">
-                Business
+                {t('nav.business')}
               </Link>
               <Link href="/blog" className="text-white/90 hover:text-accent py-2">
-                Blog
+                {t('nav.blog')}
               </Link>
               <Link href="/faq" className="text-white/90 hover:text-accent py-2">
-                FAQ
+                {t('nav.faq')}
               </Link>
               <Link href="/contatti" className="text-white/90 hover:text-accent py-2">
-                Contatti
+                {t('nav.contacts')}
               </Link>
+              
+              {/* Language Selector for Mobile */}
+              <div className="py-2">
+                <LanguageSelector />
+              </div>
+              
               {/* Mobile PodaSearch */}
               <div className="py-2">
                 <PodaSearch inline redirectToDashboard={false} />
@@ -192,10 +204,10 @@ export default function Header() {
               {isLoggedIn ? (
                 <>
                   <Link href="/dashboard" className="text-accent py-2">
-                    Dashboard
+                    {t('nav.dashboard')}
                   </Link>
                   <Link href="/dashboard/settings" className="text-white/90 py-2">
-                    Settings
+                    {t('nav.settings')}
                   </Link>
                   <button
                     onClick={() => {
@@ -205,19 +217,19 @@ export default function Header() {
                     }}
                     className="text-red-400 py-2 text-left w-full"
                   >
-                    Logout
+                    {t('nav.logout')}
                   </button>
                 </>
               ) : (
                 <>
                   <Link href="/login" className="text-white py-2">
-                    Login
+                    {t('nav.login')}
                   </Link>
                   <Link
                     href="/signup"
                     className="bg-accent text-white px-4 py-2 rounded-lg hover:opacity-90 transition text-center"
                   >
-                    Sign Up
+                    {t('nav.signup')}
                   </Link>
                 </>
               )}

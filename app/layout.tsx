@@ -7,6 +7,7 @@ import './globals.css';
 
 import MSWProvider from "./msw-provider";
 import { ConditionalLayout } from "@/components/ConditionalLayout";
+import { LanguageProvider } from "@/contexts/LanguageContext";
 
 const geistSans = localFont({
     src: "./fonts/GeistVF.woff",
@@ -33,9 +34,11 @@ export default function RootLayout({
         <html lang="en">
         <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <MSWProvider>
-            <ConditionalLayout>
-                {children}
-            </ConditionalLayout>
+            <LanguageProvider>
+                <ConditionalLayout>
+                    {children}
+                </ConditionalLayout>
+            </LanguageProvider>
         </MSWProvider>
         </body>
         </html>

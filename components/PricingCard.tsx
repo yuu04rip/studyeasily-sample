@@ -6,6 +6,8 @@ interface PricingCardProps {
     period: string;
     features: string[];
     highlighted?: boolean;
+    ctaText?: string;
+    freeText?: string;
 }
 
 export default function PricingCard({
@@ -14,6 +16,8 @@ export default function PricingCard({
                                         period,
                                         features,
                                         highlighted = false,
+                                        ctaText = "Inizia Ora",
+                                        freeText = "Gratuito",
                                     }: PricingCardProps) {
     return (
         <div
@@ -40,7 +44,7 @@ export default function PricingCard({
                         <span className="text-white/70">/{period}</span>
                     </>
                 ) : (
-                    <span className="text-4xl font-bold">Gratuito</span>
+                    <span className="text-4xl font-bold">{freeText}</span>
                 )}
             </div>
 
@@ -62,7 +66,7 @@ export default function PricingCard({
 
             <Link href="/signup" className="block w-full mt-auto">
                 <button className="w-full bg-accent hover:bg-accent/90 text-white py-3 rounded-lg font-semibold transition">
-                    Inizia Ora
+                    {ctaText}
                 </button>
             </Link>
         </div>

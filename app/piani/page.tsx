@@ -1,6 +1,11 @@
+'use client';
+
 import PricingCard from '@/components/PricingCard';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 export default function PianiPage() {
+  const { t } = useLanguage();
+  
   const plans = [
     {
       title: 'Freemium',
@@ -48,7 +53,7 @@ export default function PianiPage() {
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <h1 className="text-4xl md:text-6xl font-bold mb-6 text-white uppercase tracking-wide">
-            I Nostri Piani
+            {t('pricing.title')}
           </h1>
           <p className="text-xl text-white/90">
             Inizia a imparare oggi con un piano adatto alle tue esigenze
@@ -57,7 +62,12 @@ export default function PianiPage() {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
           {plans.map((plan) => (
-            <PricingCard key={plan.title} {...plan} />
+            <PricingCard 
+              key={plan.title} 
+              {...plan} 
+              ctaText={t('pricing.cta')} 
+              freeText={t('pricing.free')}
+            />
           ))}
         </div>
 

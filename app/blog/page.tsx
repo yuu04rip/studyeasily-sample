@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface Blog {
   id: string;
@@ -17,6 +18,7 @@ interface Blog {
 export default function BlogPage() {
   const [blogs, setBlogs] = useState<Blog[]>([]);
   const [loading, setLoading] = useState(true);
+  const { t } = useLanguage();
 
   useEffect(() => {
     const fetchBlogs = async () => {
@@ -43,7 +45,7 @@ export default function BlogPage() {
         {/* Header */}
         <div className="flex items-start justify-between mb-12">
           <h1 className="text-5xl md:text-7xl font-bold text-accent uppercase tracking-wide">
-            BLOGS!
+            {t('blog.title')}
           </h1>
           
           {/* Search Bar */}
@@ -71,12 +73,12 @@ export default function BlogPage() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
               </svg>
             </div>
-            <h2 className="text-4xl font-bold text-white mb-4">Still in Working</h2>
+            <h2 className="text-4xl font-bold text-white mb-4">{t('blog.working')}</h2>
             <p className="text-xl text-white/80 mb-6">
-              We&apos;re currently developing this section to bring you amazing content.
+              {t('blog.working.desc')}
             </p>
             <p className="text-lg text-white/70">
-              Check back soon for updates!
+              {t('blog.working.check')}
             </p>
           </div>
         </div>
