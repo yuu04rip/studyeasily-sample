@@ -1,8 +1,10 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 export default function Hero() {
+    const { t } = useLanguage();
     const rafRef = useRef<number | null>(null);
     const runningRef = useRef(true);
 
@@ -125,15 +127,15 @@ export default function Hero() {
 
                         <div className="mt-8">
                             <p className="quote-line text-3xl md:text-4xl lg:text-5xl uppercase tracking-wider font-futura text-white/95">
-                                L'UOMO COLTO È COLUI
+                                {t('hero.quote.line1')}
                             </p>
                             <p className="quote-line text-3xl md:text-4xl lg:text-5xl uppercase tracking-wider font-futura text-white/95">
-                                CHE SA DOVE TROVARE
+                                {t('hero.quote.line2')}
                             </p>
                             <p className="quote-line text-3xl md:text-4xl lg:text-5xl uppercase tracking-wider font-futura text-white/95">
-                                CIÒ CHE NON SA.
+                                {t('hero.quote.line3')}
                             </p>
-                            <p className="mt-6 text-lg md:text-xl font-futura text-white/80 italic">— Georg Simmel</p>
+                            <p className="mt-6 text-lg md:text-xl font-futura text-white/80 italic">{t('hero.quote.author')}</p>
                         </div>
                     </div>
 

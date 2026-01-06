@@ -1,3 +1,5 @@
+'use client';
+
 import Link from "next/link";
 import SearchBar from "@/components/SearchBar";
 import Hero from "@/components/Hero";
@@ -5,10 +7,12 @@ import PricingSection from "@/components/PricingSection";
 import BusinessSection from "@/components/BusinessSection";
 import FAQSection from "@/components/FAQSection";
 import ContactSection from "@/components/ContactSection";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 type Channel = { icon: string; title: string };
 
 export default function Home() {
+    const { t } = useLanguage();
     const channels: Channel[] = [
         { icon: "icons8-google-meet.svg", title: "Google Meet" },
         { icon: "icons8-zoom.svg", title: "Zoom" },
@@ -60,10 +64,10 @@ export default function Home() {
             <section className="bg-gradient-to-b from-accent via-purple-600 to-accent py-16">
                 <div className="container mx-auto px-4">
                     <h2 className="text-3xl md:text-4xl font-bold text-center text-white mb-4">
-                        Canali di connessione
+                        {t('channels.title')}
                     </h2>
                     <p className="text-center text-white/80 mb-12 max-w-2xl mx-auto">
-                        Scegli la lezione o qualsiasi community di studio
+                        {t('channels.subtitle')}
                     </p>
                     <div className="flex flex-wrap justify-center items-center gap-8 md:gap-12">
                         {channels.map((platform) => (
