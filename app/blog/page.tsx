@@ -3,17 +3,6 @@
 import Link from 'next/link';
 import { useLanguage } from '@/contexts/LanguageContext';
 
-interface Blog {
-  id: string;
-  slug: string;
-  title: string;
-  excerpt: string;
-  author: string;
-  publishedAt: string;
-  image: string;
-  category: string;
-}
-
 export default function BlogPage() {
   const { t } = useLanguage();
 

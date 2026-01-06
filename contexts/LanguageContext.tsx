@@ -135,16 +135,20 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
   const [language, setLanguageState] = useState<Language>('it');
 
   useEffect(() => {
-    // Load language from localStorage
-    const savedLanguage = localStorage.getItem('language') as Language;
-    if (savedLanguage && ['it', 'en', 'de', 'es'].includes(savedLanguage)) {
-      setLanguageState(savedLanguage);
+    // Load language from localStorage (only on client side)
+    if (typeof window !== 'undefined') {
+      const savedLanguage = localStorage.getItem('language') as Language;
+      if (savedLanguage && ['it', 'en', 'de', 'es'].includes(savedLanguage)) {
+        setLanguageState(savedLanguage);
+      }
     }
   }, []);
 
   const setLanguage = (lang: Language) => {
     setLanguageState(lang);
-    localStorage.setItem('language', lang);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('language', lang);
+    }
   };
 
   const t = (key: string): string => {
