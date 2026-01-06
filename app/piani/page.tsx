@@ -15,7 +15,7 @@ export default function PianiPage() {
     },
     {
       title: 'Premium',
-      price: 29,
+      price: 9.99,
       period: 'month',
       highlighted: true,
       features: [
@@ -29,7 +29,7 @@ export default function PianiPage() {
     },
     {
       title: 'Premium Plus',
-      price: 99,
+      price: 19.99,
       period: 'month',
       features: [
         'Tutto in Premium',

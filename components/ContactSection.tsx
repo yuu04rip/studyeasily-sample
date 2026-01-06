@@ -1,4 +1,5 @@
 import Link from "next/link";
+import {FaFacebookF, FaInstagram} from "react-icons/fa";
 
 export default function ContactSection() {
     return (
@@ -19,9 +20,23 @@ export default function ContactSection() {
                         </div>
                         <div className="mt-8 flex items-center gap-4">
                             <span className="text-white/70">social</span>
-                            <div className="flex gap-3">
-                                <a href="#" aria-label="Facebook" className="text-white hover:text-accent transition text-xl">f</a>
-                                <a href="#" aria-label="Twitter" className="text-white hover:text-accent transition text-xl">@</a>
+                            <div className="flex gap-4">
+                                <a
+                                    href="https://www.facebook.com/tuoprofilo"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-white hover:text-accent transition text-2xl font-bold"
+                                >
+                                    <FaFacebookF />
+                                </a>
+                                <a
+                                    href="https://www.instagram.com/study.easily_?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-white hover:text-accent transition text-2xl font-bold"
+                                >
+                                    <FaInstagram />
+                                </a>
                             </div>
                         </div>
                         <div className="mt-8">

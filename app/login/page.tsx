@@ -121,12 +121,6 @@ export default function LoginPage() {
               Registrati
             </Link>
           </div>
-
-          <div className="mt-6 pt-6 border-t border-white/20">
-            <p className="text-xs text-white/60 text-center">
-              <strong>Demo:</strong> Usa email "demo@studyeasily.com" con qualsiasi password
-            </p>
-          </div>
         </div>
       </div>
     </div>

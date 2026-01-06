@@ -1,6 +1,6 @@
 
 import { Suspense } from 'react';
-
+import { FaFacebookF, FaInstagram } from "react-icons/fa";
 
 export default function ContattiPage() {
   return (
@@ -26,8 +26,22 @@ export default function ContattiPage() {
                   <div className="flex items-center gap-4">
                     <span className="text-white/70 text-lg">social</span>
                     <div className="flex gap-4">
-                      <a href="#" className="text-white hover:text-accent transition text-2xl font-bold">f</a>
-                      <a href="#" className="text-white hover:text-accent transition text-2xl font-bold">@</a>
+                      <a
+                          href="https://www.facebook.com/tuoprofilo"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-white hover:text-accent transition text-2xl font-bold"
+                      >
+                        <FaFacebookF />
+                      </a>
+                      <a
+                          href="https://www.instagram.com/study.easily_?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-white hover:text-accent transition text-2xl font-bold"
+                      >
+                        <FaInstagram />
+                      </a>
                     </div>
                   </div>
                 </div>
