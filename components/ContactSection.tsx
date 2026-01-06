@@ -57,14 +57,11 @@ export default function ContactSection() {
                         </div>
                     </div>
                     <div className="flex justify-center">
-                        <div className="text-accent/30">
-                            <svg className="w-48 h-48 md:w-64 md:h-64" viewBox="0 0 200 200" fill="none">
-                                {/* Graduation cap icon */}
-                                <path d="M100 50 L180 80 L100 110 L20 80 Z" fill="currentColor" />
-                                <path d="M180 80 L180 120 L100 150 L20 120 L20 80" stroke="currentColor" strokeWidth="3" fill="none" />
-                                <circle cx="100" cy="130" r="40" stroke="currentColor" strokeWidth="3" fill="none" />
-                            </svg>
-                        </div>
+                        <img
+                            src="/icons/1000127298.png" // Inserisci il percorso della tua immagine qui
+                            alt="Icona geometrica"
+                            className="w-auto h-auto md:w-96 md:h-72 object-contain"
+                        />
                     </div>
                 </div>
             </div>

@@ -31,7 +31,7 @@ EXIT;
 
 ```bash
 # 4. Import schema
-mysql -u studyeasily_user -p studyeasily < database/schema.sql
+Get-Content .\database\schema.sql | mysql -h 127.0.0.1 -P 3310 -u studyeasily_user -p studyeasily
 
 # 5. Update .env.local
 echo 'DATABASE_URL="mysql://studyeasily_user:your_password@localhost:3306/studyeasily"' >> .env.local

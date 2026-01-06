@@ -48,16 +48,13 @@ export default function ContattiPage() {
               </div>
             </div>
 
-            {/* Graduation Cap Icon */}
+
             <div className="flex justify-center">
-              <div className="text-accent/30">
-                <svg className="w-64 h-64 md:w-80 md:h-80" viewBox="0 0 200 200" fill="none">
-                  <path d="M100 50 L180 80 L100 110 L20 80 Z" fill="currentColor" />
-                  <path d="M180 80 L180 120 L100 150 L20 120 L20 80" stroke="currentColor" strokeWidth="3" fill="none" />
-                  <circle cx="100" cy="130" r="40" stroke="currentColor" strokeWidth="3" fill="none" />
-                  <path d="M70 130 L90 150 L130 110" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-                </svg>
-              </div>
+              <img
+                  src="/icons/1000127298.png" // Inserisci il percorso della tua immagine qui
+                  alt="Icona geometrica"
+                  className="w-auto h-auto md:w-96 md:h-72 object-contain"
+              />
             </div>
           </div>
 
