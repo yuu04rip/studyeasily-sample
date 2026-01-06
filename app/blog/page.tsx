@@ -63,8 +63,26 @@ export default function BlogPage() {
           </div>
         </div>
 
-        {/* Blog Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {/* Still in working message */}
+        <div className="text-center py-20">
+          <div className="bg-white/10 backdrop-blur-md rounded-3xl p-12 max-w-2xl mx-auto border-2 border-accent/30">
+            <div className="mb-6">
+              <svg className="w-24 h-24 mx-auto text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+              </svg>
+            </div>
+            <h2 className="text-4xl font-bold text-white mb-4">Still in Working</h2>
+            <p className="text-xl text-white/80 mb-6">
+              We&apos;re currently developing this section to bring you amazing content.
+            </p>
+            <p className="text-lg text-white/70">
+              Check back soon for updates!
+            </p>
+          </div>
+        </div>
+
+        {/* Blog Grid - Hidden for now */}
+        <div className="hidden grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {blogs.map((blog) => (
             <Link key={blog.id} href={`/blog/${blog.slug}`}>
               <article className="group cursor-pointer">

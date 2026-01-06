@@ -18,7 +18,7 @@ export default function PricingCard({
     return (
         <div
             className={
-                "rounded-3xl p-8 shadow-2xl transform transition hover:scale-105 " +
+                "rounded-3xl p-8 shadow-2xl transform transition hover:scale-105 flex flex-col " +
                 (highlighted ? "ring-4 ring-[#9b7cff]/20 " : "") +
                 " bg-gradient-to-br from-[#241827] to-[#201726] border border-white/6 text-white"
             }
@@ -44,7 +44,7 @@ export default function PricingCard({
                 )}
             </div>
 
-            <ul className="space-y-3 mb-8 text-white/90">
+            <ul className="space-y-3 mb-8 text-white/90 flex-grow">
                 {features.map((feature, index) => (
                     <li key={index} className="flex items-start">
                         <svg
@@ -60,7 +60,7 @@ export default function PricingCard({
                 ))}
             </ul>
 
-            <Link href="/signup" className="block w-full">
+            <Link href="/signup" className="block w-full mt-auto">
                 <button className="w-full bg-accent hover:bg-accent/90 text-white py-3 rounded-lg font-semibold transition">
                     Inizia Ora
                 </button>
